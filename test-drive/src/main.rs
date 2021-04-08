@@ -23,7 +23,7 @@ fn mango_migration() -> Result<(), Box<dyn std::error::Error>> {
         project_name: settings::PROJECT_NAME,
         unique_project_key: settings::UNIQUE_PROJECT_KEY,
         // Register models.
-        // -----------------------------------------------------------------------------------------
+        // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         models: vec![
             mango_models::Dynamic::meta()?,
             mango_models::User::meta()?,
@@ -33,7 +33,7 @@ fn mango_migration() -> Result<(), Box<dyn std::error::Error>> {
     monitor.migrat();
 
     // Add metadata and widgects map to cache.
-    // ---------------------------------------------------------------------------------------------
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     mango_models::Dynamic::to_cache()?;
     mango_models::User::to_cache()?;
     mango_models::UserProfile::to_cache()?;
