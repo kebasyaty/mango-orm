@@ -3,9 +3,12 @@
 //!
 //! Trait:
 //! `Caching` - Methods caching information about Models for speed up work.
+//!
 //! Methods:
+//! `to_cache` - Add metadata and widgects map to cache.
 //! `form_wig` - Get an widgets map for page template.
 //! `form_json` - Get Form attributes in Json format for page templates.
+//! `form_json_for_admin` - Json-line for admin panel.
 //! `form_html` - Get Html Form of Model for page templates.
 //! `get_cache_data_for_query` - Get cached Model data.
 //! `db_update_dyn_widgets` - Accepts json-line to update data, for dynamic widgets.
@@ -60,7 +63,16 @@ pub trait CachingModel: ToModel {
         // Get a key to access Model data in the cache.
         let key: String = Self::key();
         // Get read access from cache.
-        let form_store = FORM_STORE.read()?;
+        let mut form_store = FORM_STORE.read()?;
+        // Check if there is metadata for the Model in the cache.
+        if !form_store.contains_key(key.as_str()) {
+            // Unlock.
+            drop(form_store);
+            // Add map of widgets to cache.
+            Self::to_cache()?;
+            // Reaccess.
+            form_store = FORM_STORE.read()?;
+        }
         // Get data and return the result.
         if let Some(form_cache) = form_store.get(key.as_str()) {
             Ok(form_cache.map_widgets.clone())
@@ -79,7 +91,16 @@ pub trait CachingModel: ToModel {
         // Get a key to access Model data in the cache.
         let key: String = Self::key();
         // Get read access from cache.
-        let form_store = FORM_STORE.read()?;
+        let mut form_store = FORM_STORE.read()?;
+        // Check if there is metadata for the Model in the cache.
+        if !form_store.contains_key(key.as_str()) {
+            // Unlock.
+            drop(form_store);
+            // Add map of widgets to cache.
+            Self::to_cache()?;
+            // Reaccess.
+            form_store = FORM_STORE.read()?;
+        }
         // Generate data and return the result.
         if let Some(form_cache) = form_store.get(key.as_str()) {
             if form_cache.form_json.is_empty() {
@@ -127,7 +148,16 @@ pub trait CachingModel: ToModel {
         // Get a key to access Model data in the cache.
         let key: String = Self::key();
         // Get read access from cache.
-        let form_store = FORM_STORE.read()?;
+        let mut form_store = FORM_STORE.read()?;
+        // Check if there is metadata for the Model in the cache.
+        if !form_store.contains_key(key.as_str()) {
+            // Unlock.
+            drop(form_store);
+            // Add map of widgets to cache.
+            Self::to_cache()?;
+            // Reaccess.
+            form_store = FORM_STORE.read()?;
+        }
         // Generate data and return the result.
         if let Some(form_cache) = form_store.get(key.as_str()) {
             if form_cache.form_html.is_empty() {
@@ -158,7 +188,16 @@ pub trait CachingModel: ToModel {
         // Get a key to access Model data in the cache.
         let key: String = Self::key();
         // Get read access from cache.
-        let form_store = FORM_STORE.read()?;
+        let mut form_store = FORM_STORE.read()?;
+        // Check if there is metadata for the Model in the cache.
+        if !form_store.contains_key(key.as_str()) {
+            // Unlock.
+            drop(form_store);
+            // Add map of widgets to cache.
+            Self::to_cache()?;
+            // Reaccess.
+            form_store = FORM_STORE.read()?;
+        }
         // Generate data and return the result.
         if let Some(form_cache) = form_store.get(key.as_str()) {
             // Get model metadata from cache.

@@ -5,6 +5,7 @@
 //! `Caching` - Methods caching information about Forms for speed up work.
 //!
 //! Methods:
+//! `widgets_to_cache` - Add map of widgets to cache.
 //! `form_wig` - Get an widgets map for page template.
 //! `form_json` - Get Form attributes in Json format for page templates.
 //! `form_html` - Get Html Form of Model for page templates.
@@ -45,7 +46,7 @@ pub trait CachingForm: ToForm + HtmlControls {
         let key: String = Self::key();
         // Get read access from cache.
         let mut form_store = FORM_STORE.read()?;
-        // Check if there is metadata for the Form in the cache.
+        // Check if there is widgets map for the Form in the cache.
         if !form_store.contains_key(key.as_str()) {
             // Unlock.
             drop(form_store);
@@ -72,7 +73,7 @@ pub trait CachingForm: ToForm + HtmlControls {
         let key: String = Self::key();
         // Get read access from cache.
         let mut form_store = FORM_STORE.read()?;
-        // Check if there is metadata for the Form in the cache.
+        // Check if there is widgets map for the Form in the cache.
         if !form_store.contains_key(key.as_str()) {
             // Unlock.
             drop(form_store);
@@ -109,7 +110,7 @@ pub trait CachingForm: ToForm + HtmlControls {
         let key: String = Self::key();
         // Get read access from cache.
         let mut form_store = FORM_STORE.read()?;
-        // Check if there is metadata for the Form in the cache.
+        // Check if there is widgets map for the Form in the cache.
         if !form_store.contains_key(key.as_str()) {
             // Unlock.
             drop(form_store);
@@ -147,7 +148,7 @@ pub trait CachingForm: ToForm + HtmlControls {
         let key: String = Self::key();
         // Get read access from cache.
         let mut form_store = FORM_STORE.read()?;
-        // Check if there is metadata for the Form in the cache.
+        // Check if there is widgets map for the Form in the cache.
         if !form_store.contains_key(key.as_str()) {
             // Unlock.
             drop(form_store);
