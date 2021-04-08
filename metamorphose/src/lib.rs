@@ -386,7 +386,7 @@ fn impl_create_model(args: &Vec<NestedMeta>, ast: &mut DeriveInput) -> TokenStre
     for field_name in trans_meta.fields_name.iter() {
         let widget = trans_map_widgets
             .map_widgets
-            .get(field_name.as_str())
+            .get_mut(field_name.as_str())
             .unwrap();
         // For dynamic widgets, the default is invalid.
         if widget.widget.contains("Dyn") {
@@ -431,6 +431,10 @@ fn impl_create_model(args: &Vec<NestedMeta>, ast: &mut DeriveInput) -> TokenStre
                     field_name,
                 )
             }
+        }
+        // For widgets with support for u32 numbers, parameter min = 0
+        if widget.widget.contains("U32") {
+            widget.min = 0_usize.to_string();
         }
         // Add default values in the map.
         map_default_values.insert(
