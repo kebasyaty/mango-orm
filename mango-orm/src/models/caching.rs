@@ -68,7 +68,7 @@ pub trait CachingModel: ToModel {
         if !form_store.contains_key(key.as_str()) {
             // Unlock.
             drop(form_store);
-            // Add map of widgets to cache.
+            // Add metadata and widgects map to cache.
             Self::to_cache()?;
             // Reaccess.
             form_store = FORM_STORE.read()?;
@@ -96,7 +96,7 @@ pub trait CachingModel: ToModel {
         if !form_store.contains_key(key.as_str()) {
             // Unlock.
             drop(form_store);
-            // Add map of widgets to cache.
+            // Add metadata and widgects map to cache.
             Self::to_cache()?;
             // Reaccess.
             form_store = FORM_STORE.read()?;
@@ -153,7 +153,7 @@ pub trait CachingModel: ToModel {
         if !form_store.contains_key(key.as_str()) {
             // Unlock.
             drop(form_store);
-            // Add map of widgets to cache.
+            // Add metadata and widgects map to cache.
             Self::to_cache()?;
             // Reaccess.
             form_store = FORM_STORE.read()?;
@@ -193,7 +193,7 @@ pub trait CachingModel: ToModel {
         if !form_store.contains_key(key.as_str()) {
             // Unlock.
             drop(form_store);
-            // Add map of widgets to cache.
+            // Add metadata and widgects map to cache.
             Self::to_cache()?;
             // Reaccess.
             form_store = FORM_STORE.read()?;
