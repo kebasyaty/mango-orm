@@ -177,7 +177,7 @@ fn impl_create_model(args: &Vec<NestedMeta>, ast: &mut DeriveInput) -> TokenStre
                 if let Some(ident) = &field.ident {
                     field_name = ident.to_string();
 
-                    // Check for fields with reserved names - `created_at`, `updated_at`, `paperclip`.
+                    // Check for fields with reserved names - `created_at`, `updated_at`.
                     if field_name == "created_at".to_string() {
                         panic!(
                             "Model: `{}` : The field named `created_at` is reserved.",
@@ -186,11 +186,6 @@ fn impl_create_model(args: &Vec<NestedMeta>, ast: &mut DeriveInput) -> TokenStre
                     } else if field_name == "updated_at".to_string() {
                         panic!(
                             "Model: `{}` : The field named `updated_at` is reserved.",
-                            model_name.to_string()
-                        )
-                    } else if field_name == "paperclip".to_string() {
-                        panic!(
-                            "Model: `{}` : The field named `paperclip` is reserved.",
                             model_name.to_string()
                         )
                     }
