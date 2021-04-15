@@ -609,7 +609,7 @@ impl<'a> Monitor<'a> {
                             }
                         }
                         // Insert the reserved fields.
-                        for field in vec!["created_at", "updated_at", "paperclip"] {
+                        for field in vec!["created_at", "updated_at"] {
                             if doc_from_db.contains_key(field) {
                                 let value_from_db: Option<&mongodb::bson::Bson> =
                                     doc_from_db.get(field);
