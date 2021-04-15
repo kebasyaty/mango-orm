@@ -1018,12 +1018,6 @@ pub trait QPaladins: ToModel + CachingModel {
                     final_doc.insert("updated_at", mongodb::bson::Bson::DateTime(dt));
                 }
             }
-
-            // Insert a field for linking a document to a user account.
-            // -------------------------------------------------------------------------------------
-            if !is_err_symptom && !is_update {
-                final_doc.insert("paperclip", mongodb::bson::Bson::Null);
-            }
         }
 
         // Enrich the widget map with values for dynamic widgets.
