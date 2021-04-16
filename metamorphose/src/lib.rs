@@ -1103,14 +1103,14 @@ fn get_param_value<'a>(
                 )
             }
         }
-        "default" => match field_type.as_ref() {
+        "value" => match field_type.as_ref() {
             "i32" => {
                 if let syn::Lit::Int(lit_int) = &mnv.lit {
                     widget.value = lit_int.base10_parse::<i32>().unwrap().to_string();
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
-                        Could not determine value for parameter `default`. \
+                        Could not determine value for parameter `value`. \
                         Example: 10",
                         model_or_form, model_name, field_name, field_type
                     )
@@ -1122,7 +1122,7 @@ fn get_param_value<'a>(
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
-                        Could not determine value for parameter `default`. \
+                        Could not determine value for parameter `value`. \
                         Example: 10",
                         model_or_form, model_name, field_name, field_type
                     )
@@ -1134,7 +1134,7 @@ fn get_param_value<'a>(
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
-                        Could not determine value for parameter `default`. \
+                        Could not determine value for parameter `value`. \
                         Example: 10",
                         model_or_form, model_name, field_name, field_type
                     )
@@ -1146,7 +1146,7 @@ fn get_param_value<'a>(
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
-                        Could not determine value for parameter `default`. \
+                        Could not determine value for parameter `value`. \
                         Example: 10.2",
                         model_or_form, model_name, field_name, field_type
                     )
@@ -1158,7 +1158,7 @@ fn get_param_value<'a>(
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
-                        Could not determine value for parameter `default`. \
+                        Could not determine value for parameter `value`. \
                         Example: \"Some text\"",
                         model_or_form, model_name, field_name, field_type
                     )
@@ -1482,20 +1482,19 @@ fn get_param_value<'a>(
                 model_or_form, model_name, field_name, field_type
             ),
         },
-        "choice" => match field_type.as_ref() {
+        "options" => match field_type.as_ref() {
             "i32" | "Vec < i32 >" => {
                 if let syn::Lit::Str(lit_str) = &mnv.lit {
                     let raw_options: Vec<(i32, String)> =
                         serde_json::from_str(lit_str.value().replace('_', "").as_str()).unwrap();
-                    let mut ready_options: Vec<(String, String)> = Vec::new();
-                    for item in raw_options {
-                        ready_options.push((item.0.to_string(), item.1));
-                    }
-                    widget.options = ready_options;
+                    widget.options = raw_options
+                        .iter()
+                        .map(|item| (item.0.to_string(), item.1.clone()))
+                        .collect();
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
-                        Could not determine value for parameter `choice`. \
+                        Could not determine value for parameter `options`. \
                         Example: [[10, \"Title 1\"], [20, \"Title 2\"], ...]",
                         model_or_form, model_name, field_name, field_type
                     )
@@ -1505,15 +1504,14 @@ fn get_param_value<'a>(
                 if let syn::Lit::Str(lit_str) = &mnv.lit {
                     let raw_options: Vec<(u32, String)> =
                         serde_json::from_str(lit_str.value().replace('_', "").as_str()).unwrap();
-                    let mut ready_options: Vec<(String, String)> = Vec::new();
-                    for item in raw_options {
-                        ready_options.push((item.0.to_string(), item.1));
-                    }
-                    widget.options = ready_options;
+                    widget.options = raw_options
+                        .iter()
+                        .map(|item| (item.0.to_string(), item.1.clone()))
+                        .collect();
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
-                        Could not determine value for parameter `select`. \
+                        Could not determine value for parameter `options`. \
                         Example: [[10, \"Title 1\"], [20, \"Title 2\"], ...]",
                         model_or_form, model_name, field_name, field_type
                     )
@@ -1523,15 +1521,14 @@ fn get_param_value<'a>(
                 if let syn::Lit::Str(lit_str) = &mnv.lit {
                     let raw_options: Vec<(i64, String)> =
                         serde_json::from_str(lit_str.value().replace('_', "").as_str()).unwrap();
-                    let mut ready_options: Vec<(String, String)> = Vec::new();
-                    for item in raw_options {
-                        ready_options.push((item.0.to_string(), item.1));
-                    }
-                    widget.options = ready_options;
+                    widget.options = raw_options
+                        .iter()
+                        .map(|item| (item.0.to_string(), item.1.clone()))
+                        .collect();
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
-                        Could not determine value for parameter `select`. \
+                        Could not determine value for parameter `options`. \
                         Example: [[10, \"Title 1\"], [20, \"Title 2\"], ...]",
                         model_or_form, model_name, field_name, field_type
                     )
@@ -1541,15 +1538,14 @@ fn get_param_value<'a>(
                 if let syn::Lit::Str(lit_str) = &mnv.lit {
                     let raw_options: Vec<(f64, String)> =
                         serde_json::from_str(lit_str.value().replace('_', "").as_str()).unwrap();
-                    let mut ready_options: Vec<(String, String)> = Vec::new();
-                    for item in raw_options {
-                        ready_options.push((item.0.to_string(), item.1));
-                    }
-                    widget.options = ready_options;
+                    widget.options = raw_options
+                        .iter()
+                        .map(|item| (item.0.to_string(), item.1.clone()))
+                        .collect();
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
-                        Could not determine value for parameter `select`. \
+                        Could not determine value for parameter `options`. \
                         Example: [[10.1, \"Title 1\"], [20.2, \"Title 2\"], ...]",
                         model_or_form, model_name, field_name, field_type
                     )
@@ -1561,7 +1557,7 @@ fn get_param_value<'a>(
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
-                        Could not determine value for parameter `select`. \
+                        Could not determine value for parameter `options`. \
                         Example: [[\"value\", \"Title 1\"], [value, \"Title 2\"], ...]",
                         model_or_form, model_name, field_name, field_type
                     )
@@ -1569,7 +1565,7 @@ fn get_param_value<'a>(
             }
             _ => panic!(
                 "{}: `{}` > Field: `{}` > Type: {} : \
-                Unsupported field type for `select` parameter.",
+                Unsupported field type for `options` parameter.",
                 model_or_form, model_name, field_name, field_type
             ),
         },
