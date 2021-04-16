@@ -18,16 +18,16 @@ mod app_name {
     #[derive(Serialize, Deserialize, Default)]
     pub struct TestForm {
         #[serde(default)]
-        #[field_attrs(widget = "radioI64", default = 1)]
+        #[field_attrs(widget = "radioI64", value = 1)]
         pub radio: Option<i64>,
         #[serde(default)]
         #[field_attrs(widget = "numberI64")]
         pub number: Option<i64>,
         #[serde(default)]
-        #[field_attrs(widget = "rangeI64", default = 5, min = 1, max = 12)]
+        #[field_attrs(widget = "rangeI64", value = 5, min = 1, max = 12)]
         pub range: Option<i64>,
         #[serde(default)]
-        #[field_attrs(widget = "hiddenI64", default = 3, min = 1, max = 12)]
+        #[field_attrs(widget = "hiddenI64", value = 3, min = 1, max = 12)]
         pub hidden: Option<i64>,
     }
 }

@@ -20,7 +20,7 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "inputText",
-            default = "Lorem ipsum",
+            value = "Lorem ipsum",
             minlength = 2,
             maxlength = 60,
             unique = true
@@ -29,17 +29,17 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "hiddenText",
-            default = "Lorem ipsum",
+            value = "Lorem ipsum",
             minlength = 2,
             maxlength = 60,
             unique = true
         )]
         pub hidden: Option<String>,
         #[serde(default)]
-        #[field_attrs(widget = "radioText", default = "Lorem ipsum")]
+        #[field_attrs(widget = "radioText", value = "Lorem ipsum")]
         pub radio: Option<String>,
         #[serde(default)]
-        #[field_attrs(widget = "inputColor", default = "#000000")]
+        #[field_attrs(widget = "inputColor", value = "#000000")]
         pub color: Option<String>,
         #[serde(default)]
         #[field_attrs(widget = "inputEmail", maxlength = 74)]
@@ -54,16 +54,16 @@ mod app_name {
         #[field_attrs(widget = "inputUrl")]
         pub url: Option<String>,
         #[serde(default)]
-        #[field_attrs(widget = "inputIP", default = "127.0.0.1")]
+        #[field_attrs(widget = "inputIP", value = "127.0.0.1")]
         pub ip: Option<String>,
         #[serde(default)]
-        #[field_attrs(widget = "inputIPv4", default = "127.0.0.1")]
+        #[field_attrs(widget = "inputIPv4", value = "127.0.0.1")]
         pub ipv4: Option<String>,
         #[serde(default)]
-        #[field_attrs(widget = "inputIPv6", default = "::ffff:7f00:1")]
+        #[field_attrs(widget = "inputIPv6", value = "::ffff:7f00:1")]
         pub ipv6: Option<String>,
         #[serde(default)]
-        #[field_attrs(widget = "textArea", default = "Lorem ipsum")]
+        #[field_attrs(widget = "textArea", value = "Lorem ipsum")]
         pub textarea: Option<String>,
     }
 }

@@ -174,7 +174,7 @@ pub struct UserProfile {
     #[serde(default)]
     #[field_attrs(
         widget = "inputText",
-        default = "Some text",
+        value = "Some text",
         required = false,
         minlength = 3,
         maxlength = 40
@@ -224,7 +224,7 @@ pub struct UserProfile {
     #[serde(default)]
     #[field_attrs(
         widget = "inputFile",
-        default = r#"{
+        value = r#"{
             "path":"./test-drive/media/hello_world.odt",
             "url":"/media/hello_world.odt"
         }"#
@@ -234,7 +234,7 @@ pub struct UserProfile {
     #[serde(default)]
     #[field_attrs(
         widget = "inputImage",
-        default = r#"{
+        value = r#"{
             "path":"./test-drive/media/no-image-found.png",
             "url":"/media/no-image-found.png"
         }"#
@@ -315,7 +315,7 @@ pub struct UserForm {
     #[serde(default)]
     #[field_attrs(
         widget = "inputText",
-        default = "Some text",
+        value = "Some text",
         required = false,
         minlength = 3,
         maxlength = 40

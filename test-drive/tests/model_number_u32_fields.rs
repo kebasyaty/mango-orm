@@ -27,16 +27,16 @@ mod app_name {
     #[derive(Serialize, Deserialize, Default)]
     pub struct TestModel {
         #[serde(default)]
-        #[field_attrs(widget = "radioU32", default = 1, unique = true)]
+        #[field_attrs(widget = "radioU32", value = 1, unique = true)]
         pub radio: Option<u32>,
         #[serde(default)]
         #[field_attrs(widget = "numberU32", unique = true)]
         pub number: Option<u32>,
         #[serde(default)]
-        #[field_attrs(widget = "rangeU32", default = 5, min = 1, max = 12, unique = true)]
+        #[field_attrs(widget = "rangeU32", value = 5, min = 1, max = 12, unique = true)]
         pub range: Option<u32>,
         #[serde(default)]
-        #[field_attrs(widget = "hiddenU32", default = 3, min = 1, max = 12, unique = true)]
+        #[field_attrs(widget = "hiddenU32", value = 3, min = 1, max = 12, unique = true)]
         pub hidden: Option<u32>,
     }
 

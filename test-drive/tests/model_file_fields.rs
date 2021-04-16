@@ -29,7 +29,7 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "inputFile",
-            default = r#"{
+            value = r#"{
                 "path":"./media/hello_world.odt",
                 "url":"/media/hello_world.odt"
             }"#

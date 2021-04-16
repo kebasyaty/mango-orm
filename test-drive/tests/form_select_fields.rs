@@ -21,8 +21,8 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "selectText",
-            default = "volvo",
-            choice = r#"[
+            value = "volvo",
+            options = r#"[
                 ["volvo","Volvo"],
                 ["saab","Saab"],
                 ["mercedes","Mercedes"],
@@ -33,7 +33,7 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "selectTextMult",
-            choice = r#"[
+            options = r#"[
                 ["volvo","Volvo"],
                 ["saab","Saab"],
                 ["mercedes","Mercedes"],
@@ -45,8 +45,8 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "selectI32",
-            default = 1,
-            choice = r#"[
+            value = 1,
+            options = r#"[
                 [1,"Volvo"],
                 [2,"Saab"],
                 [3,"Mercedes"],
@@ -57,7 +57,7 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "selectI32Mult",
-            choice = r#"[
+            options = r#"[
                 [1,"Volvo"],
                 [2,"Saab"],
                 [3,"Mercedes"],
@@ -69,8 +69,8 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "selectU32",
-            default = 1,
-            choice = r#"[
+            value = 1,
+            options = r#"[
                 [1,"Volvo"],
                 [2,"Saab"],
                 [3,"Mercedes"],
@@ -81,7 +81,7 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "selectU32Mult",
-            choice = r#"[
+            options = r#"[
                 [1,"Volvo"],
                 [2,"Saab"],
                 [3,"Mercedes"],
@@ -93,8 +93,8 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "selectI64",
-            default = 1,
-            choice = r#"[
+            value = 1,
+            options = r#"[
                 [1,"Volvo"],
                 [2,"Saab"],
                 [3,"Mercedes"],
@@ -105,7 +105,7 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "selectI64Mult",
-            choice = r#"[
+            options = r#"[
                 [1,"Volvo"],
                 [2,"Saab"],
                 [3,"Mercedes"],
@@ -117,8 +117,8 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "selectF64",
-            default = 1.1,
-            choice = r#"[
+            value = 1.1,
+            options = r#"[
                 [1.1,"Volvo"],
                 [2.2,"Saab"],
                 [3.3,"Mercedes"],
@@ -129,7 +129,7 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "selectF64Mult",
-            choice = r#"[
+            options = r#"[
                 [1.1,"Volvo"],
                 [2.2,"Saab"],
                 [3.3,"Mercedes"],

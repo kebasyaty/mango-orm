@@ -21,8 +21,8 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "radioText",
-            default = "volvo",
-            choice = r#"[
+            value = "volvo",
+            options = r#"[
                 ["volvo","Volvo"],
                 ["saab","Saab"],
                 ["mercedes","Mercedes"],
@@ -34,8 +34,8 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "radioI32",
-            default = 1,
-            choice = r#"[
+            value = 1,
+            options = r#"[
                 [1,"Volvo"],
                 [2,"Saab"],
                 [3,"Mercedes"],
@@ -47,8 +47,8 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "radioU32",
-            default = 1,
-            choice = r#"[
+            value = 1,
+            options = r#"[
                 [1,"Volvo"],
                 [2,"Saab"],
                 [3,"Mercedes"],
@@ -60,8 +60,8 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "radioI64",
-            default = 1,
-            choice = r#"[
+            value = 1,
+            options = r#"[
                 [1,"Volvo"],
                 [2,"Saab"],
                 [3,"Mercedes"],
@@ -73,8 +73,8 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "radioF64",
-            default = 1.1,
-            choice = r#"[
+            value = 1.1,
+            options = r#"[
                 [1.1,"Volvo"],
                 [2.2,"Saab"],
                 [3.3,"Mercedes"],

@@ -29,7 +29,7 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "inputImage",
-            default = r#"{
+            value = r#"{
                 "path":"./media/no-image-found.png",
                 "url":"/media/no-image-found.png"
             }"#

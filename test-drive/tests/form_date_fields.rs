@@ -20,7 +20,7 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "inputDate",
-            default = "1970-02-28",
+            value = "1970-02-28",
             min = "1970-01-01",
             max = "1970-03-01",
             unique = true
