@@ -1145,7 +1145,7 @@ pub trait QPaladins: ToModel + CachingModel {
             let query: mongodb::bson::document::Document = mongodb::bson::doc! {"_id": object_id};
             // Removeve files
             if let Some(document) = coll.find_one(query.clone(), None)? {
-                for (field_name, widget_name) in meta.map_field_type.iter() {
+                for (field_name, widget_name) in meta.map_widget_type.iter() {
                     match widget_name.as_str() {
                         "inputFile" | "inputImage" => {
                             if let Some(field_file) = document.get(field_name) {
