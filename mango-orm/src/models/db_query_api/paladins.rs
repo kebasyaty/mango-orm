@@ -1143,6 +1143,36 @@ pub trait QPaladins: ToModel + CachingModel {
                 mongodb::bson::oid::ObjectId::with_string(hash.unwrap().as_str())?;
             // Create query.
             let query: mongodb::bson::document::Document = mongodb::bson::doc! {"_id": object_id};
+            // Removeve files
+            if let Some(document) = coll.find_one(query.clone(), None)? {
+                for (field_name, widget_name) in meta.map_field_type.iter() {
+                    match widget_name.as_str() {
+                        "inputFile" | "inputImage" => {
+                            if let Some(field_file) =
+                                document.get(field_name).unwrap().as_document()
+                            {
+                                let path = field_file.get_str("path")?;
+                                let path = Path::new(path);
+                                if path.exists() {
+                                    fs::remove_file(path)?;
+                                }
+                            } else {
+                                Err(format!(
+                                    "Model: `{}` > Field: `{}` > \
+                                    Method: `delete()` : The field is missing in the document.",
+                                    meta.model_name, field_name
+                                ))?
+                            }
+                        }
+                        _ => {}
+                    }
+                }
+            } else {
+                Err(format!(
+                    "Model: `{}` > Method: `delete()` : Document not found.",
+                    meta.model_name
+                ))?
+            }
             // Execute query.
             coll.delete_one(query, options).is_ok()
         } else {
