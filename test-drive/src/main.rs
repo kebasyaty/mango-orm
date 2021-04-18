@@ -30,7 +30,7 @@ fn mango_migration() -> Result<(), Box<dyn std::error::Error>> {
             mango_models::UserProfile::meta()?,
         ],
     };
-    monitor.migrat();
+    monitor.migrat()?;
 
     // Add metadata and widgects map to cache.
     // Hint: Optional. It is required to add to work with the admin panel.

@@ -54,7 +54,7 @@ mod app_name {
             // Register models
             models: model_list()?,
         };
-        monitor.migrat();
+        monitor.migrat()?;
         // Add metadata and widgects map to cache.
         TestModel::to_cache()?;
         //
