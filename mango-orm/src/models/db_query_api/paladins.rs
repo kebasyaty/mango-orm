@@ -672,8 +672,8 @@ pub trait QPaladins: ToModel + CachingModel {
                         Err(format!(
                             "Model: `{}` > Field: `{}` > Method: \
                             `check()` : Incorrectly filled field. \
-                            Example (for default): {{\"path\":\"./media/hello_world.odt\",\"url\":\"/media/hello_world.odt\"}} \
-                            Example (from client side): {{\"path\":\"./media/hello_world.odt\",\"url\":\"/media/hello_world.odt\",\"is_delete\":false}}",
+                            Example: (for default): {{\"path\":\"./media/resume.docx\",\"url\":\"/media/resume.docx\"}} \
+                            Example: (from client side): {{\"path\":\"./media/resume.docx\",\"url\":\"/media/resume.docx\",\"is_delete\":false}}",
                             model_name, field_name
                         ))?
                     }
@@ -761,8 +761,8 @@ pub trait QPaladins: ToModel + CachingModel {
                         Err(format!(
                             "Model: `{}` > Field: `{}` > Method: \
                             `check()` : Incorrectly filled field. \
-                            Example (for default): {{\"path\":\"./media/no-image-found.png\",\"url\":\"/media/no-image-found.png\"}} \
-                            Example (from client side): {{\"path\":\"./media/no-image-found.png\",\"url\":\"/media/no-image-found.png\",\"is_delete\":false}}",
+                            Example: (for default): {{\"path\":\"./media/no_photo.jpg\",\"url\":\"/media/no_photo.jpg\"}} \
+                            Example: (from client side): {{\"path\":\"./media/no_photo.jpg\",\"url\":\"/media/no_photo.jpg\",\"is_delete\":false}}",
                             model_name, field_name
                         ))?
                     }
