@@ -614,16 +614,6 @@ pub trait QPaladins: ToModel + CachingModel {
                 // Validation of file type fields.
                 // *********************************************************************************
                 "inputFile" => {
-                    if ignore_fields.contains(&field_name) {
-                        is_err_symptom = true;
-                        final_widget.error = Self::accumula_err(
-                            &final_widget,
-                            &"Ignored fields are incompatible with fields of type `file`."
-                                .to_owned(),
-                        )
-                        .unwrap();
-                        continue;
-                    }
                     // Get field value for validation.
                     let mut field_value: FileData = if !pre_json_value.is_null() {
                         let obj_str = pre_json_value.as_str().unwrap();
@@ -645,7 +635,10 @@ pub trait QPaladins: ToModel + CachingModel {
                     // Validation, if the field is required and empty, accumulate the error.
                     // ( The default value is used whenever possible )
                     if field_value.path.is_empty() && field_value.url.is_empty() {
-                        if !is_update {
+                        if !is_update
+                            || (final_widget.required
+                                && self.db_get_file_info(&coll, field_name)?.is_empty())
+                        {
                             if final_widget.required && final_widget.value.is_empty() {
                                 is_err_symptom = true;
                                 final_widget.error = Self::accumula_err(
@@ -707,16 +700,6 @@ pub trait QPaladins: ToModel + CachingModel {
                     }
                 }
                 "inputImage" => {
-                    if ignore_fields.contains(&field_name) {
-                        is_err_symptom = true;
-                        final_widget.error = Self::accumula_err(
-                            &final_widget,
-                            &"Ignored fields are incompatible with fields of type `file`."
-                                .to_owned(),
-                        )
-                        .unwrap();
-                        continue;
-                    }
                     // Get field value for validation.
                     let mut field_value: ImageData = if !pre_json_value.is_null() {
                         let obj_str = pre_json_value.as_str().unwrap();
@@ -738,7 +721,10 @@ pub trait QPaladins: ToModel + CachingModel {
                     // Validation, if the field is required and empty, accumulate the error.
                     // ( The default value is used whenever possible )
                     if field_value.path.is_empty() && field_value.url.is_empty() {
-                        if !is_update {
+                        if !is_update
+                            || (final_widget.required
+                                && self.db_get_file_info(&coll, field_name)?.is_empty())
+                        {
                             if final_widget.required && final_widget.value.is_empty() {
                                 is_err_symptom = true;
                                 final_widget.error = Self::accumula_err(
