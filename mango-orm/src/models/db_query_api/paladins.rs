@@ -614,6 +614,16 @@ pub trait QPaladins: ToModel + CachingModel {
                 // Validation of file type fields.
                 // *********************************************************************************
                 "inputFile" => {
+                    if ignore_fields.contains(&field_name) {
+                        is_err_symptom = true;
+                        final_widget.error = Self::accumula_err(
+                            &final_widget,
+                            &"Ignored fields are incompatible with fields of type `file`."
+                                .to_owned(),
+                        )
+                        .unwrap();
+                        continue;
+                    }
                     // Get field value for validation.
                     let mut field_value: FileData = if !pre_json_value.is_null() {
                         let obj_str = pre_json_value.as_str().unwrap();
@@ -650,10 +660,8 @@ pub trait QPaladins: ToModel + CachingModel {
                                 // Trying to apply the value default.
                                 if !final_widget.value.is_empty() {
                                     field_value = serde_json::from_str(final_widget.value.trim())?;
-                                } else if !ignore_fields.contains(&field_name) {
-                                    final_doc.insert(field_name, mongodb::bson::Bson::Null);
-                                    continue;
                                 } else {
+                                    final_doc.insert(field_name, mongodb::bson::Bson::Null);
                                     continue;
                                 }
                             }
@@ -700,6 +708,16 @@ pub trait QPaladins: ToModel + CachingModel {
                     }
                 }
                 "inputImage" => {
+                    if ignore_fields.contains(&field_name) {
+                        is_err_symptom = true;
+                        final_widget.error = Self::accumula_err(
+                            &final_widget,
+                            &"Ignored fields are incompatible with fields of type `file`."
+                                .to_owned(),
+                        )
+                        .unwrap();
+                        continue;
+                    }
                     // Get field value for validation.
                     let mut field_value: ImageData = if !pre_json_value.is_null() {
                         let obj_str = pre_json_value.as_str().unwrap();
@@ -736,10 +754,8 @@ pub trait QPaladins: ToModel + CachingModel {
                                 // Trying to apply the value default.
                                 if !final_widget.value.is_empty() {
                                     field_value = serde_json::from_str(final_widget.value.trim())?;
-                                } else if !ignore_fields.contains(&field_name) {
-                                    final_doc.insert(field_name, mongodb::bson::Bson::Null);
-                                    continue;
                                 } else {
+                                    final_doc.insert(field_name, mongodb::bson::Bson::Null);
                                     continue;
                                 }
                             }
