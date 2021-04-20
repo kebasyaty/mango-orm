@@ -632,13 +632,12 @@ pub trait QPaladins: ToModel + CachingModel {
                     } else {
                         FileData::default()
                     };
+                    // Get the current information about file from database.
+                    let curr_info_file: String = self.db_get_file_info(&coll, field_name)?;
                     // Validation, if the field is required and empty, accumulate the error.
                     // ( The default value is used whenever possible )
                     if field_value.path.is_empty() && field_value.url.is_empty() {
-                        if !is_update
-                            || (final_widget.required
-                                && self.db_get_file_info(&coll, field_name)?.is_empty())
-                        {
+                        if !is_update || (final_widget.required && curr_info_file.is_empty()) {
                             if final_widget.required && final_widget.value.is_empty() {
                                 is_err_symptom = true;
                                 final_widget.error = Self::accumula_err(
@@ -659,8 +658,8 @@ pub trait QPaladins: ToModel + CachingModel {
                             continue;
                         }
                     }
-                    // Get the current information about file from database.
-                    final_widget.value = self.db_get_file_info(&coll, field_name)?;
+                    //
+                    final_widget.value = curr_info_file;
                     // Flags to check.
                     let is_emty_path = field_value.path.is_empty();
                     let is_emty_url = field_value.url.is_empty();
@@ -718,13 +717,12 @@ pub trait QPaladins: ToModel + CachingModel {
                     } else {
                         ImageData::default()
                     };
+                    // Get the current information about file from database.
+                    let curr_info_file: String = self.db_get_file_info(&coll, field_name)?;
                     // Validation, if the field is required and empty, accumulate the error.
                     // ( The default value is used whenever possible )
                     if field_value.path.is_empty() && field_value.url.is_empty() {
-                        if !is_update
-                            || (final_widget.required
-                                && self.db_get_file_info(&coll, field_name)?.is_empty())
-                        {
+                        if !is_update || (final_widget.required && curr_info_file.is_empty()) {
                             if final_widget.required && final_widget.value.is_empty() {
                                 is_err_symptom = true;
                                 final_widget.error = Self::accumula_err(
@@ -745,8 +743,8 @@ pub trait QPaladins: ToModel + CachingModel {
                             continue;
                         }
                     }
-                    // Get the current information about file from database.
-                    final_widget.value = self.db_get_file_info(&coll, field_name)?;
+                    //
+                    final_widget.value = curr_info_file;
                     // Flags to check.
                     let is_emty_path = field_value.path.is_empty();
                     let is_emty_url = field_value.url.is_empty();
