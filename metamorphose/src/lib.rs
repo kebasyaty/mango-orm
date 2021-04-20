@@ -408,6 +408,18 @@ fn impl_create_model(args: &Vec<NestedMeta>, ast: &mut DeriveInput) -> TokenStre
                 )
             }
         }
+        // File fields must not be ignored.
+        match widget.widget.as_str() {
+            "inputFile" | "inputImage" if trans_meta.ignore_fields.contains(field_name) => {
+                panic!(
+                    "Model: `{}` > Field: `{}` : \
+                     Ignored fields are incompatible with fields of type `file`.",
+                    model_name.to_string(),
+                    field_name,
+                )
+            }
+            _ => {}
+        }
         // For widgets of the `select` type,
         // the default value must correspond to one of the proposed options.
         if widget.widget.contains("select") {
@@ -445,6 +457,7 @@ fn impl_create_model(args: &Vec<NestedMeta>, ast: &mut DeriveInput) -> TokenStre
         );
     }
     trans_meta.map_default_values = map_default_values;
+
     // trans_meta to Json-line.
     // ---------------------------------------------------------------------------------------------
     let trans_meta: String = match serde_json::to_string(&trans_meta) {
