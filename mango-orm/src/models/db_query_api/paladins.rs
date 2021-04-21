@@ -501,6 +501,14 @@ pub trait QPaladins: ToModel + CachingModel {
                                 "selectText" | "selectTextDyn" => {
                                     let val = pre_json_value.as_str().unwrap().to_string();
                                     final_widget.value = val.clone();
+                                    if val.is_empty() && final_widget.required {
+                                        is_err_symptom = true;
+                                        final_widget.error = Self::accumula_err(
+                                            &final_widget,
+                                            &"Required field.".to_owned(),
+                                        )
+                                        .unwrap();
+                                    }
                                     mongodb::bson::Bson::String(val)
                                 }
                                 "selectI32" | "selectI32Dyn" => {
