@@ -1020,6 +1020,30 @@ pub trait QPaladins: ToModel + CachingModel {
             }
         }
 
+        // If the validation is negative, delete the orphaned files.
+        if is_err_symptom && !is_update {
+            for (_, widget) in final_map_widgets.iter_mut() {
+                let path = match widget.widget.as_str() {
+                    "inputFile" if !widget.value.is_empty() => {
+                        let file_data = serde_json::from_str::<FileData>(widget.value.as_str())?;
+                        Some(file_data.path)
+                    }
+                    "inputImage" if !widget.value.is_empty() => {
+                        let file_data = serde_json::from_str::<ImageData>(widget.value.as_str())?;
+                        Some(file_data.path)
+                    }
+                    _ => None,
+                };
+                if let Some(path) = path {
+                    let path = Path::new(&path);
+                    if path.exists() {
+                        fs::remove_file(path)?;
+                    }
+                    widget.value = String::new();
+                }
+            }
+        }
+
         // Enrich the widget map with values for dynamic widgets.
         Self::vitaminize(
             meta.project_name.as_str(),
