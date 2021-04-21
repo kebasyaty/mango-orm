@@ -361,6 +361,14 @@ pub trait ValidationForm: ToForm + CachingForm + AdditionalValidation {
                             "selectText" => {
                                 let val = pre_json_value.as_str().unwrap().to_string();
                                 final_widget.value = val.clone();
+                                if val.is_empty() && final_widget.required {
+                                    is_err_symptom = true;
+                                    final_widget.error = Self::accumula_err(
+                                        &final_widget,
+                                        &"Required field.".to_owned(),
+                                    )
+                                    .unwrap();
+                                }
                             }
                             "selectI32" => {
                                 let val = i32::try_from(pre_json_value.as_i64().unwrap())?;
