@@ -668,7 +668,7 @@ pub trait QPaladins: ToModel + CachingModel {
                         Err(format!(
                             "Model: `{}` > Field: `{}` > Method: \
                             `check()` : Incorrectly filled field. \
-                            Example: (for default): {{\"path\":\"./media/resume.docx\",\"url\":\"/media/resume.docx\"}} \
+                            Example: (for default): {{\"path\":\"./media/resume.docx\",\"url\":\"/media/resume.docx\"}} ;\
                             Example: (from client side): {{\"path\":\"\",\"url\":\"\",\"is_delete\":true}}",
                             model_name, field_name
                         ))?
@@ -753,7 +753,7 @@ pub trait QPaladins: ToModel + CachingModel {
                         Err(format!(
                             "Model: `{}` > Field: `{}` > Method: \
                             `check()` : Incorrectly filled field. \
-                            Example: (for default): {{\"path\":\"./media/no_photo.jpg\",\"url\":\"/media/no_photo.jpg\"}} \
+                            Example: (for default): {{\"path\":\"./media/no_photo.jpg\",\"url\":\"/media/no_photo.jpg\"}} ;\
                             Example: (from client side): {{\"path\":\"\",\"url\":\"\",\"is_delete\":true}}",
                             model_name, field_name
                         ))?
