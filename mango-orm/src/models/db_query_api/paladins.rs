@@ -1022,24 +1022,36 @@ pub trait QPaladins: ToModel + CachingModel {
 
         // If the validation is negative, delete the orphaned files.
         if is_err_symptom && !is_update {
-            for (_, widget) in final_map_widgets.iter_mut() {
-                let path = match widget.widget.as_str() {
+            let map_widgets = form_cache.map_widgets;
+            for (field, widget) in final_map_widgets.iter_mut() {
+                match widget.widget.as_str() {
                     "inputFile" if !widget.value.is_empty() => {
-                        let file_data = serde_json::from_str::<FileData>(widget.value.as_str())?;
-                        Some(file_data.path)
+                        let default = map_widgets.get(field).unwrap();
+                        let default = serde_json::from_str::<FileData>(default.value.as_str())?;
+                        let current = serde_json::from_str::<FileData>(widget.value.as_str())?;
+                        // Exclude files by default.
+                        if current.path != default.path {
+                            let path = Path::new(&current.path);
+                            if path.exists() {
+                                fs::remove_file(path)?;
+                            }
+                            widget.value = String::new();
+                        }
                     }
                     "inputImage" if !widget.value.is_empty() => {
-                        let file_data = serde_json::from_str::<ImageData>(widget.value.as_str())?;
-                        Some(file_data.path)
+                        let default = map_widgets.get(field).unwrap();
+                        let default = serde_json::from_str::<ImageData>(default.value.as_str())?;
+                        let current = serde_json::from_str::<ImageData>(widget.value.as_str())?;
+                        // Exclude files by default.
+                        if current.path != default.path {
+                            let path = Path::new(&current.path);
+                            if path.exists() {
+                                fs::remove_file(path)?;
+                            }
+                            widget.value = String::new();
+                        }
                     }
-                    _ => None,
-                };
-                if let Some(path) = path {
-                    let path = Path::new(&path);
-                    if path.exists() {
-                        fs::remove_file(path)?;
-                    }
-                    widget.value = String::new();
+                    _ => {}
                 }
             }
         }
