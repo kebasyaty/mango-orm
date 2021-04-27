@@ -17,7 +17,7 @@ use crate::{
     models::{caching::CachingModel, Meta, ToModel},
 };
 use rand::Rng;
-use std::convert::TryFrom;
+use std::{collections::HashMap, convert::TryFrom};
 use std::{fs, path::Path};
 
 pub trait QPaladins: ToModel + CachingModel {
@@ -73,6 +73,7 @@ pub trait QPaladins: ToModel + CachingModel {
         coll: &mongodb::sync::Collection,
         model_name: &str,
         field_name: &str,
+        widget_default_value: &str,
     ) -> Result<(), Box<dyn std::error::Error>> {
         let hash = self.get_hash().unwrap_or_default();
         if !hash.is_empty() {
@@ -85,10 +86,14 @@ pub trait QPaladins: ToModel + CachingModel {
                 coll.update_one(filter, update, None)?;
                 // Delete the orphaned file.
                 if let Some(field_file) = document.get(field_name).unwrap().as_document() {
+                    let default_file_info =
+                        serde_json::from_str::<HashMap<&str, &str>>(widget_default_value)?;
                     let path = field_file.get_str("path")?;
-                    let path = Path::new(path);
-                    if path.exists() {
-                        fs::remove_file(path)?;
+                    if path != *default_file_info.get("path").unwrap() {
+                        let path = Path::new(path);
+                        if path.exists() {
+                            fs::remove_file(path)?;
+                        }
                     }
                 } else {
                     Err(format!(
@@ -632,7 +637,12 @@ pub trait QPaladins: ToModel + CachingModel {
                         .get("is_delete")
                         {
                             if is_update && is_delete.as_bool().unwrap() {
-                                self.delete_file(&coll, model_name, field_name)?;
+                                self.delete_file(
+                                    &coll,
+                                    model_name,
+                                    field_name,
+                                    final_widget.value.as_str(),
+                                )?;
                                 final_doc.insert(field_name, mongodb::bson::Bson::Null);
                             }
                         }
@@ -717,7 +727,12 @@ pub trait QPaladins: ToModel + CachingModel {
                         .get("is_delete")
                         {
                             if is_update && is_delete.as_bool().unwrap() {
-                                self.delete_file(&coll, model_name, field_name)?;
+                                self.delete_file(
+                                    &coll,
+                                    model_name,
+                                    field_name,
+                                    final_widget.value.as_str(),
+                                )?;
                                 final_doc.insert(field_name, mongodb::bson::Bson::Null);
                             }
                         }
@@ -1022,15 +1037,14 @@ pub trait QPaladins: ToModel + CachingModel {
 
         // If the validation is negative, delete the orphaned files.
         if is_err_symptom && !is_update {
-            let map_widgets = form_cache.map_widgets;
+            let map_default_values = meta.map_default_values;
             for (field, widget) in final_map_widgets.iter_mut() {
                 match widget.widget.as_str() {
                     "inputFile" if !widget.value.is_empty() => {
-                        let default = map_widgets.get(field).unwrap();
-                        let default = serde_json::from_str::<FileData>(default.value.as_str())?;
+                        let default_value = map_default_values.get(field).unwrap();
                         let current = serde_json::from_str::<FileData>(widget.value.as_str())?;
                         // Exclude files by default.
-                        if current.path != default.path {
+                        if !default_value.1.contains(&current.path) {
                             let path = Path::new(&current.path);
                             if path.exists() {
                                 fs::remove_file(path)?;
@@ -1039,11 +1053,10 @@ pub trait QPaladins: ToModel + CachingModel {
                         }
                     }
                     "inputImage" if !widget.value.is_empty() => {
-                        let default = map_widgets.get(field).unwrap();
-                        let default = serde_json::from_str::<ImageData>(default.value.as_str())?;
+                        let default_value = map_default_values.get(field).unwrap();
                         let current = serde_json::from_str::<ImageData>(widget.value.as_str())?;
                         // Exclude files by default.
-                        if current.path != default.path {
+                        if !default_value.1.contains(&current.path) {
                             let path = Path::new(&current.path);
                             if path.exists() {
                                 fs::remove_file(path)?;
