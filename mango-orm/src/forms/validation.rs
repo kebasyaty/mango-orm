@@ -87,10 +87,7 @@ pub trait ValidationForm: ToForm + CachingForm + AdditionalValidation {
             }
             "inputPassword" => {
                 if !REGEX_IS_PASSWORD.is_match(value) {
-                    Err(
-                        "Allowed characters: a-z A-Z 0-9 @ # $ % ^ & + = * ! ~ ) (<br> \
-                                 Minimum size 8 characters",
-                    )?
+                    Err("Size 8-256 chars ; Allowed chars: a-z A-Z 0-9 @ # $ % ^ & + = * ! ~ ) (")?
                 }
             }
             "inputDate" => {
