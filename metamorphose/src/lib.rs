@@ -1568,17 +1568,22 @@ fn get_param_value<'a>(
             "f64" | "Vec < f64 >" => {
                 if let syn::Lit::Str(lit_str) = &mnv.lit {
                     let json = lit_str.value().replace('_', "");
-                    let raw_options: Vec<(f64, String)> =
-                        serde_json::from_str(json.as_str()).unwrap();
+                    let raw_options: Vec<(f64, String)> = if json.matches("[").count() > 1 {
+                        serde_json::from_str(json.as_str()).unwrap()
+                    } else {
+                        let arr: Vec<f64> = serde_json::from_str(json.as_str()).unwrap();
+                        arr.iter().map(|item| (*item, item.to_string())).collect()
+                    };
                     widget.options = raw_options
                         .iter()
-                        .map(|item| (item.0.to_string(), item.1.clone()))
+                        .map(|item| (item.0.to_string(), item.1.to_string()))
                         .collect();
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
                         Could not determine value for parameter `options`. \
-                        Example: [[10.1, \"Title 1\"], [20.2, \"Title 2\"], ...]",
+                        Example: [[10.1, \"Title 1\"], [20.2, \"Title 2\"], ...] OR \
+                        Example: [10.1, 20.2, ...]",
                         model_or_form, model_name, field_name, field_type
                     )
                 }
