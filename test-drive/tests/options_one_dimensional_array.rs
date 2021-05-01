@@ -30,24 +30,14 @@ mod app_name {
         #[serde(default)]
         #[field_attrs(
             widget = "selectText",
-            value = "volvo",
-            options = r#"[
-                ["volvo","Volvo"],
-                ["saab","Saab"],
-                ["mercedes","Mercedes"],
-                ["audi","Audi"]
-            ]"#
+            value = "Volvo",
+            options = r#"["Volvo","Saab","Mercedes","Audi"]"#
         )]
         pub select_text: Option<String>,
         #[serde(default)]
         #[field_attrs(
             widget = "selectTextMult",
-            options = r#"[
-                ["volvo","Volvo"],
-                ["saab","Saab"],
-                ["mercedes","Mercedes"],
-                ["audi","Audi"]
-            ]"#
+            options = r#"["Volvo","Saab","Mercedes","Audi"]"#
         )]
         pub select_text_mult: Option<Vec<String>>,
         // i32
@@ -172,8 +162,8 @@ fn test_model_select_fields() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut test_model = app_name::TestModel {
         // text
-        select_text: Some("audi".to_string()),
-        select_text_mult: Some(vec!["saab".to_string(), "audi".to_string()]),
+        select_text: Some("Audi".to_string()),
+        select_text_mult: Some(vec!["Saab".to_string(), "Audi".to_string()]),
 
         // i32
         select_i32: Some(4),
@@ -204,12 +194,12 @@ fn test_model_select_fields() -> Result<(), Box<dyn std::error::Error>> {
     // select_text
     // ---------------------------------------------------------------------------------------------
     let map_wigets = result.wig();
-    assert_eq!("audi", map_wigets.get("select_text").unwrap().value);
+    assert_eq!("Audi", map_wigets.get("select_text").unwrap().value);
     let map_wigets = app_name::TestModel::form_wig()?;
-    assert_eq!("volvo", map_wigets.get("select_text").unwrap().value);
+    assert_eq!("Volvo", map_wigets.get("select_text").unwrap().value);
     assert_eq!(
         serde_json::from_str::<Vec<(String, String)>>(
-            r#"[["volvo","Volvo"],["saab","Saab"],["mercedes","Mercedes"],["audi","Audi"]]"#
+            r#"[["Volvo","Volvo"],["Saab","Saab"],["Mercedes","Mercedes"],["Audi","Audi"]]"#
         )?,
         map_wigets.get("select_text").unwrap().options
     );
@@ -217,13 +207,13 @@ fn test_model_select_fields() -> Result<(), Box<dyn std::error::Error>> {
     let map_wigets = result.wig();
     assert_eq!(
         map_wigets.get("select_text_mult").unwrap().value,
-        r#"["saab","audi"]"#
+        r#"["Saab","Audi"]"#
     );
     let map_wigets = app_name::TestModel::form_wig()?;
     assert!(map_wigets.get("select_text_mult").unwrap().value.is_empty());
     assert_eq!(
         serde_json::from_str::<Vec<(String, String)>>(
-            r#"[["volvo","Volvo"],["saab","Saab"],["mercedes","Mercedes"],["audi","Audi"]]"#
+            r#"[["Volvo","Volvo"],["Saab","Saab"],["Mercedes","Mercedes"],["Audi","Audi"]]"#
         )?,
         map_wigets.get("select_text_mult").unwrap().options
     );
@@ -341,15 +331,14 @@ fn test_model_select_fields() -> Result<(), Box<dyn std::error::Error>> {
         // text
         // -----------------------------------------------------------------------------------------
         assert!(!doc.is_null("select_text"));
-        assert_eq!("audi", doc.get_str("select_text")?);
+        assert_eq!("Audi", doc.get_str("select_text")?);
         assert_eq!(
             &vec![
-                mongodb::bson::Bson::String("saab".to_string()),
-                mongodb::bson::Bson::String("audi".to_string())
+                mongodb::bson::Bson::String("Saab".to_string()),
+                mongodb::bson::Bson::String("Audi".to_string())
             ],
             doc.get_array("select_text_mult")?
         );
-
         // i32
         // -----------------------------------------------------------------------------------------
         assert!(!doc.is_null("select_i32"));
@@ -399,12 +388,12 @@ fn test_model_select_fields() -> Result<(), Box<dyn std::error::Error>> {
     // select_text
     // ---------------------------------------------------------------------------------------------
     let map_wigets = result.wig();
-    assert_eq!("audi", map_wigets.get("select_text").unwrap().value);
+    assert_eq!("Audi", map_wigets.get("select_text").unwrap().value);
     let map_wigets = app_name::TestModel::form_wig()?;
-    assert_eq!("volvo", map_wigets.get("select_text").unwrap().value);
+    assert_eq!("Volvo", map_wigets.get("select_text").unwrap().value);
     assert_eq!(
         serde_json::from_str::<Vec<(String, String)>>(
-            r#"[["volvo","Volvo"],["saab","Saab"],["mercedes","Mercedes"],["audi","Audi"]]"#
+            r#"[["Volvo","Volvo"],["Saab","Saab"],["Mercedes","Mercedes"],["Audi","Audi"]]"#
         )?,
         map_wigets.get("select_text").unwrap().options
     );
@@ -412,13 +401,13 @@ fn test_model_select_fields() -> Result<(), Box<dyn std::error::Error>> {
     let map_wigets = result.wig();
     assert_eq!(
         map_wigets.get("select_text_mult").unwrap().value,
-        r#"["saab","audi"]"#
+        r#"["Saab","Audi"]"#
     );
     let map_wigets = app_name::TestModel::form_wig()?;
     assert!(map_wigets.get("select_text_mult").unwrap().value.is_empty());
     assert_eq!(
         serde_json::from_str::<Vec<(String, String)>>(
-            r#"[["volvo","Volvo"],["saab","Saab"],["mercedes","Mercedes"],["audi","Audi"]]"#
+            r#"[["Volvo","Volvo"],["Saab","Saab"],["Mercedes","Mercedes"],["Audi","Audi"]]"#
         )?,
         map_wigets.get("select_text_mult").unwrap().options
     );
@@ -535,15 +524,14 @@ fn test_model_select_fields() -> Result<(), Box<dyn std::error::Error>> {
         // text
         // -----------------------------------------------------------------------------------------
         assert!(!doc.is_null("select_text"));
-        assert_eq!("audi", doc.get_str("select_text")?);
+        assert_eq!("Audi", doc.get_str("select_text")?);
         assert_eq!(
             &vec![
-                mongodb::bson::Bson::String("saab".to_string()),
-                mongodb::bson::Bson::String("audi".to_string())
+                mongodb::bson::Bson::String("Saab".to_string()),
+                mongodb::bson::Bson::String("Audi".to_string())
             ],
             doc.get_array("select_text_mult")?
         );
-
         // i32
         // -----------------------------------------------------------------------------------------
         assert!(!doc.is_null("select_i32"));

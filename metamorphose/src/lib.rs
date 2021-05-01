@@ -1576,7 +1576,17 @@ fn get_param_value<'a>(
             "String" | "Vec < String >" => {
                 if let syn::Lit::Str(lit_str) = &mnv.lit {
                     let json = lit_str.value();
-                    widget.options = serde_json::from_str(json.as_str()).unwrap();
+                    widget.options = if json.matches("[").count() > 1 {
+                        serde_json::from_str(json.as_str()).unwrap()
+                    } else {
+                        let arr: Vec<String> = serde_json::from_str(json.as_str()).unwrap();
+                        arr.iter()
+                            .map(|item| {
+                                let item = item.to_string();
+                                (item.clone(), item)
+                            })
+                            .collect()
+                    };
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
