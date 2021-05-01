@@ -1116,7 +1116,7 @@ fn get_param_value<'a>(
                 )
             }
         }
-        "value" => match field_type.as_ref() {
+        "value" => match field_type {
             "i32" => {
                 if let syn::Lit::Int(lit_int) = &mnv.lit {
                     widget.value = lit_int.base10_parse::<i32>().unwrap().to_string();
@@ -1294,7 +1294,7 @@ fn get_param_value<'a>(
                 )
             }
         }
-        "step" => match field_type.as_ref() {
+        "step" => match field_type {
             "i32" => {
                 if let syn::Lit::Int(lit_int) = &mnv.lit {
                     widget.step = lit_int.base10_parse::<i32>().unwrap().to_string();
@@ -1361,7 +1361,7 @@ fn get_param_value<'a>(
                 model_or_form, model_name, field_name, field_type
             ),
         },
-        "min" => match field_type.as_ref() {
+        "min" => match field_type {
             "i32" => {
                 if let syn::Lit::Int(lit_int) = &mnv.lit {
                     widget.min = lit_int.base10_parse::<i32>().unwrap().to_string();
@@ -1428,7 +1428,7 @@ fn get_param_value<'a>(
                 model_or_form, model_name, field_name, field_type
             ),
         },
-        "max" => match field_type.as_ref() {
+        "max" => match field_type {
             "i32" => {
                 if let syn::Lit::Int(lit_int) = &mnv.lit {
                     widget.max = lit_int.base10_parse::<i32>().unwrap().to_string();
@@ -1495,7 +1495,7 @@ fn get_param_value<'a>(
                 model_or_form, model_name, field_name, field_type
             ),
         },
-        "options" => match field_type.as_ref() {
+        "options" => match field_type {
             "i32" | "Vec < i32 >" => {
                 if let syn::Lit::Str(lit_str) = &mnv.lit {
                     let raw_options: Vec<(i32, String)> =
