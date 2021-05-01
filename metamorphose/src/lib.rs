@@ -1498,8 +1498,9 @@ fn get_param_value<'a>(
         "options" => match field_type {
             "i32" | "Vec < i32 >" => {
                 if let syn::Lit::Str(lit_str) = &mnv.lit {
+                    let json = lit_str.value().replace('_', "");
                     let raw_options: Vec<(i32, String)> =
-                        serde_json::from_str(lit_str.value().replace('_', "").as_str()).unwrap();
+                        serde_json::from_str(json.as_str()).unwrap();
                     widget.options = raw_options
                         .iter()
                         .map(|item| (item.0.to_string(), item.1.clone()))
@@ -1515,8 +1516,9 @@ fn get_param_value<'a>(
             }
             "u32" | "Vec < u32 >" => {
                 if let syn::Lit::Str(lit_str) = &mnv.lit {
+                    let json = lit_str.value().replace('_', "");
                     let raw_options: Vec<(u32, String)> =
-                        serde_json::from_str(lit_str.value().replace('_', "").as_str()).unwrap();
+                        serde_json::from_str(json.as_str()).unwrap();
                     widget.options = raw_options
                         .iter()
                         .map(|item| (item.0.to_string(), item.1.clone()))
@@ -1532,8 +1534,9 @@ fn get_param_value<'a>(
             }
             "i64" | "Vec < i64 >" => {
                 if let syn::Lit::Str(lit_str) = &mnv.lit {
+                    let json = lit_str.value().replace('_', "");
                     let raw_options: Vec<(i64, String)> =
-                        serde_json::from_str(lit_str.value().replace('_', "").as_str()).unwrap();
+                        serde_json::from_str(json.as_str()).unwrap();
                     widget.options = raw_options
                         .iter()
                         .map(|item| (item.0.to_string(), item.1.clone()))
@@ -1549,8 +1552,9 @@ fn get_param_value<'a>(
             }
             "f64" | "Vec < f64 >" => {
                 if let syn::Lit::Str(lit_str) = &mnv.lit {
+                    let json = lit_str.value().replace('_', "");
                     let raw_options: Vec<(f64, String)> =
-                        serde_json::from_str(lit_str.value().replace('_', "").as_str()).unwrap();
+                        serde_json::from_str(json.as_str()).unwrap();
                     widget.options = raw_options
                         .iter()
                         .map(|item| (item.0.to_string(), item.1.clone()))
@@ -1566,7 +1570,8 @@ fn get_param_value<'a>(
             }
             "String" | "Vec < String >" => {
                 if let syn::Lit::Str(lit_str) = &mnv.lit {
-                    widget.options = serde_json::from_str(lit_str.value().as_str()).unwrap();
+                    let json = lit_str.value();
+                    widget.options = serde_json::from_str(json.as_str()).unwrap();
                 } else {
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
