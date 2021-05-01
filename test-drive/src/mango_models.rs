@@ -175,9 +175,8 @@ pub struct UserProfile {
     #[field_attrs(
         widget = "inputText",
         value = "Some text",
-        required = false,
-        minlength = 3,
-        maxlength = 40
+        required = true,
+        maxlength = 150
     )]
     pub username: Option<String>,
     //
