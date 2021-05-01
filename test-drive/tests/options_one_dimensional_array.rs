@@ -49,27 +49,10 @@ mod app_name {
         pub select_i32_mult: Option<Vec<i32>>,
         // u32
         #[serde(default)]
-        #[field_attrs(
-            widget = "selectU32",
-            value = 1,
-            options = r#"[
-                [1,"Volvo"],
-                [2,"Saab"],
-                [3,"Mercedes"],
-                [4,"Audi"]
-            ]"#
-        )]
+        #[field_attrs(widget = "selectU32", value = 1, options = "[1,2,3,4]")]
         pub select_u32: Option<u32>,
         #[serde(default)]
-        #[field_attrs(
-            widget = "selectU32Mult",
-            options = r#"[
-                [1,"Volvo"],
-                [2,"Saab"],
-                [3,"Mercedes"],
-                [4,"Audi"]
-            ]"#
-        )]
+        #[field_attrs(widget = "selectU32Mult", options = "[1,2,3,4]")]
         pub select_u32_mult: Option<Vec<u32>>,
         // i64
         #[serde(default)]
@@ -248,7 +231,7 @@ fn test_model_select_fields() -> Result<(), Box<dyn std::error::Error>> {
     assert_eq!("1", map_wigets.get("select_u32").unwrap().value);
     assert_eq!(
         serde_json::from_str::<Vec<(String, String)>>(
-            r#"[["1","Volvo"],["2","Saab"],["3","Mercedes"],["4","Audi"]]"#
+            r#"[["1","1"],["2","2"],["3","3"],["4","4"]]"#
         )?,
         map_wigets.get("select_u32").unwrap().options
     );
@@ -259,7 +242,7 @@ fn test_model_select_fields() -> Result<(), Box<dyn std::error::Error>> {
     assert!(map_wigets.get("select_u32_mult").unwrap().value.is_empty());
     assert_eq!(
         serde_json::from_str::<Vec<(String, String)>>(
-            r#"[["1","Volvo"],["2","Saab"],["3","Mercedes"],["4","Audi"]]"#
+            r#"[["1","1"],["2","2"],["3","3"],["4","4"]]"#
         )?,
         map_wigets.get("select_u32_mult").unwrap().options
     );
@@ -442,7 +425,7 @@ fn test_model_select_fields() -> Result<(), Box<dyn std::error::Error>> {
     assert_eq!("1", map_wigets.get("select_u32").unwrap().value);
     assert_eq!(
         serde_json::from_str::<Vec<(String, String)>>(
-            r#"[["1","Volvo"],["2","Saab"],["3","Mercedes"],["4","Audi"]]"#
+            r#"[["1","1"],["2","2"],["3","3"],["4","4"]]"#
         )?,
         map_wigets.get("select_u32").unwrap().options
     );
@@ -453,7 +436,7 @@ fn test_model_select_fields() -> Result<(), Box<dyn std::error::Error>> {
     assert!(map_wigets.get("select_u32_mult").unwrap().value.is_empty());
     assert_eq!(
         serde_json::from_str::<Vec<(String, String)>>(
-            r#"[["1","Volvo"],["2","Saab"],["3","Mercedes"],["4","Audi"]]"#
+            r#"[["1","1"],["2","2"],["3","3"],["4","4"]]"#
         )?,
         map_wigets.get("select_u32_mult").unwrap().options
     );
