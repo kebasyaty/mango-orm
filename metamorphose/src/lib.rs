@@ -1606,7 +1606,8 @@ fn get_param_value<'a>(
                     panic!(
                         "{}: `{}` > Field: `{}` > Type: {} : \
                         Could not determine value for parameter `options`. \
-                        Example: [[\"value\", \"Title 1\"], [value, \"Title 2\"], ...]",
+                        Example: [[\"value\", \"Title 1\"], [value, \"Title 2\"], ...] OR \
+                        Example: [\"Item\", \"Item 2\", ...]",
                         model_or_form, model_name, field_name, field_type
                     )
                 }
