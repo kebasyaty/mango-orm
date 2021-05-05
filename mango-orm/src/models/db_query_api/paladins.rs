@@ -831,6 +831,15 @@ pub trait QPaladins: ToModel + CachingModel {
                         if thumbnail_size.0 > 0 && thumbnail_size.1 > 0 {
                             let width = thumbnail_size.0;
                             let height = thumbnail_size.1;
+                            let thumb_name = format!("{}_{}", max_size.0, field_value.name);
+                            let thumb_path = field_value
+                                .path
+                                .clone()
+                                .replace(field_value.name.as_str(), thumb_name.as_str());
+                            let thumb_url = field_value
+                                .url
+                                .clone()
+                                .replace(field_value.name.as_str(), thumb_name.as_str());
                             match max_size.0 {
                                 "lg" => {
                                     img = img.resize_exact(
@@ -838,15 +847,6 @@ pub trait QPaladins: ToModel + CachingModel {
                                         height,
                                         image::imageops::FilterType::Nearest,
                                     );
-                                    let thumb_name = format!("{}_{}", max_size.0, field_value.name);
-                                    let thumb_path = field_value
-                                        .path
-                                        .clone()
-                                        .replace(field_value.name.as_str(), thumb_name.as_str());
-                                    let thumb_url = field_value
-                                        .url
-                                        .clone()
-                                        .replace(field_value.name.as_str(), thumb_name.as_str());
                                     img.save(thumb_path.clone())?;
                                     field_value.path_lg = thumb_path;
                                     field_value.url_lg = thumb_url;
@@ -857,6 +857,9 @@ pub trait QPaladins: ToModel + CachingModel {
                                         height,
                                         image::imageops::FilterType::Triangle,
                                     );
+                                    img.save(thumb_path.clone())?;
+                                    field_value.path_md = thumb_path;
+                                    field_value.url_md = thumb_url;
                                 }
                                 "sm" => {
                                     img = img.resize_exact(
@@ -864,13 +867,19 @@ pub trait QPaladins: ToModel + CachingModel {
                                         height,
                                         image::imageops::FilterType::Triangle,
                                     );
+                                    img.save(thumb_path.clone())?;
+                                    field_value.path_sm = thumb_path;
+                                    field_value.url_sm = thumb_url;
                                 }
                                 "xs" => {
                                     img = img.resize_exact(
                                         width,
                                         height,
                                         image::imageops::FilterType::Nearest,
-                                    )
+                                    );
+                                    img.save(thumb_path.clone())?;
+                                    field_value.path_xs = thumb_path;
+                                    field_value.url_xs = thumb_url;
                                 }
                                 _ => {}
                             }
