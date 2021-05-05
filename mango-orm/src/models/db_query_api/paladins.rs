@@ -99,9 +99,11 @@ pub trait QPaladins: ToModel + CachingModel {
                         for size_name in size_names.iter() {
                             let key_name = format!("{}_{}", "path", size_name);
                             let path = field_file.get_str(key_name.as_str())?;
-                            let path = Path::new(path);
-                            if path.exists() {
-                                fs::remove_file(path)?;
+                            if path.is_empty() {
+                                let path = Path::new(path);
+                                if path.exists() {
+                                    fs::remove_file(path)?;
+                                }
                             }
                         }
                     }
@@ -1155,6 +1157,23 @@ pub trait QPaladins: ToModel + CachingModel {
                             if path.exists() {
                                 fs::remove_file(path)?;
                             }
+                            // Remove thumbnails.
+                            let size_names: [&str; 4] = ["lg", "md", "sm", "xs"];
+                            for size_name in size_names.iter() {
+                                let path = match *size_name {
+                                    "lg" => current.path_lg.clone(),
+                                    "md" => current.path_md.clone(),
+                                    "sm" => current.path_sm.clone(),
+                                    "xs" => current.url_xs.clone(),
+                                    _ => String::new(),
+                                };
+                                if path.is_empty() {
+                                    let path = Path::new(path.as_str());
+                                    if path.exists() {
+                                        fs::remove_file(path)?;
+                                    }
+                                }
+                            }
                             widget.value = String::new();
                         }
                     }
@@ -1307,9 +1326,11 @@ pub trait QPaladins: ToModel + CachingModel {
                                             for size_name in size_names.iter() {
                                                 let key_name = format!("{}_{}", "path", size_name);
                                                 let path = field_file.get_str(key_name.as_str())?;
-                                                let path = Path::new(path);
-                                                if path.exists() {
-                                                    fs::remove_file(path)?;
+                                                if path.is_empty() {
+                                                    let path = Path::new(path);
+                                                    if path.exists() {
+                                                        fs::remove_file(path)?;
+                                                    }
                                                 }
                                             }
                                         }
