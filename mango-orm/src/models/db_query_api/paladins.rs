@@ -94,6 +94,15 @@ pub trait QPaladins: ToModel + CachingModel {
                         if path.exists() {
                             fs::remove_file(path)?;
                         }
+                        // Remove thumbnails.
+                        let size_names: [&str; 4] = ["lg", "md", "sm", "xs"];
+                        for size_name in size_names.iter() {
+                            let path = field_file.get_str(size_name)?;
+                            let path = Path::new(path);
+                            if path.exists() {
+                                fs::remove_file(path)?;
+                            }
+                        }
                     }
                 } else {
                     Err(format!(
