@@ -35,16 +35,24 @@ pub struct FileData {
 pub struct ImageData {
     #[serde(default)]
     pub path: String, // max size = original
+    #[serde(default)]
     pub path_xs: String, // max size = 200 px
+    #[serde(default)]
     pub path_sm: String, // max size = 400 px
+    #[serde(default)]
     pub path_md: String, // max size = 800 px
+    #[serde(default)]
     pub path_lg: String, // max size = 1600 px
     #[serde(default)]
     pub url: String, // max size = original
-    pub url_xs: String,  // max size = 200 px
-    pub url_sm: String,  // max size = 400 px
-    pub url_md: String,  // max size = 800 px
-    pub url_lg: String,  // max size = 1600 px
+    #[serde(default)]
+    pub url_xs: String, // max size = 200 px
+    #[serde(default)]
+    pub url_sm: String, // max size = 400 px
+    #[serde(default)]
+    pub url_md: String, // max size = 800 px
+    #[serde(default)]
+    pub url_lg: String, // max size = 1600 px
     #[serde(default)]
     pub name: String,
     #[serde(default, with = "mongodb::bson::compat::u2f")]
