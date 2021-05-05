@@ -93,6 +93,7 @@ fn test_model_image_fields() -> Result<(), Box<dyn std::error::Error>> {
         size: 241138_u32,
         width: 1024_u32,
         height: 748_u32,
+        ..Default::default()
     };
     let result = test_model.save(None, None)?;
     // Validating create

@@ -134,6 +134,27 @@ pub trait QPaladins: ToModel + CachingModel {
         Ok(result)
     }
 
+    // Calculate the maximum size for a thumbnail.
+    // *********************************************************************************************
+    fn calculate_thumbnail_size(width: u32, height: u32, max_size: u32) -> (u32, u32) {
+        if width > height {
+            if width > max_size {
+                return (
+                    max_size,
+                    (height as f32 * (max_size as f32 / width as f32)).floor() as u32,
+                );
+            }
+        } else {
+            if height > max_size {
+                return (
+                    (width as f32 * (max_size as f32 / height as f32)).floor() as u32,
+                    max_size,
+                );
+            }
+        }
+        (0, 0)
+    }
+
     // Checking the Model before queries the database.
     // *********************************************************************************************
     fn check(&self) -> Result<OutputDataForm, Box<dyn std::error::Error>> {
@@ -798,9 +819,39 @@ pub trait QPaladins: ToModel + CachingModel {
                     // Get file name
                     field_value.name = f_path.file_name().unwrap().to_str().unwrap().to_string();
                     // Get image width and height.
-                    let dimensions: (u32, u32) = image::image_dimensions(path)?;
+                    let dimensions: (u32, u32) = image::image_dimensions(f_path)?;
                     field_value.width = dimensions.0;
                     field_value.height = dimensions.1;
+                    // Generate sub-size images.
+                    let mut img = image::open(f_path)?;
+                    let max_size_list: [(&str, u32); 4] =
+                        [("lg", 1600), ("md", 800), ("sm", 400), ("xs", 200)];
+                    for max_size in max_size_list.iter() {
+                        let thumbnail_size: (u32, u32) =
+                            Self::calculate_thumbnail_size(dimensions.0, dimensions.1, max_size.1);
+                        if thumbnail_size.0 > 0 && thumbnail_size.1 > 0 {
+                            let width = thumbnail_size.0;
+                            let height = thumbnail_size.1;
+                            match max_size.0 {
+                                "lg" | "xs" => {
+                                    img = img.resize_exact(
+                                        width,
+                                        height,
+                                        image::imageops::FilterType::Nearest,
+                                    )
+                                }
+                                "md" | "sm" => {
+                                    img = img.resize_exact(
+                                        width,
+                                        height,
+                                        image::imageops::FilterType::Triangle,
+                                    );
+                                }
+                                _ => {}
+                            }
+                            img.save(format!("{}_{}", max_size.0, path))?;
+                        };
+                    }
                     // Insert result.
                     if !is_err_symptom && !ignore_fields.contains(&field_name) {
                         // Add image data to widget.

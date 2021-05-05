@@ -34,9 +34,17 @@ pub struct FileData {
 #[derive(Default, serde::Serialize, serde::Deserialize, PartialEq, Clone, Debug)]
 pub struct ImageData {
     #[serde(default)]
-    pub path: String,
+    pub path: String, // max size = original
+    pub path_xs: String, // max size = 200 px
+    pub path_sm: String, // max size = 400 px
+    pub path_md: String, // max size = 800 px
+    pub path_lg: String, // max size = 1600 px
     #[serde(default)]
-    pub url: String,
+    pub url: String, // max size = original
+    pub url_xs: String,  // max size = 200 px
+    pub url_sm: String,  // max size = 400 px
+    pub url_md: String,  // max size = 800 px
+    pub url_lg: String,  // max size = 1600 px
     #[serde(default)]
     pub name: String,
     #[serde(default, with = "mongodb::bson::compat::u2f")]
