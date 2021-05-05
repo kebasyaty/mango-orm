@@ -803,13 +803,12 @@ pub trait QPaladins: ToModel + CachingModel {
                         ))?
                     }
                     // Create path for validation of file.
-                    let path: String = field_value.path.clone();
-                    let f_path = std::path::Path::new(path.as_str());
+                    let f_path = std::path::Path::new(field_value.path.as_str());
                     if !f_path.exists() || !f_path.is_file() {
                         Err(format!(
                             "Model: `{}` > Field: `{}` > Method: \
                                 `check()` : File is missing - {}",
-                            model_name, field_name, path
+                            model_name, field_name, field_value.path
                         ))?
                     }
                     // Get file metadata.
@@ -833,23 +832,48 @@ pub trait QPaladins: ToModel + CachingModel {
                             let width = thumbnail_size.0;
                             let height = thumbnail_size.1;
                             match max_size.0 {
-                                "lg" | "xs" => {
+                                "lg" => {
                                     img = img.resize_exact(
                                         width,
                                         height,
                                         image::imageops::FilterType::Nearest,
-                                    )
+                                    );
+                                    let thumb_name = format!("{}_{}", max_size.0, field_value.name);
+                                    let thumb_path = field_value
+                                        .path
+                                        .clone()
+                                        .replace(field_value.name.as_str(), thumb_name.as_str());
+                                    let thumb_url = field_value
+                                        .url
+                                        .clone()
+                                        .replace(field_value.name.as_str(), thumb_name.as_str());
+                                    img.save(thumb_path.clone())?;
+                                    field_value.path_lg = thumb_path;
+                                    field_value.url_lg = thumb_url;
                                 }
-                                "md" | "sm" => {
+                                "md" => {
                                     img = img.resize_exact(
                                         width,
                                         height,
                                         image::imageops::FilterType::Triangle,
                                     );
                                 }
+                                "sm" => {
+                                    img = img.resize_exact(
+                                        width,
+                                        height,
+                                        image::imageops::FilterType::Triangle,
+                                    );
+                                }
+                                "xs" => {
+                                    img = img.resize_exact(
+                                        width,
+                                        height,
+                                        image::imageops::FilterType::Nearest,
+                                    )
+                                }
                                 _ => {}
                             }
-                            img.save(format!("{}_{}", max_size.0, path))?;
                         };
                     }
                     // Insert result.
