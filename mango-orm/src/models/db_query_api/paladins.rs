@@ -1348,10 +1348,10 @@ pub trait QPaladins: ToModel + CachingModel {
             // Removeve files
             if let Some(document) = coll.find_one(query.clone(), None)? {
                 for (field_name, widget_name) in meta.map_widget_type.iter() {
-                    match widget_name.as_str() {
-                        "inputFile" => {
-                            if let Some(field_file) = document.get(field_name) {
-                                if field_file != &mongodb::bson::Bson::Null {
+                    if !document.is_null(field_name) {
+                        match widget_name.as_str() {
+                            "inputFile" => {
+                                if let Some(field_file) = document.get(field_name) {
                                     if let Some(info_file) = field_file.as_document() {
                                         let path = info_file.get_str("path")?;
                                         let default = meta
@@ -1368,18 +1368,16 @@ pub trait QPaladins: ToModel + CachingModel {
                                             }
                                         }
                                     }
-                                }
-                            } else {
-                                Err(format!(
+                                } else {
+                                    Err(format!(
                                         "Model: `{}` > Field: `{}` > \
                                          Method: `delete()` : The field is missing in the document.",
                                         meta.model_name, field_name
                                     ))?
+                                }
                             }
-                        }
-                        "inputImage" => {
-                            if let Some(field_file) = document.get(field_name) {
-                                if field_file != &mongodb::bson::Bson::Null {
+                            "inputImage" => {
+                                if let Some(field_file) = document.get(field_name) {
                                     if let Some(info_file) = field_file.as_document() {
                                         let path = info_file.get_str("path")?;
                                         let default = meta
@@ -1408,16 +1406,16 @@ pub trait QPaladins: ToModel + CachingModel {
                                             }
                                         }
                                     }
-                                }
-                            } else {
-                                Err(format!(
+                                } else {
+                                    Err(format!(
                                         "Model: `{}` > Field: `{}` > \
                                          Method: `delete()` : The field is missing in the document.",
                                         meta.model_name, field_name
                                     ))?
+                                }
                             }
+                            _ => {}
                         }
-                        _ => {}
                     }
                 }
             } else {
