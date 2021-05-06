@@ -1148,9 +1148,10 @@ pub trait QPaladins: ToModel + CachingModel {
                 match widget.widget.as_str() {
                     "inputFile" if !widget.value.is_empty() => {
                         let default_value = map_default_values.get(field).unwrap();
+                        let default = serde_json::from_str::<FileData>(default_value.1.as_str())?;
                         let current = serde_json::from_str::<FileData>(widget.value.as_str())?;
                         // Exclude files by default.
-                        if !default_value.1.contains(&current.path) {
+                        if current.path != default.path {
                             let path = Path::new(&current.path);
                             if path.exists() {
                                 fs::remove_file(path)?;
@@ -1160,9 +1161,10 @@ pub trait QPaladins: ToModel + CachingModel {
                     }
                     "inputImage" if !widget.value.is_empty() => {
                         let default_value = map_default_values.get(field).unwrap();
+                        let default = serde_json::from_str::<ImageData>(default_value.1.as_str())?;
                         let current = serde_json::from_str::<ImageData>(widget.value.as_str())?;
                         // Exclude files by default.
-                        if !default_value.1.contains(&current.path) {
+                        if current.path != default.path {
                             let path = Path::new(&current.path);
                             if path.exists() {
                                 fs::remove_file(path)?;
@@ -1319,7 +1321,30 @@ pub trait QPaladins: ToModel + CachingModel {
             if let Some(document) = coll.find_one(query.clone(), None)? {
                 for (field_name, widget_name) in meta.map_widget_type.iter() {
                     match widget_name.as_str() {
-                        "inputFile" | "inputImage" => {
+                        "inputFile" => {
+                            if let Some(field_file) = document.get(field_name) {
+                                if field_file != &mongodb::bson::Bson::Null {
+                                    if let Some(info_file) = field_file.as_document() {
+                                        let path = info_file.get_str("path")?;
+                                        let default_value =
+                                            meta.map_default_values.get(field_name).unwrap();
+                                        if !default_value.1.contains(path) {
+                                            let path = Path::new(path);
+                                            if path.exists() {
+                                                fs::remove_file(path)?;
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                Err(format!(
+                                        "Model: `{}` > Field: `{}` > \
+                                         Method: `delete()` : The field is missing in the document.",
+                                        meta.model_name, field_name
+                                    ))?
+                            }
+                        }
+                        "inputImage" => {
                             if let Some(field_file) = document.get(field_name) {
                                 if field_file != &mongodb::bson::Bson::Null {
                                     if let Some(info_file) = field_file.as_document() {
