@@ -1167,11 +1167,15 @@ pub trait QPaladins: ToModel + CachingModel {
             for (field, widget) in final_map_widgets.iter_mut() {
                 match widget.widget.as_str() {
                     "inputFile" if !widget.value.is_empty() => {
-                        let default = map_default_values.get(field).unwrap().1.as_str();
-                        let default = serde_json::from_str::<FileData>(default)?;
+                        let default_value = map_default_values.get(field).unwrap().1.as_str();
+                        let default_path = if !default_value.is_empty() {
+                            serde_json::from_str::<FileData>(default_value)?.path
+                        } else {
+                            String::new()
+                        };
                         let current = serde_json::from_str::<FileData>(widget.value.as_str())?;
                         // Exclude files by default.
-                        if current.path != default.path {
+                        if current.path != default_path {
                             let path = Path::new(&current.path);
                             if path.exists() {
                                 fs::remove_file(path)?;
@@ -1180,11 +1184,15 @@ pub trait QPaladins: ToModel + CachingModel {
                         }
                     }
                     "inputImage" if !widget.value.is_empty() => {
-                        let default = map_default_values.get(field).unwrap().1.as_str();
-                        let default = serde_json::from_str::<ImageData>(default)?;
+                        let default_value = map_default_values.get(field).unwrap().1.as_str();
+                        let default_path = if !default_value.is_empty() {
+                            serde_json::from_str::<ImageData>(default_value)?.path
+                        } else {
+                            String::new()
+                        };
                         let current = serde_json::from_str::<ImageData>(widget.value.as_str())?;
                         // Exclude files by default.
-                        if current.path != default.path {
+                        if current.path != default_path {
                             let path = Path::new(&current.path);
                             if path.exists() {
                                 fs::remove_file(path)?;
