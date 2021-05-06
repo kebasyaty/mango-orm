@@ -81,6 +81,10 @@ pub trait QPaladins: ToModel + CachingModel {
             let object_id = mongodb::bson::oid::ObjectId::with_string(hash.as_str())?;
             let filter = mongodb::bson::doc! {"_id": object_id};
             if let Some(document) = coll.find_one(filter.clone(), None)? {
+                // If `is_deleted = true` was passed incorrectly.
+                if document.is_null(field_name) {
+                    return Ok(());
+                }
                 // Delete the file information in the database.
                 let file_doc = mongodb::bson::doc! {field_name: mongodb::bson::Bson::Null};
                 let update = mongodb::bson::doc! { "$set": file_doc };
