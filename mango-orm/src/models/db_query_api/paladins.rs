@@ -1322,8 +1322,8 @@ pub trait QPaladins: ToModel + CachingModel {
                         "inputFile" | "inputImage" => {
                             if let Some(field_file) = document.get(field_name) {
                                 if field_file != &mongodb::bson::Bson::Null {
-                                    if let Some(field_file) = field_file.as_document() {
-                                        let path = field_file.get_str("path")?;
+                                    if let Some(info_file) = field_file.as_document() {
+                                        let path = info_file.get_str("path")?;
                                         let default_value =
                                             meta.map_default_values.get(field_name).unwrap();
                                         if !default_value.1.contains(path) {
@@ -1338,7 +1338,7 @@ pub trait QPaladins: ToModel + CachingModel {
                                                 for size_name in size_names.iter() {
                                                     let key_name = format!("path_{}", size_name);
                                                     let path =
-                                                        field_file.get_str(key_name.as_str())?;
+                                                        info_file.get_str(key_name.as_str())?;
                                                     if !path.is_empty() {
                                                         let path = Path::new(path);
                                                         if path.exists() {
