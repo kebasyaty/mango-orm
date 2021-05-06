@@ -88,18 +88,26 @@ pub trait QPaladins: ToModel + CachingModel {
                 // Delete the orphaned file.
                 if let Some(info_file) = document.get(field_name).unwrap().as_document() {
                     if !is_image {
-                        let default = serde_json::from_str::<FileData>(widget_default_value)?;
+                        let default_path = if !widget_default_value.is_empty() {
+                            serde_json::from_str::<FileData>(widget_default_value)?.path
+                        } else {
+                            String::new()
+                        };
                         let path = info_file.get_str("path")?;
-                        if path != default.path {
+                        if path != default_path {
                             let path = Path::new(path);
                             if path.exists() {
                                 fs::remove_file(path)?;
                             }
                         }
                     } else {
-                        let default = serde_json::from_str::<ImageData>(widget_default_value)?;
+                        let default_path = if !widget_default_value.is_empty() {
+                            serde_json::from_str::<ImageData>(widget_default_value)?.path
+                        } else {
+                            String::new()
+                        };
                         let path = info_file.get_str("path")?;
-                        if path != default.path {
+                        if path != default_path {
                             let path = Path::new(path);
                             if path.exists() {
                                 fs::remove_file(path)?;
