@@ -1147,8 +1147,8 @@ pub trait QPaladins: ToModel + CachingModel {
             for (field, widget) in final_map_widgets.iter_mut() {
                 match widget.widget.as_str() {
                     "inputFile" if !widget.value.is_empty() => {
-                        let default_value = map_default_values.get(field).unwrap();
-                        let default = serde_json::from_str::<FileData>(default_value.1.as_str())?;
+                        let default = map_default_values.get(field).unwrap().1.as_str();
+                        let default = serde_json::from_str::<FileData>(default)?;
                         let current = serde_json::from_str::<FileData>(widget.value.as_str())?;
                         // Exclude files by default.
                         if current.path != default.path {
@@ -1160,8 +1160,8 @@ pub trait QPaladins: ToModel + CachingModel {
                         }
                     }
                     "inputImage" if !widget.value.is_empty() => {
-                        let default_value = map_default_values.get(field).unwrap();
-                        let default = serde_json::from_str::<ImageData>(default_value.1.as_str())?;
+                        let default = map_default_values.get(field).unwrap().1.as_str();
+                        let default = serde_json::from_str::<ImageData>(default)?;
                         let current = serde_json::from_str::<ImageData>(widget.value.as_str())?;
                         // Exclude files by default.
                         if current.path != default.path {
