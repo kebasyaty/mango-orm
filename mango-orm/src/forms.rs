@@ -87,9 +87,10 @@ pub struct Widget {
     pub step: String,
     pub min: String,
     pub max: String,
+    pub options: Vec<(String, String)>, // Hint: <value, Title> - <option value="value1">Title 1</option>
+    pub thumbnails: bool,
     pub other_attrs: String, // "autofocus tabindex=\"some number\" size=\"some number\" ..."
     pub css_classes: String, // Hint: "class-name class-name ..."
-    pub options: Vec<(String, String)>, // Hint: <value, Title> - <option value="value1">Title 1</option>
     pub hint: String,
     pub warning: String,    // The value is determined automatically.
     pub error: String,      // The value is determined automatically.
@@ -118,9 +119,10 @@ impl Default for Widget {
             step: String::from("1"),
             min: String::new(),
             max: String::new(),
+            options: Vec::new(),
+            thumbnails: true,
             other_attrs: String::new(),
             css_classes: String::new(),
-            options: Vec::new(),
             hint: String::new(),
             warning: String::new(),
             error: String::new(),
