@@ -1328,7 +1328,15 @@ pub trait QPaladins: ToModel + CachingModel {
                                         let path = info_file.get_str("path")?;
                                         let default_value =
                                             meta.map_default_values.get(field_name).unwrap();
-                                        if !default_value.1.contains(path) {
+                                        let default_path = if !default_value.1.is_empty() {
+                                            serde_json::from_str::<FileData>(
+                                                default_value.1.as_str(),
+                                            )?
+                                            .path
+                                        } else {
+                                            String::new()
+                                        };
+                                        if path != default_path {
                                             let path = Path::new(path);
                                             if path.exists() {
                                                 fs::remove_file(path)?;
@@ -1351,24 +1359,28 @@ pub trait QPaladins: ToModel + CachingModel {
                                         let path = info_file.get_str("path")?;
                                         let default_value =
                                             meta.map_default_values.get(field_name).unwrap();
-                                        if !default_value.1.contains(path) {
+                                        let default_path = if !default_value.1.is_empty() {
+                                            serde_json::from_str::<ImageData>(
+                                                default_value.1.as_str(),
+                                            )?
+                                            .path
+                                        } else {
+                                            String::new()
+                                        };
+                                        if path != default_path {
                                             let path = Path::new(path);
                                             if path.exists() {
                                                 fs::remove_file(path)?;
                                             }
                                             // Remove thumbnails.
-                                            if widget_name == "inputImage" {
-                                                let size_names: [&str; 4] =
-                                                    ["lg", "md", "sm", "xs"];
-                                                for size_name in size_names.iter() {
-                                                    let key_name = format!("path_{}", size_name);
-                                                    let path =
-                                                        info_file.get_str(key_name.as_str())?;
-                                                    if !path.is_empty() {
-                                                        let path = Path::new(path);
-                                                        if path.exists() {
-                                                            fs::remove_file(path)?;
-                                                        }
+                                            let size_names: [&str; 4] = ["lg", "md", "sm", "xs"];
+                                            for size_name in size_names.iter() {
+                                                let key_name = format!("path_{}", size_name);
+                                                let path = info_file.get_str(key_name.as_str())?;
+                                                if !path.is_empty() {
+                                                    let path = Path::new(path);
+                                                    if path.exists() {
+                                                        fs::remove_file(path)?;
                                                     }
                                                 }
                                             }
