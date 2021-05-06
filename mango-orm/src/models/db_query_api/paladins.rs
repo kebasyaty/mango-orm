@@ -1355,10 +1355,14 @@ pub trait QPaladins: ToModel + CachingModel {
                                     document.get(field_name).unwrap().as_document()
                                 {
                                     let path = info_file.get_str("path")?;
-                                    let default =
+                                    let default_value =
                                         meta.map_default_values.get(field_name).unwrap().1.as_str();
-                                    let default = serde_json::from_str::<FileData>(default)?;
-                                    if path != default.path {
+                                    let default_path = if !default_value.is_empty() {
+                                        serde_json::from_str::<FileData>(default_value)?.path
+                                    } else {
+                                        String::new()
+                                    };
+                                    if path != default_path {
                                         let path = Path::new(path);
                                         if path.exists() {
                                             fs::remove_file(path)?;
@@ -1377,10 +1381,14 @@ pub trait QPaladins: ToModel + CachingModel {
                                     document.get(field_name).unwrap().as_document()
                                 {
                                     let path = info_file.get_str("path")?;
-                                    let default =
+                                    let default_value =
                                         meta.map_default_values.get(field_name).unwrap().1.as_str();
-                                    let default = serde_json::from_str::<ImageData>(default)?;
-                                    if path != default.path {
+                                    let default_path = if !default_value.is_empty() {
+                                        serde_json::from_str::<ImageData>(default_value)?.path
+                                    } else {
+                                        String::new()
+                                    };
+                                    if path != default_path {
                                         let path = Path::new(path);
                                         if path.exists() {
                                             fs::remove_file(path)?;
