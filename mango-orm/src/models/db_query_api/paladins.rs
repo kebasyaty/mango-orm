@@ -17,7 +17,7 @@ use crate::{
     models::{caching::CachingModel, Meta, ToModel},
 };
 use rand::Rng;
-use std::{collections::HashMap, convert::TryFrom};
+use std::convert::TryFrom;
 use std::{fs, path::Path};
 
 pub trait QPaladins: ToModel + CachingModel {
