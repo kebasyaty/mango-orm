@@ -1326,10 +1326,13 @@ pub trait QPaladins: ToModel + CachingModel {
                                 if field_file != &mongodb::bson::Bson::Null {
                                     if let Some(info_file) = field_file.as_document() {
                                         let path = info_file.get_str("path")?;
-                                        let default =
-                                            meta.map_default_values.get(field_name).unwrap();
-                                        let default =
-                                            serde_json::from_str::<FileData>(default.1.as_str())?;
+                                        let default = meta
+                                            .map_default_values
+                                            .get(field_name)
+                                            .unwrap()
+                                            .1
+                                            .as_str();
+                                        let default = serde_json::from_str::<FileData>(default)?;
                                         if path != default.path {
                                             let path = Path::new(path);
                                             if path.exists() {
@@ -1351,10 +1354,13 @@ pub trait QPaladins: ToModel + CachingModel {
                                 if field_file != &mongodb::bson::Bson::Null {
                                     if let Some(info_file) = field_file.as_document() {
                                         let path = info_file.get_str("path")?;
-                                        let default =
-                                            meta.map_default_values.get(field_name).unwrap();
-                                        let default =
-                                            serde_json::from_str::<ImageData>(default.1.as_str())?;
+                                        let default = meta
+                                            .map_default_values
+                                            .get(field_name)
+                                            .unwrap()
+                                            .1
+                                            .as_str();
+                                        let default = serde_json::from_str::<ImageData>(default)?;
                                         if path != default.path {
                                             let path = Path::new(path);
                                             if path.exists() {
