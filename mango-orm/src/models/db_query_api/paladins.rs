@@ -87,16 +87,24 @@ pub trait QPaladins: ToModel + CachingModel {
                 coll.update_one(filter, update, None)?;
                 // Delete the orphaned file.
                 if let Some(info_file) = document.get(field_name).unwrap().as_document() {
-                    let default_info_file =
-                        serde_json::from_str::<HashMap<&str, &str>>(widget_default_value)?;
-                    let path = info_file.get_str("path")?;
-                    if path != *default_info_file.get("path").unwrap() {
-                        let path = Path::new(path);
-                        if path.exists() {
-                            fs::remove_file(path)?;
+                    if !is_image {
+                        let default = serde_json::from_str::<FileData>(widget_default_value)?;
+                        let path = info_file.get_str("path")?;
+                        if path != default.path {
+                            let path = Path::new(path);
+                            if path.exists() {
+                                fs::remove_file(path)?;
+                            }
                         }
-                        // Remove thumbnails.
-                        if is_image {
+                    } else {
+                        let default = serde_json::from_str::<ImageData>(widget_default_value)?;
+                        let path = info_file.get_str("path")?;
+                        if path != default.path {
+                            let path = Path::new(path);
+                            if path.exists() {
+                                fs::remove_file(path)?;
+                            }
+                            // Remove thumbnails.
                             let size_names: [&str; 4] = ["lg", "md", "sm", "xs"];
                             for size_name in size_names.iter() {
                                 let key_name = format!("path_{}", size_name);
