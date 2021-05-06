@@ -86,11 +86,11 @@ pub trait QPaladins: ToModel + CachingModel {
                 let update = mongodb::bson::doc! { "$set": file_doc };
                 coll.update_one(filter, update, None)?;
                 // Delete the orphaned file.
-                if let Some(field_file) = document.get(field_name).unwrap().as_document() {
-                    let default_file_info =
+                if let Some(info_file) = document.get(field_name).unwrap().as_document() {
+                    let default_info_file =
                         serde_json::from_str::<HashMap<&str, &str>>(widget_default_value)?;
-                    let path = field_file.get_str("path")?;
-                    if path != *default_file_info.get("path").unwrap() {
+                    let path = info_file.get_str("path")?;
+                    if path != *default_info_file.get("path").unwrap() {
                         let path = Path::new(path);
                         if path.exists() {
                             fs::remove_file(path)?;
@@ -99,9 +99,9 @@ pub trait QPaladins: ToModel + CachingModel {
                         if is_image {
                             let size_names: [&str; 4] = ["lg", "md", "sm", "xs"];
                             for size_name in size_names.iter() {
-                                let key_name = format!("{}_{}", "path", size_name);
-                                let path = field_file.get_str(key_name.as_str())?;
-                                if path.is_empty() {
+                                let key_name = format!("path_{}", size_name);
+                                let path = info_file.get_str(key_name.as_str())?;
+                                if !path.is_empty() {
                                     let path = Path::new(path);
                                     if path.exists() {
                                         fs::remove_file(path)?;
@@ -1177,7 +1177,7 @@ pub trait QPaladins: ToModel + CachingModel {
                                     "xs" => current.url_xs.clone(),
                                     _ => String::new(),
                                 };
-                                if path.is_empty() {
+                                if !path.is_empty() {
                                     let path = Path::new(path.as_str());
                                     if path.exists() {
                                         fs::remove_file(path)?;
@@ -1336,11 +1336,10 @@ pub trait QPaladins: ToModel + CachingModel {
                                                 let size_names: [&str; 4] =
                                                     ["lg", "md", "sm", "xs"];
                                                 for size_name in size_names.iter() {
-                                                    let key_name =
-                                                        format!("{}_{}", "path", size_name);
+                                                    let key_name = format!("path_{}", size_name);
                                                     let path =
                                                         field_file.get_str(key_name.as_str())?;
-                                                    if path.is_empty() {
+                                                    if !path.is_empty() {
                                                         let path = Path::new(path);
                                                         if path.exists() {
                                                             fs::remove_file(path)?;
