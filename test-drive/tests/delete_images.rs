@@ -13,7 +13,7 @@ mod app_name {
     // Test application settings
     // *********************************************************************************************
     pub const PROJECT_NAME: &str = "project_name";
-    pub const UNIQUE_PROJECT_KEY: &str = "gKpqf5VS5gkNxfr";
+    pub const UNIQUE_PROJECT_KEY: &str = "GkxTsZ1Vc7QJRZw";
     pub const SERVICE_NAME: &str = "service_name";
     pub const DATABASE_NAME: &str = "database_name";
     pub const DB_CLIENT_NAME: &str = "default";
@@ -26,13 +26,13 @@ mod app_name {
     pub struct TestModel {
         #[serde(default)]
         #[field_attrs(
-            widget = "inputFile",
+            widget = "inputImage",
             value = r#"{
-                "path":"./media/hello_world.odt",
-                "url":"/media/hello_world.odt"
+                "path":"./media/no-image-found.png",
+                "url":"/media/no-image-found.png"
             }"#
         )]
-        pub file: Option<String>,
+        pub image: Option<String>,
     }
 
     // Test migration
@@ -69,20 +69,21 @@ mod app_name {
 // TEST
 // #################################################################################################
 #[test]
-fn test_delete_file() -> Result<(), Box<dyn std::error::Error>> {
+fn test_delete_images() -> Result<(), Box<dyn std::error::Error>> {
     // ---------------------------------------------------------------------------------------------
     app_name::mango_migration()?;
     // ^ ^ ^ ---------------------------------------------------------------------------------------
 
     let mut test_model = app_name::TestModel {
-        file: Some(
-            r#"{"path":"./media/hello_world_2.odt","url":"/media/hello_world_2.odt"}"#.to_string(),
+        image: Some(
+            r#"{"path":"./media/beautiful-mountains.jpg","url":"/media/beautiful-mountains.jpg"}"#
+                .to_string(),
         ),
         ..Default::default()
     };
 
     // ---------------------------------------------------------------------------------------------
-    let path = Path::new("./media/hello_world_2.odt");
+    let path = Path::new("./media/beautiful-mountains.jpg");
     assert!(path.exists());
     assert!(test_model.save(None, None)?.is_valid());
     assert!(test_model.delete(None)?.is_valid());
