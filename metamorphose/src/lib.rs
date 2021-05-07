@@ -967,7 +967,7 @@ impl Default for Widget {
             min: String::new(),
             max: String::new(),
             options: Vec::new(),
-            thumbnails: true,
+            thumbnails: false,
             other_attrs: String::new(),
             css_classes: String::new(),
             hint: String::new(),
