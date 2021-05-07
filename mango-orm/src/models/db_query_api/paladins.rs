@@ -1373,7 +1373,7 @@ pub trait QPaladins: ToModel + CachingModel {
                                             fs::remove_file(path)?;
                                         }
                                         // Remove thumbnails.
-                                        let size_names: [&str; 4] = ["lg", "md", "sm", "xs"];
+                                        let size_names: [&str; 3] = ["lg", "md", "sm"];
                                         for size_name in size_names.iter() {
                                             let key_name = format!("path_{}", size_name);
                                             let path = info_file.get_str(key_name.as_str())?;

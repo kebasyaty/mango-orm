@@ -83,10 +83,11 @@ fn test_delete_file() -> Result<(), Box<dyn std::error::Error>> {
 
     // ---------------------------------------------------------------------------------------------
     let path = Path::new("./media/hello_world_2.odt");
-    assert!(path.exists());
-    assert!(test_model.save(None, None)?.is_valid());
-    assert!(test_model.delete(None)?.is_valid());
-    assert!(!path.exists());
+    assert!(path.exists(), "1.check path");
+    assert!(test_model.save(None, None)?.is_valid(), "save");
+    let result = test_model.delete(None)?;
+    assert!(result.is_valid(), "delete - {}", result.err_msg());
+    assert!(!path.exists(), "2.check path");
 
     // ---------------------------------------------------------------------------------------------
     del_test_db(
