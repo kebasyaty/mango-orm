@@ -117,7 +117,7 @@ pub trait QPaladins: ToModel + CachingModel {
                                 fs::remove_file(path)?;
                             }
                             // Remove thumbnails.
-                            let size_names: [&str; 4] = ["lg", "md", "sm", "xs"];
+                            let size_names: [&str; 3] = ["lg", "md", "sm"];
                             for size_name in size_names.iter() {
                                 let key_name = format!("path_{}", size_name);
                                 let path = info_file.get_str(key_name.as_str())?;
@@ -861,8 +861,8 @@ pub trait QPaladins: ToModel + CachingModel {
                     // Generate sub-size images.
                     if final_widget.thumbnails {
                         let mut img = image::open(f_path)?;
-                        let max_size_list: [(&str, u32); 4] =
-                            [("lg", 1600), ("md", 800), ("sm", 400), ("xs", 200)];
+                        let max_size_list: [(&str, u32); 3] =
+                            [("lg", 1200), ("md", 600), ("sm", 300)];
                         for max_size in max_size_list.iter() {
                             let thumbnail_size: (u32, u32) = Self::calculate_thumbnail_size(
                                 dimensions.0,
@@ -911,16 +911,6 @@ pub trait QPaladins: ToModel + CachingModel {
                                         img.save(thumb_path.clone())?;
                                         field_value.path_sm = thumb_path;
                                         field_value.url_sm = thumb_url;
-                                    }
-                                    "xs" => {
-                                        img = img.resize_exact(
-                                            width,
-                                            height,
-                                            image::imageops::FilterType::Nearest,
-                                        );
-                                        img.save(thumb_path.clone())?;
-                                        field_value.path_xs = thumb_path;
-                                        field_value.url_xs = thumb_url;
                                     }
                                     _ => {}
                                 }
@@ -1198,13 +1188,12 @@ pub trait QPaladins: ToModel + CachingModel {
                                 fs::remove_file(path)?;
                             }
                             // Remove thumbnails.
-                            let size_names: [&str; 4] = ["lg", "md", "sm", "xs"];
+                            let size_names: [&str; 3] = ["lg", "md", "sm"];
                             for size_name in size_names.iter() {
                                 let path = match *size_name {
                                     "lg" => current.path_lg.clone(),
                                     "md" => current.path_md.clone(),
                                     "sm" => current.path_sm.clone(),
-                                    "xs" => current.url_xs.clone(),
                                     _ => String::new(),
                                 };
                                 if !path.is_empty() {
