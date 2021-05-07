@@ -31,7 +31,7 @@ mod app_name {
                 "path":"./media/no-image-found.png",
                 "url":"/media/no-image-found.png"
             }"#,
-            thumbnails = false // path_sm - max 300px ; path_md - max 600px ; path_lg - max 1200px
+            thumbnails = true // path_sm - max 300px ; path_md - max 600px ; path_lg - max 1200px
         )]
         pub image: Option<String>,
     }
