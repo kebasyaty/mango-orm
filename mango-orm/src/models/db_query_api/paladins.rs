@@ -881,33 +881,23 @@ pub trait QPaladins: ToModel + CachingModel {
                                     .url
                                     .clone()
                                     .replace(field_value.name.as_str(), thumb_name.as_str());
+                                img = img.resize_exact(
+                                    width,
+                                    height,
+                                    image::imageops::FilterType::Triangle,
+                                );
                                 match max_size.0 {
                                     "lg" => {
-                                        img = img.resize_exact(
-                                            width,
-                                            height,
-                                            image::imageops::FilterType::Nearest,
-                                        );
                                         img.save(thumb_path.clone())?;
                                         field_value.path_lg = thumb_path;
                                         field_value.url_lg = thumb_url;
                                     }
                                     "md" => {
-                                        img = img.resize_exact(
-                                            width,
-                                            height,
-                                            image::imageops::FilterType::Triangle,
-                                        );
                                         img.save(thumb_path.clone())?;
                                         field_value.path_md = thumb_path;
                                         field_value.url_md = thumb_url;
                                     }
                                     "sm" => {
-                                        img = img.resize_exact(
-                                            width,
-                                            height,
-                                            image::imageops::FilterType::Triangle,
-                                        );
                                         img.save(thumb_path.clone())?;
                                         field_value.path_sm = thumb_path;
                                         field_value.url_sm = thumb_url;
