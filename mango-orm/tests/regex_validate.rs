@@ -278,7 +278,7 @@ mod tests {
     // *********************************************************************************************
     #[test]
     fn regex_validate_json_dyn_widgets() {
-        let re = RegexBuilder::new(r#"^\{[\s]*(?:"[a-z][a-z\d]*(?:_[a-z\d]+)*":(?:\[(?:(?:\["[-_.()\s\w]+","[-_.()\s\w]+"\])(?:,\["[-_.()\s\w]+","[-_.()\s\w]+"\])*)*\]))(?:,[\s]*"[a-z][a-z\d]*(?:_[a-z\d]+)*":(?:\[(?:(?:\["[-_.()\s\w]+","[-_.()\s\w]+"\])(?:,\["[-_.()\s\w]+","[-_.()\s\w]+"\])*)*\]))*[\s]*\}$"#)
+        let re = RegexBuilder::new(r#"^\{[\s]*(?:"[a-z][a-z\d]*(?:_[a-z\d]+)*":(?:\[(?:(?:\["[-_.`()\s\w]+","[-_.`()\s\w]+"\])(?:,\["[-_.`()\s\w]+","[-_.`()\s\w]+"\])*)*\]))(?:,[\s]*"[a-z][a-z\d]*(?:_[a-z\d]+)*":(?:\[(?:(?:\["[-_.`()\s\w]+","[-_.`()\s\w]+"\])(?:,\["[-_.`()\s\w]+","[-_.`()\s\w]+"\])*)*\]))*[\s]*\}$"#)
             .case_insensitive(true)
             .build()
             .unwrap();
@@ -399,7 +399,7 @@ mod tests {
         assert!(re.is_match(r#"{"field_name":[]}"#));
         assert!(re.is_match(r#"{"field_name_2":[]}"#));
         assert!(re.is_match(r#"{"field":[["value","Title"]]}"#));
-        assert!(re.is_match(r#"{"field":[["- _ . ( ) a A 1","- _ . ( ) a A 1"]]}"#));
+        assert!(re.is_match(r#"{"field":[["- _ . ` ( ) a A 1","- _ . ` ( ) a A 1"]]}"#));
         assert!(re.is_match(r#"{"field":[["2","Title"]]}"#));
         assert!(re.is_match(r#"{"field":[["-2","Title"]]}"#));
         assert!(re.is_match(r#"{"field":[["2.2","Title"]]}"#));
@@ -412,7 +412,7 @@ mod tests {
         assert!(re.is_match(r#"{"field_name2":[["value","Title"]]}"#));
         assert!(re.is_match(r#"{"field_name_2":[["value","Title"]]}"#));
         assert!(re.is_match(r#"{"field_name":[["value","Title"],["value","Title"]]}"#));
-        assert!(re.is_match(r#"{"field_name":[["(value)","(Title)"],["(value)","(Title)"]]}"#));
+        assert!(re.is_match(r#"{"field_name":[["- _ . ` ( ) a A 1","- _ . ` ( ) a A 1"],["- _ . ` ( ) a A 1","- _ . ` ( ) a A 1"]]}"#));
         assert!(re
             .is_match(r#"{"field_name":[["value","Title"],["value","Title"],["value","Title"]]}"#));
         assert!(re.is_match(r#"{"field_name":[],"field_name_2":[]}"#));
@@ -469,6 +469,12 @@ mod tests {
                 "field_name":[["value","Title"],["value2","Title 2"]],
                 "field_name":[["value","Title"],["value2","Title 2"]],
                 "field_name":[["value","Title"],["value2","Title 2"]]
+            }"#
+        ));
+        assert!(re.is_match(
+            r#"{
+                "select_text_dyn":[["- _ . ` ( ) a A 1","- _ . ` ( ) a A 1"],["- _ . ` ( ) a A 1","- _ . ` ( ) a A 1"],["- _ . ` ( ) a A 1","- _ . ` ( ) a A 1"],["- _ . ` ( ) a A 1","- _ . ` ( ) a A 1"]],
+                "select_text_mult_dyn":[["- _ . ` ( ) a A 1","- _ . ` ( ) a A 1"],["- _ . ` ( ) a A 1","- _ . ` ( ) a A 1"],["- _ . ` ( ) a A 1","- _ . ` ( ) a A 1"],["- _ . ` ( ) a A 1","- _ . ` ( ) a A 1"]]
             }"#
         ));
         assert!(re.is_match(
