@@ -85,7 +85,24 @@ mod tests {
         let after = re.replace_all(before, r#"<span style="background-color:$color;"></span>"#);
         assert_eq!(after, r#"Lorem ipsum dolor sit amet."#);
         //
-        let samples: Vec<&str> = vec!["#fff"];
+        let samples: Vec<&str> = vec![
+            "#fff",
+            "#f2f2f2",
+            "#F2F2F2",
+            "#00000000",
+            "rgb(255,0,24)",
+            "rgb(255, 0, 24)",
+            "rgba(255, 0, 24, .5)",
+            "rgba(#fff, .5)",
+            "rgba(#fff,.5)",
+            "rgba(#FFF, .5)",
+            "hsl(120, 100%, 50%)",
+            "hsl(120,100%,50%)",
+            "hsla(170, 23%, 25%, 0.2)",
+            "hsla(170,23%,25%,0.2)",
+            "0x00ffff",
+            "0x00FFFF",
+        ];
         for sample in samples {
             let before = format!("Lorem ipsum dolor {} sit amet.", sample);
             let after = re.replace_all(
