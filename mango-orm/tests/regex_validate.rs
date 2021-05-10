@@ -66,6 +66,30 @@ mod tests {
     }
 
     #[test]
+    fn regex_replace_color() {
+        let re = RegexBuilder::new(
+            r"(?P<color>(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6}|[a-f0-9]{8})\b|(?:rgb|hsl)a?\([^\)]*\))",
+        )
+        .case_insensitive(true)
+        .build()
+        .unwrap();
+        // invalids
+        let before = "Lorem ipsum dolor #f2ewq sit amet.";
+        let after = re.replace_all(before, r#"<span style="background-color:$color;"></span>"#);
+        assert_ne!(
+            after,
+            r#"Lorem ipsum dolor <span style="background-color:#fff;"></span> sit amet."#
+        );
+        // valids
+        let before = "Lorem ipsum dolor #fff sit amet.";
+        let after = re.replace_all(before, r#"<span style="background-color:$color;"></span>"#);
+        assert_eq!(
+            after,
+            r#"Lorem ipsum dolor <span style="background-color:#fff;"></span> sit amet."#
+        );
+    }
+
+    #[test]
     fn regex_validate_time() {
         let re = RegexBuilder::new(r"^(?:[01]\d|2[0-3]):[0-5]\d$")
             .build()
