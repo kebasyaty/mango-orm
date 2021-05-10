@@ -47,10 +47,10 @@ mod tests {
         assert!(!re.is_match("#f2ewq"));
         assert!(!re.is_match(""));
         // valids
+        assert!(re.is_match("#fff"));
         assert!(re.is_match("#f2f2f2"));
         assert!(re.is_match("#F2F2F2"));
         assert!(re.is_match("#00000000"));
-        assert!(re.is_match("#fff"));
         assert!(re.is_match("rgb(255,0,24)"));
         assert!(re.is_match("rgb(255, 0, 24)"));
         assert!(re.is_match("rgba(255, 0, 24, .5)"));
@@ -85,12 +85,21 @@ mod tests {
         let after = re.replace_all(before, r#"<span style="background-color:$color;"></span>"#);
         assert_eq!(after, r#"Lorem ipsum dolor sit amet."#);
         //
-        let before = "Lorem ipsum dolor #fff sit amet.";
-        let after = re.replace_all(before, r#"<span style="background-color:$color;"></span>"#);
-        assert_eq!(
-            after,
-            r#"Lorem ipsum dolor <span style="background-color:#fff;"></span> sit amet."#
-        );
+        let samples: Vec<&str> = vec!["#fff"];
+        for sample in samples {
+            let before = format!("Lorem ipsum dolor {} sit amet.", sample);
+            let after = re.replace_all(
+                before.as_str(),
+                r#"<span style="background-color:$color;"></span>"#,
+            );
+            assert_eq!(
+                after,
+                format!(
+                    r#"Lorem ipsum dolor <span style="background-color:{};"></span> sit amet."#,
+                    sample
+                )
+            );
+        }
     }
 
     #[test]
