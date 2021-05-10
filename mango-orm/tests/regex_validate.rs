@@ -81,6 +81,10 @@ mod tests {
             r#"Lorem ipsum dolor <span style="background-color:#fff;"></span> sit amet."#
         );
         // valids
+        let before = "Lorem ipsum dolor sit amet.";
+        let after = re.replace_all(before, r#"<span style="background-color:$color;"></span>"#);
+        assert_eq!(after, r#"Lorem ipsum dolor sit amet."#);
+        //
         let before = "Lorem ipsum dolor #fff sit amet.";
         let after = re.replace_all(before, r#"<span style="background-color:$color;"></span>"#);
         assert_eq!(
