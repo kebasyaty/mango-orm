@@ -76,15 +76,15 @@ mod tests {
 
         // invalids
         let before = "Lorem ipsum dolor #f2ewq sit amet.";
-        let after = re.replace_all(before, r#"<span style="background-color:$color;"></span>"#);
+        let after = re.replace_all(before, r#"<div style="background-color:$color;"></div>"#);
         assert_ne!(
             after,
-            r#"Lorem ipsum dolor <span style="background-color:#fff;"></span> sit amet."#
+            r#"Lorem ipsum dolor <div style="background-color:#fff;"></div> sit amet."#
         );
 
         // valids
         let before = "Lorem ipsum dolor sit amet.";
-        let after = re.replace_all(before, r#"<span style="background-color:$color;"></span>"#);
+        let after = re.replace_all(before, r#"<div style="background-color:$color;"></div>"#);
         assert_eq!(after, r#"Lorem ipsum dolor sit amet."#);
         //
         let samples: Vec<&str> = vec![
@@ -110,12 +110,12 @@ mod tests {
             let before = format!("Lorem ipsum dolor {} sit amet.", sample);
             let after = re.replace_all(
                 before.as_str(),
-                r#"<span style="background-color:$color;"></span>"#,
+                r#"<div style="background-color:$color;"></div>"#,
             );
             assert_eq!(
                 after,
                 format!(
-                    r#"Lorem ipsum dolor <span style="background-color:{};"></span> sit amet."#,
+                    r#"Lorem ipsum dolor <div style="background-color:{};"></div> sit amet."#,
                     sample
                 )
             );
@@ -123,12 +123,12 @@ mod tests {
             let before = format!("Lorem ipsum {} dolor {} sit amet.", sample, sample);
             let after = re.replace_all(
                 before.as_str(),
-                r#"<span style="background-color:$color;"></span>"#,
+                r#"<div style="background-color:$color;"></div>"#,
             );
             assert_eq!(
                 after,
                 format!(
-                    r#"Lorem ipsum <span style="background-color:{};"></span> dolor <span style="background-color:{};"></span> sit amet."#,
+                    r#"Lorem ipsum <div style="background-color:{};"></div> dolor <div style="background-color:{};"></div> sit amet."#,
                     sample, sample
                 )
             );
