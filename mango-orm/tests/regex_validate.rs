@@ -104,6 +104,7 @@ mod tests {
             "0x00FFFF",
         ];
         for sample in samples {
+            // 1
             let before = format!("Lorem ipsum dolor {} sit amet.", sample);
             let after = re.replace_all(
                 before.as_str(),
@@ -114,6 +115,19 @@ mod tests {
                 format!(
                     r#"Lorem ipsum dolor <span style="background-color:{};"></span> sit amet."#,
                     sample
+                )
+            );
+            // 2
+            let before = format!("Lorem ipsum {} dolor {} sit amet.", sample, sample);
+            let after = re.replace_all(
+                before.as_str(),
+                r#"<span style="background-color:$color;"></span>"#,
+            );
+            assert_eq!(
+                after,
+                format!(
+                    r#"Lorem ipsum <span style="background-color:{};"></span> dolor <span style="background-color:{};"></span> sit amet."#,
+                    sample, sample
                 )
             );
         }
