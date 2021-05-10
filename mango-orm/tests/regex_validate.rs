@@ -73,6 +73,7 @@ mod tests {
         .case_insensitive(true)
         .build()
         .unwrap();
+
         // invalids
         let before = "Lorem ipsum dolor #f2ewq sit amet.";
         let after = re.replace_all(before, r#"<span style="background-color:$color;"></span>"#);
@@ -80,6 +81,7 @@ mod tests {
             after,
             r#"Lorem ipsum dolor <span style="background-color:#fff;"></span> sit amet."#
         );
+
         // valids
         let before = "Lorem ipsum dolor sit amet.";
         let after = re.replace_all(before, r#"<span style="background-color:$color;"></span>"#);
