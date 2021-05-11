@@ -36,23 +36,23 @@ pub struct ImageData {
     #[serde(default)]
     pub path: String, // max size = original
     #[serde(default)]
-    pub path_xs: String, // default max size = 150 px
+    pub path_xs: String,
     #[serde(default)]
-    pub path_sm: String, // default max size = 300 px
+    pub path_sm: String,
     #[serde(default)]
-    pub path_md: String, // default max size = 600 px
+    pub path_md: String,
     #[serde(default)]
-    pub path_lg: String, // default max size = 1200 px
+    pub path_lg: String,
     #[serde(default)]
     pub url: String, // max size = original
     #[serde(default)]
-    pub url_xs: String, // default max size = 150 px
+    pub url_xs: String,
     #[serde(default)]
-    pub url_sm: String, // default max size = 300 px
+    pub url_sm: String,
     #[serde(default)]
-    pub url_md: String, // default max size = 600 px
+    pub url_md: String,
     #[serde(default)]
-    pub url_lg: String, // default max size = 1200 px
+    pub url_lg: String,
     #[serde(default)]
     pub name: String,
     #[serde(default, with = "mongodb::bson::compat::u2f")]
@@ -88,7 +88,7 @@ pub struct Widget {
     pub min: String,
     pub max: String,
     pub options: Vec<(String, String)>, // Hint: <value, Title> - <option value="value1">Title 1</option>
-    pub thumbnails: bool,
+    pub thumbnails: Vec<(String, u32)>,
     pub other_attrs: String, // "autofocus tabindex=\"some number\" size=\"some number\" ..."
     pub css_classes: String, // Hint: "class-name class-name ..."
     pub hint: String,
@@ -120,7 +120,7 @@ impl Default for Widget {
             min: String::new(),
             max: String::new(),
             options: Vec::new(),
-            thumbnails: false,
+            thumbnails: Vec::new(),
             other_attrs: String::new(),
             css_classes: String::new(),
             hint: String::new(),

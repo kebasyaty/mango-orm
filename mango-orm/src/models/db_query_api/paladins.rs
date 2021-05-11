@@ -859,11 +859,9 @@ pub trait QPaladins: ToModel + CachingModel {
                     field_value.width = dimensions.0;
                     field_value.height = dimensions.1;
                     // Generate sub-size images.
-                    if final_widget.thumbnails {
+                    if !final_widget.thumbnails.is_empty() {
                         let mut img = image::open(f_path)?;
-                        let max_size_list: [(&str, u32); 4] =
-                            [("lg", 1200), ("md", 600), ("sm", 300), ("xs", 150)];
-                        for max_size in max_size_list.iter() {
+                        for max_size in final_widget.thumbnails.iter() {
                             let thumbnail_size: (u32, u32) = Self::calculate_thumbnail_size(
                                 dimensions.0,
                                 dimensions.1,
@@ -886,7 +884,7 @@ pub trait QPaladins: ToModel + CachingModel {
                                     height,
                                     image::imageops::FilterType::Triangle,
                                 );
-                                match max_size.0 {
+                                match max_size.0.as_str() {
                                     "lg" => {
                                         img.save(thumb_path.clone())?;
                                         field_value.path_lg = thumb_path;
