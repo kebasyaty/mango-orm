@@ -1623,7 +1623,9 @@ fn get_param_value<'a>(
         "thumbnails" => {
             if let syn::Lit::Str(lit_str) = &mnv.lit {
                 let json = lit_str.value().replace('_', "");
-                widget.thumbnails = serde_json::from_str(json.as_str()).unwrap();
+                let mut sizes = serde_json::from_str::<Vec<(String, u32)>>(json.as_str()).unwrap();
+                sizes.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
+                widget.thumbnails = sizes;
             } else {
                 panic!(
                     "{}: `{}` > Field: `{}` : \
