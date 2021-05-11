@@ -31,7 +31,7 @@ mod app_name {
                 "path":"./media/no-image-found.png",
                 "url":"/media/no-image-found.png"
             }"#,
-            thumbnails = r#"[["xs",150],["sm",300],["md",600],["lg",1200]]"# // from zero to four inclusive
+            thumbnails = r#"[["xs",150],["sm",300],["md",600],["lg",1200]]"# // from one to four inclusive
         )]
         pub image: Option<String>,
     }
