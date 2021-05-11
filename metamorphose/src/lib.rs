@@ -1625,6 +1625,15 @@ fn get_param_value<'a>(
                 let json = lit_str.value().replace('_', "");
                 let mut sizes = serde_json::from_str::<Vec<(String, u32)>>(json.as_str()).unwrap();
                 sizes.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
+                let valid_size_names: [&str; 4] = ["xs", "sm", "md", "lg"];
+                for size in sizes.iter() {
+                    if !valid_size_names.contains(&size.0.as_str()) {
+                        panic!(
+                            "{}: `{}` > Field: `{}` : Valid size names - `xs`, `sm`, `md`, `lg`",
+                            model_or_form, model_name, field_name
+                        )
+                    }
+                }
                 widget.thumbnails = sizes;
             } else {
                 panic!(
