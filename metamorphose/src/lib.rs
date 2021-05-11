@@ -1628,7 +1628,7 @@ fn get_param_value<'a>(
                 panic!(
                     "{}: `{}` > Field: `{}` : \
                     Could not determine value for parameter `thumbnails`. \
-                    Example: [[\"lg\", 1200], [\"md\", 600], [\"sm\", 300], [\"xs\", 150]]",
+                    Example: [[\"xs\",150],[\"sm\",300],[\"md\",600],[\"lg\",1200]]",
                     model_or_form, model_name, field_name
                 )
             }
