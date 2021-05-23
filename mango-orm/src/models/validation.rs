@@ -20,10 +20,10 @@ use crate::{
     store::{REGEX_IS_COLOR_CODE, REGEX_IS_DATE, REGEX_IS_DATETIME, REGEX_IS_PASSWORD},
 };
 
-// Validating Model fields for save and update.
+/// Validating Model fields for save and update.
 // *************************************************************************************************
 pub trait ValidationModel {
-    // Validation of `minlength`.
+    /// Validation of `minlength`.
     // ---------------------------------------------------------------------------------------------
     fn check_minlength(minlength: usize, value: &str) -> Result<(), Box<dyn std::error::Error>> {
         if minlength > 0 && value.encode_utf16().count() < minlength {
@@ -32,7 +32,7 @@ pub trait ValidationModel {
         Ok(())
     }
 
-    // Validation of `maxlength`.
+    /// Validation of `maxlength`.
     // ---------------------------------------------------------------------------------------------
     fn check_maxlength(maxlength: usize, value: &str) -> Result<(), Box<dyn std::error::Error>> {
         if maxlength > 0 && value.encode_utf16().count() > maxlength {
@@ -41,7 +41,7 @@ pub trait ValidationModel {
         Ok(())
     }
 
-    // Accumulation of errors.
+    /// Accumulation of errors.
     // ---------------------------------------------------------------------------------------------
     fn accumula_err(widget: &Widget, err: &String) -> Result<String, Box<dyn std::error::Error>> {
         let mut tmp = widget.error.clone();
@@ -53,7 +53,7 @@ pub trait ValidationModel {
         Ok(format!("{}{}", tmp, err))
     }
 
-    // Validation in regular expression (email, password, etc...).
+    /// Validation in regular expression (email, password, etc...).
     // ---------------------------------------------------------------------------------------------
     fn regex_validation(field_type: &str, value: &str) -> Result<(), Box<dyn std::error::Error>> {
         match field_type {
@@ -109,7 +109,7 @@ pub trait ValidationModel {
         Ok(())
     }
 
-    // Validation of `unique`.
+    /// Validation of `unique`.
     // ---------------------------------------------------------------------------------------------
     fn check_unique(
         hash: &str,
@@ -136,9 +136,9 @@ pub trait ValidationModel {
     }
 }
 
-// Methods for additional validation.
-// Hint: For custom use, add the Model/Form attribute `is_use_add_valid = true`.
-// Hint (for models): Remember to use for validate of ignored fields.
+/// Methods for additional validation.
+/// Hint: For custom use, add the Model/Form attribute `is_use_add_valid = true`.
+/// Hint (for models): Remember to use for validate of ignored fields.
 // *************************************************************************************************
 pub trait AdditionalValidation {
     // Default implementation as a stub.

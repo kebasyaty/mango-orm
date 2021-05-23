@@ -4,7 +4,7 @@
 //! `OutputDataMany` - To return results after processing queries for many documents.
 //!
 
-// To return results after processing queries for one document.
+/// To return results after processing queries for one document.
 // *************************************************************************************************
 #[derive(Debug, Clone)]
 pub enum OutputDataOne {
@@ -20,8 +20,8 @@ pub enum OutputDataOne {
 }
 
 impl OutputDataOne {
-    // Get raw document.
-    // Hint: For non-standard operations.
+    /// Get raw document.
+    /// Hint: For non-standard operations.
     // ---------------------------------------------------------------------------------------------
     pub fn raw_doc(&self) -> mongodb::bson::document::Document {
         match self {
@@ -35,8 +35,8 @@ impl OutputDataOne {
         }
     }
 
-    // Get prepared document.
-    // Hint: For page template.
+    /// Get prepared document.
+    /// Hint: For page template.
     // ---------------------------------------------------------------------------------------------
     pub fn doc(&self) -> Result<mongodb::bson::document::Document, Box<dyn std::error::Error>> {
         match self {
@@ -55,8 +55,8 @@ impl OutputDataOne {
         }
     }
 
-    // Get json-line.
-    // Hint: For Ajax.
+    /// Get json-line.
+    /// Hint: For Ajax.
     // ---------------------------------------------------------------------------------------------
     pub fn json(&self) -> Result<String, Box<dyn std::error::Error>> {
         match self {
@@ -77,8 +77,8 @@ impl OutputDataOne {
         }
     }
 
-    // Get model instance.
-    // Hint: For the `save`, `update`, `delete` operations.
+    /// Get model instance.
+    /// Hint: For the `save`, `update`, `delete` operations.
     // ---------------------------------------------------------------------------------------------
     pub fn model<T>(&self) -> Result<T, mongodb::bson::de::Error>
     where
@@ -129,8 +129,8 @@ impl OutputDataOne {
         }
     }
 
-    // Get validation status (boolean)
-    // Hint: For check document availability.
+    /// Get validation status (boolean)
+    /// Hint: For check document availability.
     // ---------------------------------------------------------------------------------------------
     pub fn is_valid(&self) -> bool {
         match self {
@@ -138,8 +138,8 @@ impl OutputDataOne {
         }
     }
 
-    // A description of the error if the document was not deleted.
-    // (Main use for admin panel.)
+    /// A description of the error if the document was not deleted.
+    /// (Main use for admin panel.)
     // ---------------------------------------------------------------------------------------------
     pub fn err_msg(&self) -> String {
         match self {
@@ -147,8 +147,8 @@ impl OutputDataOne {
         }
     }
 
-    // Get prepared doc.
-    // Hint: Converting data types to model-friendly formats.
+    /// Get prepared doc.
+    /// Hint: Converting data types to model-friendly formats.
     // ---------------------------------------------------------------------------------------------
     pub fn to_prepared_doc(
         doc: mongodb::bson::document::Document,
@@ -220,7 +220,7 @@ impl OutputDataOne {
     }
 }
 
-// To return results after processing queries for many documents.
+/// To return results after processing queries for many documents.
 // *************************************************************************************************
 #[derive(Debug, Clone)]
 pub enum OutputDataMany {
@@ -253,8 +253,8 @@ impl OutputDataMany {
         }
     }
 
-    // Get prepared documents.
-    // Hint: For page template.
+    /// Get prepared documents.
+    /// Hint: For page template.
     // ---------------------------------------------------------------------------------------------
     pub fn docs(
         &self,
@@ -336,8 +336,8 @@ impl OutputDataMany {
         }
     }
 
-    // Get json-line.
-    // Hint: For Ajax.
+    /// Get json-line.
+    /// Hint: For Ajax.
     // ---------------------------------------------------------------------------------------------
     pub fn json(&self) -> Result<String, Box<dyn std::error::Error>> {
         match self {
@@ -431,14 +431,14 @@ impl OutputDataMany {
         }
     }
 
-    // Get validation status (boolean)
-    // Hint: For check documents availability.
+    /// Get validation status (boolean)
+    /// Hint: For check documents availability.
     // ---------------------------------------------------------------------------------------------
     pub fn is_valid(&self) -> Result<bool, Box<dyn std::error::Error>> {
         Ok(self.count()? > 0)
     }
 
-    // Get the number of documents.
+    /// Get the number of documents.
     // ---------------------------------------------------------------------------------------------
     pub fn count(&self) -> mongodb::error::Result<i64> {
         match self {
