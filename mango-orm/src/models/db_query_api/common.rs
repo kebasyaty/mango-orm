@@ -27,8 +27,8 @@ use crate::{
 };
 
 pub trait QCommon: ToModel + CachingModel {
-    // Runs an aggregation operation.
-    // https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.aggregate
+    /// Runs an aggregation operation.
+    /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.aggregate
     // ---------------------------------------------------------------------------------------------
     fn aggregate(
         pipeline: Vec<mongodb::bson::document::Document>,
@@ -48,8 +48,8 @@ pub trait QCommon: ToModel + CachingModel {
             .collect())
     }
 
-    // Gets the number of documents matching filter.
-    // https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.count_documents
+    /// Gets the number of documents matching filter.
+    /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.count_documents
     // ---------------------------------------------------------------------------------------------
     fn count_documents(
         filter: Option<mongodb::bson::document::Document>,
@@ -66,8 +66,8 @@ pub trait QCommon: ToModel + CachingModel {
         Ok(coll.count_documents(filter, options)?)
     }
 
-    // Deletes all documents stored in the collection matching query.
-    // https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.delete_many
+    /// Deletes all documents stored in the collection matching query.
+    /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.delete_many
     // ---------------------------------------------------------------------------------------------
     fn delete_many(
         query: mongodb::bson::document::Document,
@@ -99,8 +99,8 @@ pub trait QCommon: ToModel + CachingModel {
         Ok(OutputDataForm::Delete((result_bool, err_msg)))
     }
 
-    // Deletes up to one document found matching query.
-    // https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.delete_one
+    /// Deletes up to one document found matching query.
+    /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.delete_one
     // ---------------------------------------------------------------------------------------------
     fn delete_one(
         query: mongodb::bson::document::Document,
@@ -132,8 +132,8 @@ pub trait QCommon: ToModel + CachingModel {
         Ok(OutputDataForm::Delete((result_bool, err_msg)))
     }
 
-    // Finds the distinct values of the field specified by field_name across the collection.
-    // https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.distinct
+    /// Finds the distinct values of the field specified by field_name across the collection.
+    /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.distinct
     // ---------------------------------------------------------------------------------------------
     fn distinct(
         field_name: &str,
@@ -151,8 +151,8 @@ pub trait QCommon: ToModel + CachingModel {
         Ok(coll.distinct(field_name, filter, options)?)
     }
 
-    // Drops the collection, deleting all data and indexes stored in it.
-    // https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.drop
+    /// Drops the collection, deleting all data and indexes stored in it.
+    /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.drop
     // ---------------------------------------------------------------------------------------------
     fn drop(
         options: Option<mongodb::options::DropCollectionOptions>,
@@ -183,8 +183,8 @@ pub trait QCommon: ToModel + CachingModel {
         Ok(OutputDataForm::Delete((result_bool, err_msg)))
     }
 
-    // Estimates the number of documents in the collection using collection metadata.
-    // https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.estimated_document_count
+    /// Estimates the number of documents in the collection using collection metadata.
+    /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.estimated_document_count
     // ---------------------------------------------------------------------------------------------
     fn estimated_document_count(
         options: Option<mongodb::options::EstimatedDocumentCountOptions>,
@@ -200,8 +200,8 @@ pub trait QCommon: ToModel + CachingModel {
         Ok(coll.estimated_document_count(options)?)
     }
 
-    // Finds the documents in the collection matching filter.
-    // https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.find
+    /// Finds the documents in the collection matching filter.
+    /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.find
     // ---------------------------------------------------------------------------------------------
     fn find(
         filter: Option<mongodb::bson::document::Document>,
@@ -238,8 +238,8 @@ pub trait QCommon: ToModel + CachingModel {
         )))
     }
 
-    // Finds a single document in the collection matching filter.
-    // https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.find_one
+    /// Finds a single document in the collection matching filter.
+    /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.find_one
     // ---------------------------------------------------------------------------------------------
     fn find_one(
         filter: Option<mongodb::bson::document::Document>,
@@ -262,8 +262,8 @@ pub trait QCommon: ToModel + CachingModel {
         )))
     }
 
-    // Atomically finds up to one document in the collection matching filter and deletes it.
-    // https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.find_one_and_delete
+    /// Atomically finds up to one document in the collection matching filter and deletes it.
+    /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.find_one_and_delete
     // ---------------------------------------------------------------------------------------------
     fn find_one_and_delete(
         filter: mongodb::bson::document::Document,
@@ -307,8 +307,8 @@ pub trait QCommon: ToModel + CachingModel {
         }
     }
 
-    // Gets the name of the Collection.
-    // https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.name
+    /// Gets the name of the Collection.
+    /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.name
     // ---------------------------------------------------------------------------------------------
     fn name() -> Result<String, Box<dyn std::error::Error>> {
         // Get cached Model data.
@@ -322,8 +322,8 @@ pub trait QCommon: ToModel + CachingModel {
         Ok(coll.name().to_string())
     }
 
-    // Gets the namespace of the Collection.
-    // https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.namespace
+    /// Gets the namespace of the Collection.
+    /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.namespace
     // ---------------------------------------------------------------------------------------------
     fn namespace() -> Result<mongodb::Namespace, Box<dyn std::error::Error>> {
         // Get cached Model data.
