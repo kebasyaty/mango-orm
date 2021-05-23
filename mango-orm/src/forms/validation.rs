@@ -111,8 +111,8 @@ pub trait ValidationForm: ToForm + CachingForm + AdditionalValidation {
     /// # Example:
     ///
     /// ```
-    /// let user_profile  = UserProfile {...}
-    /// let result = user_profile.check()?;
+    /// let restore_password = RestorePasswordForm {...}
+    /// let result = restore_password.check()?;
     /// assert!(result.is_valid());
     /// ```
     ///

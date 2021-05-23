@@ -200,6 +200,15 @@ pub trait QPaladins: ToModel + CachingModel {
 
     /// Checking the Model before queries the database.
     // *********************************************************************************************
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let user_profile  = UserProfile {...}
+    /// let result = user_profile.check()?;
+    /// assert!(result.is_valid());
+    /// ```
+    ///
     fn check(&self) -> Result<OutputDataForm, Box<dyn std::error::Error>> {
         // Get cached Model data.
         let (form_cache, client_cache) = Self::get_cache_data_for_query()?;
