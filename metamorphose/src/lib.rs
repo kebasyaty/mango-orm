@@ -67,7 +67,7 @@ use syn::{parse_macro_input, Attribute, AttributeArgs, DeriveInput, MetaNameValu
 ///        hint = "Image in JPEG or PNG format",
 ///        thumbnails = r#"[["xs",150],["sm",300]]"#
 ///    )]
-////    pub photo: Option<String>,
+///    pub photo: Option<String>,
 ///    //
 ///    #[serde(default)]
 ///    #[field_attrs(
