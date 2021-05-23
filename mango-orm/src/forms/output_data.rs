@@ -95,7 +95,6 @@ impl OutputDataForm {
     /// Get Map of Widgets
     // ---------------------------------------------------------------------------------------------
     /// ( Wig - Widgets )
-    ///
     pub fn wig(&self) -> std::collections::HashMap<String, Widget> {
         match self {
             Self::CheckForm(data) => data.2.clone(),
@@ -119,7 +118,6 @@ impl OutputDataForm {
     /// Json-line for admin panel.
     // ---------------------------------------------------------------------------------------------
     /// ( converts a widget map to a list, in the order of the Model fields )
-    ///
     pub fn json_for_admin(&self) -> Result<String, Box<dyn std::error::Error>> {
         let data = match self {
             Self::Save(data) => data,
@@ -161,7 +159,7 @@ impl OutputDataForm {
         }
     }
 
-    // Get Document
+    /// Get Document
     // ---------------------------------------------------------------------------------------------
     pub fn doc(&self) -> mongodb::bson::document::Document {
         match self {
@@ -170,9 +168,9 @@ impl OutputDataForm {
         }
     }
 
-    // Get Form instance.
-    // (It is convenient if the form passes (after validation) the value of the fields to Models.)
+    /// Get Form instance.)
     // ---------------------------------------------------------------------------------------------
+    /// (It is convenient if the form passes (after validation) the value of the fields to Models.
     pub fn form<T>(&self) -> Result<T, serde_json::error::Error>
     where
         T: serde::de::DeserializeOwned,
@@ -183,9 +181,17 @@ impl OutputDataForm {
         }
     }
 
-    // A description of the error if the document was not deleted.
-    // (Main use for admin panel.)
+    /// A description of the error if the document was not deleted.
     // ---------------------------------------------------------------------------------------------
+    /// (Main use for admin panel.)
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let output_data = RestorePasswordForm.delete()?;
+    /// println!("{}", output_data.err_msg());
+    /// ```
+    ///
     pub fn err_msg(&self) -> String {
         match self {
             Self::Delete(data) => data.1.clone(),
