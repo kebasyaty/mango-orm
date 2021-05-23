@@ -95,7 +95,7 @@ pub trait QCommon: ToModel + CachingModel {
     /// let query = doc!{};
     /// let output_data  = UserProfile::delete_many(query, None)?;
     /// if !routput_data.is_valid() {
-    ///     println!("", routput_data.err_msg());
+    ///     println!("{}", routput_data.err_msg());
     /// }
     /// ```
     ///
@@ -139,7 +139,7 @@ pub trait QCommon: ToModel + CachingModel {
     /// let query = doc!{};
     /// let output_data  = UserProfile::delete_one(query, None)?;
     /// if !routput_data.is_valid() {
-    ///     println!("", routput_data.err_msg());
+    ///     println!("{}", routput_data.err_msg());
     /// }
     /// ```
     ///
@@ -211,7 +211,7 @@ pub trait QCommon: ToModel + CachingModel {
     /// ```
     /// let output_data  = UserProfile::drop(None)?;
     /// if !routput_data.is_valid() {
-    ///     println!("", routput_data.err_msg());
+    ///     println!("{}", routput_data.err_msg());
     /// }
     /// ```
     ///
@@ -279,7 +279,7 @@ pub trait QCommon: ToModel + CachingModel {
     /// let filter = doc!{};
     /// let output_data  = UserProfile::find(filter, None)?;
     /// if output_data.is_valid()? {
-    ///     println!("", routput_data.count()?);
+    ///     println!("{}", routput_data.count()?);
     /// }
     /// ```
     ///
@@ -361,7 +361,7 @@ pub trait QCommon: ToModel + CachingModel {
     /// let filter = doc!{};
     /// let output_data  = UserProfile::find_one_and_delete(filter, None)?;
     /// if !routput_data.is_valid() {
-    ///     println!("", routput_data.err_msg());
+    ///     println!("{}", routput_data.err_msg());
     /// }
     /// ```
     ///

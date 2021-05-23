@@ -1242,6 +1242,7 @@ pub trait QPaladins: ToModel + CachingModel {
     }
 
     /// Save to database as a new document or update an existing document.
+    /// ( Used in conjunction with the `check ()` method. )
     // *********************************************************************************************
     fn save(
         &mut self,
@@ -1309,6 +1310,16 @@ pub trait QPaladins: ToModel + CachingModel {
 
     /// Remove document from collection.
     // *********************************************************************************************
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let output_data  = UserProfile.delete(None)?;
+    /// if !routput_data.is_valid() {
+    ///     println!("{}", routput_data.err_msg());
+    /// }
+    /// ```
+    ///
     fn delete(
         &self,
         options: Option<mongodb::options::DeleteOptions>,
