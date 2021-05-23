@@ -21,8 +21,8 @@ use std::convert::TryFrom;
 use std::{fs, path::Path};
 
 pub trait QPaladins: ToModel + CachingModel {
-    // Json-line for admin panel.
-    // ( converts a widget map to a list, in the order of the Model fields )
+    /// Json-line for admin panel.
+    /// ( converts a widget map to a list, in the order of the Model fields )
     // *********************************************************************************************
     fn json_for_admin(&self) -> Result<String, Box<dyn std::error::Error>> {
         // Get cached Model data.
@@ -66,7 +66,7 @@ pub trait QPaladins: ToModel + CachingModel {
         Ok(serde_json::to_string(&widget_list)?)
     }
 
-    // Deleting a file in the database and in the file system.
+    /// Deleting a file in the database and in the file system.
     // *********************************************************************************************
     fn delete_file(
         &self,
@@ -147,7 +147,7 @@ pub trait QPaladins: ToModel + CachingModel {
         Ok(())
     }
 
-    // Get file info from database.
+    /// Get file info from database.
     // *********************************************************************************************
     fn db_get_file_info(
         &self,
@@ -169,7 +169,7 @@ pub trait QPaladins: ToModel + CachingModel {
         Ok(result)
     }
 
-    // Calculate the maximum size for a thumbnail.
+    /// Calculate the maximum size for a thumbnail.
     // *********************************************************************************************
     fn calculate_thumbnail_size(width: u32, height: u32, max_size: u32) -> (u32, u32) {
         if width > height {
@@ -190,7 +190,7 @@ pub trait QPaladins: ToModel + CachingModel {
         (0, 0)
     }
 
-    // Checking the Model before queries the database.
+    /// Checking the Model before queries the database.
     // *********************************************************************************************
     fn check(&self) -> Result<OutputDataForm, Box<dyn std::error::Error>> {
         // Get cached Model data.
@@ -1224,7 +1224,7 @@ pub trait QPaladins: ToModel + CachingModel {
         )))
     }
 
-    // Save to database as a new document or update an existing document.
+    /// Save to database as a new document or update an existing document.
     // *********************************************************************************************
     fn save(
         &mut self,
@@ -1290,7 +1290,7 @@ pub trait QPaladins: ToModel + CachingModel {
         )))
     }
 
-    // Remove document from collection.
+    /// Remove document from collection.
     // *********************************************************************************************
     fn delete(
         &self,
@@ -1417,7 +1417,7 @@ pub trait QPaladins: ToModel + CachingModel {
 
     // Operations with passwords.
     // *********************************************************************************************
-    // Generate password hash and add to result document.
+    /// Generate password hash and add to result document.
     // ---------------------------------------------------------------------------------------------
     fn create_password_hash(field_value: &str) -> Result<String, Box<dyn std::error::Error>> {
         const CHARSET: &[u8] =
@@ -1437,7 +1437,7 @@ pub trait QPaladins: ToModel + CachingModel {
         Ok(hash)
     }
 
-    // Match the password from the user to the password in the database.
+    /// Match the password from the user to the password in the database.
     // ---------------------------------------------------------------------------------------------
     fn verify_password(
         &self,
@@ -1499,7 +1499,7 @@ pub trait QPaladins: ToModel + CachingModel {
         Ok(argon2::verify_encoded(password_hash, password.as_bytes())?)
     }
 
-    // For replace or recover password.
+    /// For replace or recover password.
     // ---------------------------------------------------------------------------------------------
     fn update_password(
         &self,
