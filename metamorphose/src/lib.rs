@@ -25,6 +25,16 @@ use syn::{parse_macro_input, Attribute, AttributeArgs, DeriveInput, MetaNameValu
 /// # Example:
 ///
 /// ```
+/// use mango_orm::*;
+/// use metamorphose::Model;
+/// use serde::{Deserialize, Serialize};
+///
+/// // Get settings of service/sub-application.
+/// use crate::settings::{
+///     default::{DATABASE_NAME, DB_CLIENT_NAME, DB_QUERY_DOCS_LIMIT, SERVICE_NAME},
+///     PROJECT_NAME, UNIQUE_PROJECT_KEY,
+/// };
+///
 /// #[Model(
 ///     is_del_docs = false,
 ///     is_use_add_valid = true,
@@ -716,6 +726,10 @@ fn impl_create_model(args: &Vec<NestedMeta>, ast: &mut DeriveInput) -> TokenStre
 /// # Example:
 ///
 /// ```
+/// use mango_orm::*;
+/// use metamorphose::Form;
+/// use serde::{Deserialize, Serialize};
+///
 /// #[Form]
 /// #[derive(Serialize, Deserialize, Default, Debug)]
 /// pub struct RestorePassword {
