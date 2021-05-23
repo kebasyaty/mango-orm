@@ -27,7 +27,7 @@
 ### Importing
     [dependencies]
     mango-orm = "0.4.74-beta"
-    metamorphose = "0.2.54-beta"
+    metamorphose = "0.2.55-beta"
     serde_json = "1.0"
     
     [dependencies.serde]
