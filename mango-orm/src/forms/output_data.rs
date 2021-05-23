@@ -153,7 +153,7 @@ impl OutputDataForm {
     /// # Example:
     ///
     /// ```
-    /// let output_data  = RestorePasswordForm {...}
+    /// let output_data = Update documentation {...}
     /// let result = output_data.check()?;
     /// assert!(result.is_valid());
     /// ```
