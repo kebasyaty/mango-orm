@@ -327,9 +327,7 @@ pub trait QCommon: ToModel + CachingModel {
     /// ```
     /// let filter = doc!{};
     /// let output_data  = UserProfile::find_one(filter, None)?;
-    /// if !output_data.is_valid()? {
-    ///     println!("", routput_data.err_msg());
-    /// }
+    /// assert!(output_data.is_valid()?);
     /// ```
     ///
     fn find_one(
@@ -356,6 +354,17 @@ pub trait QCommon: ToModel + CachingModel {
     /// Atomically finds up to one document in the collection matching filter and deletes it.
     /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.find_one_and_delete
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find_one_and_delete(filter, None)?;
+    /// if !routput_data.is_valid() {
+    ///     println!("", routput_data.err_msg());
+    /// }
+    /// ```
+    ///
     fn find_one_and_delete(
         filter: mongodb::bson::document::Document,
         options: Option<mongodb::options::FindOneAndDeleteOptions>,
@@ -401,6 +410,14 @@ pub trait QCommon: ToModel + CachingModel {
     /// Gets the name of the Collection.
     /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.name
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let name  = UserProfile::name()?;
+    /// println!("{}", name);
+    /// ```
+    ///
     fn name() -> Result<String, Box<dyn std::error::Error>> {
         // Get cached Model data.
         let (form_cache, client_cache) = Self::get_cache_data_for_query()?;
@@ -416,6 +433,14 @@ pub trait QCommon: ToModel + CachingModel {
     /// Gets the namespace of the Collection.
     /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.namespace
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let name  = UserProfile::namespace()?;
+    /// println!("{:?}", name);
+    /// ```
+    ///
     fn namespace() -> Result<mongodb::Namespace, Box<dyn std::error::Error>> {
         // Get cached Model data.
         let (form_cache, client_cache) = Self::get_cache_data_for_query()?;
