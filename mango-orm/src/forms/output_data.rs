@@ -5,7 +5,7 @@
 
 use crate::forms::{html_controls::HtmlControls, Widget};
 
-// Output data type
+/// Output data type
 #[derive(Debug)]
 pub enum OutputDataForm {
     CheckForm(
@@ -36,7 +36,7 @@ pub enum OutputDataForm {
 }
 
 impl HtmlControls for OutputDataForm {
-    // Get Html-line
+    /// Get Html-line
     fn html(&self) -> String {
         match self {
             Self::CheckForm(data) => Self::to_html(&data.1, data.2.clone()),
@@ -48,7 +48,7 @@ impl HtmlControls for OutputDataForm {
 }
 
 impl OutputDataForm {
-    // Get Hash-line
+    /// Get Hash-line
     // ---------------------------------------------------------------------------------------------
     fn to_hash(
         map_widgets: &std::collections::HashMap<String, Widget>,
@@ -68,7 +68,8 @@ impl OutputDataForm {
         Ok(map_widgets.get("hash").unwrap().value.clone())
     }
 
-    // Get Hash-line
+    /// Get Hash-line
+    // ---------------------------------------------------------------------------------------------
     pub fn hash(&self) -> Result<String, Box<dyn std::error::Error>> {
         match self {
             Self::CheckModel(data) => Ok(Self::to_hash(&data.2)?),
@@ -77,7 +78,8 @@ impl OutputDataForm {
         }
     }
 
-    // Get MongoDB ID from hash-line
+    /// Get MongoDB ID from hash-line
+    // ---------------------------------------------------------------------------------------------
     pub fn id(&self) -> Result<mongodb::bson::oid::ObjectId, Box<dyn std::error::Error>> {
         match self {
             Self::CheckModel(data) => Ok(mongodb::bson::oid::ObjectId::with_string(
@@ -90,9 +92,10 @@ impl OutputDataForm {
         }
     }
 
-    // Get Map of Widgets
-    // ( Wig - Widgets )
+    /// Get Map of Widgets
     // ---------------------------------------------------------------------------------------------
+    /// ( Wig - Widgets )
+    ///
     pub fn wig(&self) -> std::collections::HashMap<String, Widget> {
         match self {
             Self::CheckForm(data) => data.2.clone(),
@@ -102,7 +105,7 @@ impl OutputDataForm {
         }
     }
 
-    // Get Json-line
+    /// Get Json-line
     // ---------------------------------------------------------------------------------------------
     pub fn json(&self) -> Result<String, Box<dyn std::error::Error>> {
         match self {
@@ -113,8 +116,10 @@ impl OutputDataForm {
         }
     }
 
-    // Json-line for admin panel.
-    // ( converts a widget map to a list, in the order of the Model fields )
+    /// Json-line for admin panel.
+    // ---------------------------------------------------------------------------------------------
+    /// ( converts a widget map to a list, in the order of the Model fields )
+    ///
     pub fn json_for_admin(&self) -> Result<String, Box<dyn std::error::Error>> {
         let data = match self {
             Self::Save(data) => data,
@@ -136,8 +141,17 @@ impl OutputDataForm {
         Ok(serde_json::to_string(&widget_list)?)
     }
 
-    // Get Boolean
+    /// Get validation status (boolean)
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let restore_password  = RestorePasswordForm {...}
+    /// let result = restore_password.check()?;
+    /// assert!(result.is_valid());
+    /// ```
+    ///
     pub fn is_valid(&self) -> bool {
         match self {
             Self::CheckForm(data) => data.0,
