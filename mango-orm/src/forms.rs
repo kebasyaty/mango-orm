@@ -17,7 +17,7 @@ pub mod validation;
 
 // FORMS
 // #################################################################################################
-// Data structures for `inputFile` and `inputImage` widgets.
+/// Data structures for `inputFile` and `inputImage` widgets.
 // *************************************************************************************************
 #[derive(Default, serde::Serialize, serde::Deserialize, PartialEq, Clone, Debug)]
 pub struct FileData {
@@ -63,8 +63,8 @@ pub struct ImageData {
     pub height: u32, // in pixels
 }
 
-// Widget.
-// ( Form controls parameters )
+/// Widget.
+/// ( Form controls parameters )
 // *************************************************************************************************
 #[derive(serde::Serialize, serde::Deserialize, PartialEq, Clone, Debug)]
 pub struct Widget {
@@ -131,8 +131,8 @@ impl Default for Widget {
     }
 }
 
-// For transporting of Widgets map to implementation of methods.
-// Hint: <field name, Widget>
+/// For transporting of Widgets map to implementation of methods.
+/// Hint: <field name, Widget>
 #[derive(serde::Deserialize)]
 pub struct TransMapWidgets {
     pub map_widgets: std::collections::HashMap<String, Widget>,
@@ -141,25 +141,25 @@ pub struct TransMapWidgets {
 // Form settings.
 // *************************************************************************************************
 pub trait ToForm {
-    // Get form key.
-    // (To access data in the cache)
+    /// Get form key.
+    /// (To access data in the cache)
     // ---------------------------------------------------------------------------------------------
     fn key() -> String;
 
-    // Get form name
+    /// Get form name
     // ---------------------------------------------------------------------------------------------
     fn form_name() -> String;
 
-    // Get fields name list.
+    /// Get fields name list.
     // ---------------------------------------------------------------------------------------------
     fn fields_name() -> Result<Vec<String>, Box<dyn std::error::Error>>;
 
-    // Get map of widgets for Form fields.
-    // Hint: <field name, Widget>
+    /// Get map of widgets for Form fields.
+    /// Hint: <field name, Widget>
     // ---------------------------------------------------------------------------------------------
     fn widgets() -> Result<std::collections::HashMap<String, Widget>, Box<dyn std::error::Error>>;
 
-    // Serialize Form to json-line.
+    /// Serialize Form to json-line.
     // ---------------------------------------------------------------------------------------------
     fn self_to_json(&self) -> Result<serde_json::value::Value, Box<dyn std::error::Error>>;
 }

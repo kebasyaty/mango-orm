@@ -17,8 +17,8 @@ pub mod validation;
 
 // MODEL
 // #################################################################################################
-// Metadata.
-// ( Model parameters )
+/// Metadata.
+/// ( Model parameters )
 // *************************************************************************************************
 #[derive(serde::Deserialize, Clone, Debug)]
 pub struct Meta {
@@ -71,17 +71,17 @@ impl Default for Meta {
 // Model options and widget map for Form.
 // *************************************************************************************************
 pub trait ToModel: HtmlControls + AdditionalValidation + ValidationModel {
-    // Get model key.
-    // (To access data in the cache)
+    /// Get model key.
+    /// (To access data in the cache)
     // ---------------------------------------------------------------------------------------------
     fn key() -> String;
 
-    // Get metadata of Model.
+    /// Get metadata of Model.
     // ---------------------------------------------------------------------------------------------
     fn meta() -> Result<Meta, Box<dyn std::error::Error>>;
 
-    // Get map of widgets for model fields.
-    // Hint: <field name, Widget>
+    /// Get map of widgets for model fields.
+    /// Hint: <field name, Widget>
     // ---------------------------------------------------------------------------------------------
     fn widgets() -> Result<std::collections::HashMap<String, Widget>, Box<dyn std::error::Error>>;
 
@@ -90,23 +90,23 @@ pub trait ToModel: HtmlControls + AdditionalValidation + ValidationModel {
     fn get_hash(&self) -> Option<String>;
     fn set_hash(&mut self, value: String);
 
-    // Serialize an instance of the Model to a hash-line.
+    /// Serialize an instance of the Model to a hash-line.
     // ---------------------------------------------------------------------------------------------
     fn self_to_json(&self) -> Result<serde_json::value::Value, Box<dyn std::error::Error>>;
 
-    // Convert hash-line to MongoDB ID.
+    /// Convert hash-line to MongoDB ID.
     // ---------------------------------------------------------------------------------------------
     fn hash_to_id(hash: &str) -> Result<mongodb::bson::oid::ObjectId, Box<dyn std::error::Error>> {
         Ok(mongodb::bson::oid::ObjectId::with_string(hash)?)
     }
 
-    // Convert MongoDB ID to hash-line.
+    /// Convert MongoDB ID to hash-line.
     // ---------------------------------------------------------------------------------------------
     fn id_to_hash(id: mongodb::bson::oid::ObjectId) -> String {
         id.to_hex()
     }
 
-    // Enrich the widget map with values for dynamic widgets.
+    /// Enrich the widget map with values for dynamic widgets.
     // ---------------------------------------------------------------------------------------------
     fn vitaminize(
         project_name: &str,

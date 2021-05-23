@@ -25,7 +25,7 @@ use std::collections::HashMap;
 
 // MIGRATION
 // #################################################################################################
-// Creation and updating of a technical database for monitoring the state of models.
+/// Creation and updating of a technical database for monitoring the state of models.
 #[derive(Serialize, Deserialize)]
 pub struct ModelState {
     pub database: String,
@@ -42,7 +42,7 @@ pub struct Monitor<'a> {
 }
 
 impl<'a> Monitor<'a> {
-    // Get the name of the technical database for a project.
+    /// Get the name of the technical database for a project.
     // *********************************************************************************************
     pub fn mango_tech_name(&self) -> Result<String, Box<dyn std::error::Error>> {
         // PROJECT_NAME Validation.
@@ -68,15 +68,17 @@ impl<'a> Monitor<'a> {
         Ok(format!("mango_tech__{}__{}", self.project_name, self.unique_project_key))
     }
 
-    // Refresh models state.
+    /// Refresh models state.
     // *********************************************************************************************
-    /*
-        if {
-            If there is no technical database, it will be created.
-        } else {
-            Resets the Model's status to `false`.
-        }
-    */
+    ///
+    /// ```
+    /// if {
+    ///     If there is no technical database, it will be created.
+    /// } else {
+    ///     Resets the Model's status to `false`.
+    /// }
+    /// ```
+    ///
     fn refresh(&self) -> Result<(), Box<dyn std::error::Error>> {
         // Get cache MongoDB clients.
         let client_store: std::sync::RwLockReadGuard<HashMap<String, Client>> =
@@ -127,8 +129,8 @@ impl<'a> Monitor<'a> {
         Ok(())
     }
 
-    // Reorganize databases state.
-    // (full delete of orphaned collections and databases)
+    /// Reorganize databases state.
+    /// (full delete of orphaned collections and databases)
     // *********************************************************************************************
     fn napalm(&self) -> Result<(), Box<dyn std::error::Error>> {
         // Get cache MongoDB clients.
@@ -171,9 +173,9 @@ impl<'a> Monitor<'a> {
         Ok(())
     }
 
-    // Migrating Models.
+    /// Migrating Models.
     // *********************************************************************************************
-    // Check the changes in the models and (if necessary) apply to the database.
+    /// Check the changes in the models and (if necessary) apply to the database.
     pub fn migrat(&self) -> Result<(), Box<dyn std::error::Error>> {
         // Run refresh models state.
         self.refresh()?;
