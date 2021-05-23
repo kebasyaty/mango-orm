@@ -37,6 +37,15 @@ pub enum OutputDataForm {
 
 impl HtmlControls for OutputDataForm {
     /// Get Html-line
+    // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let output_data = UserProfile.save()?;
+    /// println!("{}", output_data.html());
+    /// ```
+    ///
     fn html(&self) -> String {
         match self {
             Self::CheckForm(data) => Self::to_html(&data.1, data.2.clone()),
@@ -68,8 +77,14 @@ impl OutputDataForm {
         Ok(map_widgets.get("hash").unwrap().value.clone())
     }
 
-    /// Get Hash-line
-    // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let output_data = UserProfile.save()?;
+    /// println!("{}", output_data.hash());
+    /// ```
+    ///
     pub fn hash(&self) -> Result<String, Box<dyn std::error::Error>> {
         match self {
             Self::CheckModel(data) => Ok(Self::to_hash(&data.2)?),
@@ -80,6 +95,14 @@ impl OutputDataForm {
 
     /// Get MongoDB ID from hash-line
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let output_data = UserProfile.save()?;
+    /// println!("{:?}", output_data.id()?);
+    /// ```
+    ///
     pub fn id(&self) -> Result<mongodb::bson::oid::ObjectId, Box<dyn std::error::Error>> {
         match self {
             Self::CheckModel(data) => Ok(mongodb::bson::oid::ObjectId::with_string(
@@ -95,6 +118,14 @@ impl OutputDataForm {
     /// Get Map of Widgets
     // ---------------------------------------------------------------------------------------------
     /// ( Wig - Widgets )
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let output_data = UserProfile.save()?;
+    /// println!("{:?}", output_data.wig());
+    /// ```
+    ///
     pub fn wig(&self) -> std::collections::HashMap<String, Widget> {
         match self {
             Self::CheckForm(data) => data.2.clone(),
@@ -106,6 +137,14 @@ impl OutputDataForm {
 
     /// Get Json-line
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let output_data = UserProfile.save()?;
+    /// println!("{}", output_data.json()?);
+    /// ```
+    ///
     pub fn json(&self) -> Result<String, Box<dyn std::error::Error>> {
         match self {
             Self::CheckForm(data) => Ok(serde_json::to_string(&data.2)?),
@@ -153,7 +192,7 @@ impl OutputDataForm {
     /// # Example:
     ///
     /// ```
-    /// let output_data = Update documentation {...}
+    /// let output_data = UserProfile {...}
     /// let result = output_data.check()?;
     /// assert!(result.is_valid());
     /// ```
@@ -169,6 +208,14 @@ impl OutputDataForm {
 
     /// Get Document
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let output_data = UserProfile.save()?;
+    /// println!("{:?}", output_data.doc());
+    /// ```
+    ///
     pub fn doc(&self) -> mongodb::bson::document::Document {
         match self {
             Self::CheckModel(data) => data.3.clone(),
