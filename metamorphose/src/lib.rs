@@ -18,6 +18,128 @@ use syn::{parse_macro_input, Attribute, AttributeArgs, DeriveInput, MetaNameValu
 
 // MODEL - MACRO FOR CONVERTING STRUCTURE TO MANGO-ORM MODEL
 // #################################################################################################
+/// Macro for converting Structure to mango-orm Model.
+/// The model can access the database.
+/// The model can create, update, and delete documents in collections.
+///
+/// # Example:
+///
+/// ```
+/// #[Model(
+///     is_del_docs = false,
+///     is_use_add_valid = true,
+///     ignore_fields = "confirm_password"
+/// )]
+/// #[derive(Serialize, Deserialize, Default, Debug)]
+/// pub struct AdminProfile {
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "inputText",
+///        label = "Username",
+///        placeholder = "Enter your username",
+///        unique = true,
+///        required = true,
+///        maxlength = 150,
+///        hint = "Valid characters: a-z A-Z 0-9 _ @ + .<br>Max size: 150"
+///    )]
+///    pub username: Option<String>,
+///    //
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "inputImage",
+///        label = "Photo",
+///        value = r#"{
+///                "path":"./media/no_avatar.png",
+///                "url":"/media/no_avatar.png"
+///            }"#,
+///        placeholder = "Upload your photo",
+///        accept = "image/jpeg,image/png",
+///        hint = "Image in JPEG or PNG format",
+///        thumbnails = r#"[["xs",150],["sm",300]]"#
+///    )]
+////    pub photo: Option<String>,
+///    //
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "inputText",
+///        label = "First name",
+///        placeholder = "Enter your First name",
+///        maxlength = 150
+///    )]
+///    pub first_name: Option<String>,
+///    //
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "inputText",
+///        label = "Last name",
+///        placeholder = "Enter your Last name",
+///        maxlength = 150
+///    )]
+///    pub last_name: Option<String>,
+///    //
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "inputEmail",
+///        label = "E-mail",
+///        placeholder = "Please enter your email",
+///        required = true,
+///        unique = true,
+///        maxlength = 320,
+///        hint = "Your actual E-mail"
+///    )]
+///    pub email: Option<String>,
+///    //
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "inputPhone",
+///        label = "Phone number",
+///        placeholder = "Please enter your phone number",
+///        unique = true,
+///        maxlength = 30,
+///        hint = "Your actual phone number"
+///    )]
+///    pub phone: Option<String>,
+///    //
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "inputPassword",
+///        label = "Password",
+///        placeholder = "Enter your password",
+///        required = true,
+///        minlength = 8,
+///        hint = "Valid characters: a-z A-Z 0-9 @ # $ % ^ & + = * ! ~ ) (<br>Min size: 8"
+///    )]
+///    pub password: Option<String>,
+///    //
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "inputPassword",
+///        label = "Confirm password",
+///        placeholder = "Repeat your password",
+///        required = true,
+///        minlength = 8,
+///        hint = "Repeat your password"
+///    )]
+///    pub confirm_password: Option<String>,
+///    //
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "checkBox",
+///        label = "is staff?",
+///        hint = "User can access the admin site?"
+///    )]
+///    pub is_staff: Option<bool>,
+///    //
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "checkBox",
+///        label = "is active?",
+///        hint = "Is this an active account?"
+///    )]
+///    pub is_active: Option<bool>,
+/// }
+/// ```
+///
 #[allow(non_snake_case)]
 #[proc_macro_attribute]
 pub fn Model(args: TokenStream, input: TokenStream) -> TokenStream {
@@ -586,6 +708,56 @@ fn impl_create_model(args: &Vec<NestedMeta>, ast: &mut DeriveInput) -> TokenStre
 
 // FORM - MACRO FOR CONVERTING STRUCTURE TO MANGO-ORM FORM
 // #################################################################################################
+/// Macro for converting Structure to mango-orm Form.
+/// The form does not have access to the database.
+/// Form are needed where it makes no sense to use a model -
+/// To create a search form, to recover a password, to combine models, etc.
+///
+/// # Example:
+///
+/// ```
+/// #[Form]
+/// #[derive(Serialize, Deserialize, Default, Debug)]
+/// pub struct RestorePassword {
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "inputEmail",
+///        value = "Your Email",
+///        required = true,
+///        unique = true,
+///        maxlength = 74
+///    )]
+///    pub email: Option<String>,
+///    //
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "inputPassword",
+///        value = "Your old password",
+///        required = true,
+///        minlength = 8
+///    )]
+///    pub old_password: Option<String>,
+///    //
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "inputPassword",
+///        value = "Your new password",
+///        required = true,
+///        minlength = 8
+///    )]
+///    pub new_password: Option<String>,
+///    //
+///    #[serde(default)]
+///    #[field_attrs(
+///        widget = "inputPassword",
+///        value = "Confirm the password",
+///        required = true,
+///        minlength = 8
+///    )]
+///    pub confirm_password: Option<String>,
+/// }
+/// ```
+///
 #[allow(non_snake_case)]
 #[proc_macro_attribute]
 pub fn Form(args: TokenStream, input: TokenStream) -> TokenStream {
