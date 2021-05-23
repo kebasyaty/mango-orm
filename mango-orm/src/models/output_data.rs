@@ -129,10 +129,10 @@ impl OutputDataOne {
         }
     }
 
-    // Get boolean.
+    // Get validation status (boolean)
     // Hint: For check document availability.
     // ---------------------------------------------------------------------------------------------
-    pub fn bool(&self) -> bool {
+    pub fn is_valid(&self) -> bool {
         match self {
             Self::Doc(data) => data.0.is_some(),
         }
@@ -431,10 +431,10 @@ impl OutputDataMany {
         }
     }
 
-    // Get boolean.
+    // Get validation status (boolean)
     // Hint: For check documents availability.
     // ---------------------------------------------------------------------------------------------
-    pub fn bool(&self) -> Result<bool, Box<dyn std::error::Error>> {
+    pub fn is_valid(&self) -> Result<bool, Box<dyn std::error::Error>> {
         Ok(self.count()? > 0)
     }
 

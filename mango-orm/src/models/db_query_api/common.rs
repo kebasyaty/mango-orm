@@ -29,7 +29,17 @@ use crate::{
 pub trait QCommon: ToModel + CachingModel {
     /// Runs an aggregation operation.
     /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.aggregate
+    /// See the documentation https://docs.mongodb.com/manual/aggregation/ for more information on aggregations.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let pipeline = doc!{};
+    /// let document  = UserProfile::aggregate(pipeline, None)?;
+    /// println!("{:?}", document);
+    /// ```
+    ///
     fn aggregate(
         pipeline: Vec<mongodb::bson::document::Document>,
         options: Option<mongodb::options::AggregateOptions>,
@@ -51,6 +61,15 @@ pub trait QCommon: ToModel + CachingModel {
     /// Gets the number of documents matching filter.
     /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.count_documents
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let count  = UserProfile::count_documents(filter, None)?;
+    /// println!("{:?}", count);
+    /// ```
+    ///
     fn count_documents(
         filter: Option<mongodb::bson::document::Document>,
         options: Option<mongodb::options::CountOptions>,
@@ -69,6 +88,17 @@ pub trait QCommon: ToModel + CachingModel {
     /// Deletes all documents stored in the collection matching query.
     /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.delete_many
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let query = doc!{};
+    /// let output_data  = UserProfile::delete_many(query, None)?;
+    /// if !routput_data.is_valid() {
+    ///     println!("", routput_data.err_msg());
+    /// }
+    /// ```
+    ///
     fn delete_many(
         query: mongodb::bson::document::Document,
         options: Option<mongodb::options::DeleteOptions>,
@@ -102,6 +132,17 @@ pub trait QCommon: ToModel + CachingModel {
     /// Deletes up to one document found matching query.
     /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.delete_one
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let query = doc!{};
+    /// let output_data  = UserProfile::delete_one(query, None)?;
+    /// if !routput_data.is_valid() {
+    ///     println!("", routput_data.err_msg());
+    /// }
+    /// ```
+    ///
     fn delete_one(
         query: mongodb::bson::document::Document,
         options: Option<mongodb::options::DeleteOptions>,
@@ -135,6 +176,16 @@ pub trait QCommon: ToModel + CachingModel {
     /// Finds the distinct values of the field specified by field_name across the collection.
     /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.distinct
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let ield_name = "";
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::distinct(field_name, filter, None)?;
+    /// println!("{:?}", routput_data);
+    /// ```
+    ///
     fn distinct(
         field_name: &str,
         filter: Option<mongodb::bson::document::Document>,
@@ -154,6 +205,16 @@ pub trait QCommon: ToModel + CachingModel {
     /// Drops the collection, deleting all data and indexes stored in it.
     /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.drop
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let output_data  = UserProfile::drop(None)?;
+    /// if !routput_data.is_valid() {
+    ///     println!("", routput_data.err_msg());
+    /// }
+    /// ```
+    ///
     fn drop(
         options: Option<mongodb::options::DropCollectionOptions>,
     ) -> Result<OutputDataForm, Box<dyn std::error::Error>> {
@@ -186,6 +247,14 @@ pub trait QCommon: ToModel + CachingModel {
     /// Estimates the number of documents in the collection using collection metadata.
     /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.estimated_document_count
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let count  = UserProfile::estimated_document_count(None)?;
+    /// println!("{:?}", count);
+    /// ```
+    ///
     fn estimated_document_count(
         options: Option<mongodb::options::EstimatedDocumentCountOptions>,
     ) -> Result<i64, Box<dyn std::error::Error>> {
@@ -203,6 +272,17 @@ pub trait QCommon: ToModel + CachingModel {
     /// Finds the documents in the collection matching filter.
     /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.find
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find(filter, None)?;
+    /// if output_data.is_valid()? {
+    ///     println!("", routput_data.count()?);
+    /// }
+    /// ```
+    ///
     fn find(
         filter: Option<mongodb::bson::document::Document>,
         options: Option<mongodb::options::FindOptions>,
@@ -241,6 +321,17 @@ pub trait QCommon: ToModel + CachingModel {
     /// Finds a single document in the collection matching filter.
     /// https://docs.rs/mongodb/1.1.1/mongodb/struct.Collection.html#method.find_one
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find_one(filter, None)?;
+    /// if !output_data.is_valid()? {
+    ///     println!("", routput_data.err_msg());
+    /// }
+    /// ```
+    ///
     fn find_one(
         filter: Option<mongodb::bson::document::Document>,
         options: Option<mongodb::options::FindOneOptions>,
