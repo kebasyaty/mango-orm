@@ -298,7 +298,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let result = user_form.check()?;
 
-    println!("Boolean: {}\n\n", result.bool());
+    println!("Boolean: {}\n\n", result.is_valid());
     //println!("Widget map:\n{:?}\n\n", result.wig());
     //println!("Json:\n{}\n\n", result.json()?);
     //println!("Html:\n{}\n", result.html());

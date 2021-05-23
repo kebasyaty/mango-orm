@@ -20,7 +20,7 @@ use crate::{
 // Caching information about Forms for speed up work.
 // *************************************************************************************************
 pub trait CachingForm: ToForm + HtmlControls {
-    // Add map of widgets to cache.
+    /// Add map of widgets to cache.
     // ---------------------------------------------------------------------------------------------
     fn widgets_to_cache() -> Result<(), Box<dyn std::error::Error>> {
         // Get a key to access Model data in the cache.
@@ -39,8 +39,16 @@ pub trait CachingForm: ToForm + HtmlControls {
         Ok(())
     }
 
-    // Get an widgets map for page template.
+    /// Get an widgets map for page template.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let widgets_map = RestorePasswordForm::form_wig()?;
+    /// println!("{:?}", widgets_map);
+    /// ```
+    ///
     fn form_wig() -> Result<std::collections::HashMap<String, Widget>, Box<dyn std::error::Error>> {
         // Get a key to access Model data in the cache.
         let key: String = Self::key();
@@ -66,8 +74,16 @@ pub trait CachingForm: ToForm + HtmlControls {
         }
     }
 
-    // Get Form attributes in Json format for page templates.
+    /// Get Form attributes in Json format for page templates.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let json_line = RestorePasswordForm::form_json()?;
+    /// println!("{}", json_line);
+    /// ```
+    ///
     fn form_json() -> Result<String, Box<dyn std::error::Error>> {
         // Get a key to access Model data in the cache.
         let key: String = Self::key();
@@ -103,8 +119,16 @@ pub trait CachingForm: ToForm + HtmlControls {
         }
     }
 
-    // Get Html Form of Model for page templates.
+    /// Get Html Form of Model for page templates.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let html = RestorePasswordForm::form_html()?;
+    /// println!("{}", html);
+    /// ```
+    ///
     fn form_html() -> Result<String, Box<dyn std::error::Error>> {
         // Get a key to access Model data in the cache.
         let key: String = Self::key();
@@ -141,8 +165,16 @@ pub trait CachingForm: ToForm + HtmlControls {
         }
     }
 
-    // Get cached Form data.
+    /// Get cached Form data.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let form_cache = RestorePasswordForm::get_cache_data()?;
+    /// println!("{:?}", form_cache);
+    /// ```
+    ///
     fn get_cache_data() -> Result<FormCache, Box<dyn std::error::Error>> {
         // Get a key to access Model data in the cache.
         let key: String = Self::key();

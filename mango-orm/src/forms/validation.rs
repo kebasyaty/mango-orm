@@ -105,8 +105,17 @@ pub trait ValidationForm: ToForm + CachingForm + AdditionalValidation {
         Ok(())
     }
 
-    // Checking the Form before other proceeding.
+    /// Checking the Form before other proceeding.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let user_profile  = UserProfile {...}
+    /// let result = user_profile.check()?;
+    /// assert!(result.is_valid());
+    /// ```
+    ///
     fn check(&self) -> Result<OutputDataForm, Box<dyn std::error::Error>> {
         // Get cached Model data.
         let form_cache = Self::get_cache_data()?;
