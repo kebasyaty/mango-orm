@@ -18,10 +18,10 @@ use crate::{
     store::{REGEX_IS_COLOR_CODE, REGEX_IS_DATE, REGEX_IS_DATETIME, REGEX_IS_PASSWORD},
 };
 
-// Validating Form fields for save and update.
+/// Validating Form fields for save and update.
 // *************************************************************************************************
 pub trait ValidationForm: ToForm + CachingForm + AdditionalValidation {
-    // Validation of `minlength`.
+    /// Validation of `minlength`.
     // ---------------------------------------------------------------------------------------------
     fn check_minlength(minlength: usize, value: &str) -> Result<(), Box<dyn std::error::Error>> {
         if minlength > 0 && value.encode_utf16().count() < minlength {
@@ -30,7 +30,7 @@ pub trait ValidationForm: ToForm + CachingForm + AdditionalValidation {
         Ok(())
     }
 
-    // Validation of `maxlength`.
+    /// Validation of `maxlength`.
     // ---------------------------------------------------------------------------------------------
     fn check_maxlength(maxlength: usize, value: &str) -> Result<(), Box<dyn std::error::Error>> {
         if maxlength > 0 && value.encode_utf16().count() > maxlength {
@@ -39,7 +39,7 @@ pub trait ValidationForm: ToForm + CachingForm + AdditionalValidation {
         Ok(())
     }
 
-    // Accumulation of errors.
+    /// Accumulation of errors.
     // ---------------------------------------------------------------------------------------------
     fn accumula_err(widget: &Widget, err: &String) -> Result<String, Box<dyn std::error::Error>> {
         let mut tmp = widget.error.clone();
@@ -51,7 +51,7 @@ pub trait ValidationForm: ToForm + CachingForm + AdditionalValidation {
         Ok(format!("{}{}", tmp, err))
     }
 
-    // Validation in regular expression (email, password, etc...).
+    /// Validation in regular expression (email, password, etc...).
     // ---------------------------------------------------------------------------------------------
     fn regex_validation(field_type: &str, value: &str) -> Result<(), Box<dyn std::error::Error>> {
         match field_type {
