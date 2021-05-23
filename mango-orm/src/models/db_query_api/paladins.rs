@@ -24,6 +24,14 @@ pub trait QPaladins: ToModel + CachingModel {
     /// Json-line for admin panel.
     /// ( converts a widget map to a list, in the order of the Model fields )
     // *********************************************************************************************
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let user_profile = UserProfile{...};
+    /// println!("{}", user_profile.json_for_admin()?);
+    /// ```
+    ///
     fn json_for_admin(&self) -> Result<String, Box<dyn std::error::Error>> {
         // Get cached Model data.
         let (form_cache, _client_cache) = Self::get_cache_data_for_query()?;

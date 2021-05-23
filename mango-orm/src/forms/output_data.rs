@@ -162,7 +162,7 @@ impl OutputDataForm {
     ///
     /// ```
     /// let output_data = UserProfile.save()?;
-    /// println!("{}", output_data.json_for_admin());
+    /// println!("{}", output_data.json_for_admin()?);
     /// ```
     ///
     pub fn json_for_admin(&self) -> Result<String, Box<dyn std::error::Error>> {
