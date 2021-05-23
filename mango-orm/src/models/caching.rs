@@ -20,10 +20,10 @@ use crate::{
     store::{FormCache, FORM_STORE, MONGODB_CLIENT_STORE},
 };
 
-// Caching information about Models for speed up work.
+/// Caching information about Models for speed up work.
 // #################################################################################################
 pub trait CachingModel: ToModel {
-    // Add metadata and widgects map to cache.
+    /// Add metadata and widgects map to cache.
     // *********************************************************************************************
     fn to_cache() -> Result<(), Box<dyn std::error::Error>> {
         // Get a key to access Model data in the cache.
@@ -57,8 +57,16 @@ pub trait CachingModel: ToModel {
         Ok(())
     }
 
-    // Get an widgets map for page template.
+    /// Get an widgets map for page template.
     // *********************************************************************************************
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let widgets_map = UserProfile::form_wig()?;
+    /// println!("{:?}", widgets_map);
+    /// ```
+    ///
     fn form_wig() -> Result<std::collections::HashMap<String, Widget>, Box<dyn std::error::Error>> {
         // Get a key to access Model data in the cache.
         let key: String = Self::key();
@@ -85,8 +93,16 @@ pub trait CachingModel: ToModel {
         }
     }
 
-    // Get Form attributes in Json format for page templates.
+    /// Get Form attributes in Json format for page templates.
     // *********************************************************************************************
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let json_line = UserProfile::form_json()?;
+    /// println!("{}", json_line);
+    /// ```
+    ///
     fn form_json() -> Result<String, Box<dyn std::error::Error>> {
         // Get a key to access Model data in the cache.
         let key: String = Self::key();
@@ -123,9 +139,17 @@ pub trait CachingModel: ToModel {
         }
     }
 
-    // Json-line for admin panel.
-    // ( converts a widget map to a list, in the order of the Model fields )
-    // ---------------------------------------------------------------------------------------------
+    /// Json-line for admin panel.
+    /// ( converts a widget map to a list, in the order of the Model fields )
+    // *********************************************************************************************
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let json_line = UserProfile::form_json_for_admin()?;
+    /// println!("{}", json_line);
+    /// ```
+    ///
     fn form_json_for_admin() -> Result<String, Box<dyn std::error::Error>> {
         // Get cached Model data.
         let (form_cache, _client_cache) = Self::get_cache_data_for_query()?;
@@ -142,8 +166,16 @@ pub trait CachingModel: ToModel {
         Ok(serde_json::to_string(&widget_list)?)
     }
 
-    // Get Html Form of Model for page templates.
+    /// Get Html Form of Model for page templates.
     // *********************************************************************************************
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let html = UserProfile::form_html()?;
+    /// println!("{}", html);
+    /// ```
+    ///
     fn form_html() -> Result<String, Box<dyn std::error::Error>> {
         // Get a key to access Model data in the cache.
         let key: String = Self::key();
@@ -181,8 +213,16 @@ pub trait CachingModel: ToModel {
         }
     }
 
-    // Get cached Model data.
+    /// Get cached Model data.
     // *********************************************************************************************
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let (form_cache, client_cache) = UserProfile::get_cache_data_for_query()?;
+    /// println!("{:?}", form_cache);
+    /// ```
+    ///
     fn get_cache_data_for_query(
     ) -> Result<(FormCache, mongodb::sync::Client), Box<dyn std::error::Error>> {
         // Get a key to access Model data in the cache.
@@ -216,15 +256,19 @@ pub trait CachingModel: ToModel {
         }
     }
 
-    // Accepts json-line to update data, for dynamic widgets.
-    // Hint: Used in conjunction with the admin panel.
-    // Example (json-line): {"field_name":[["value","Title"]]}
-    // or
-    // r#"{
-    //    "field_name":[["value","Title"]],
-    //    "field_name_2":[["value","Title 2"]],
-    //    "field_name_3":[["value","Title 3"]]
-    // }"#
+    /// Accepts json-line to update data, for dynamic widgets.
+    /// Hint: Used in conjunction with the admin panel.
+    ///
+    /// ```
+    /// Example (json-line): {"field_name":[["value","Title"]]}
+    /// or
+    /// r#"{
+    ///    "field_name":[["value","Title"]],
+    ///    "field_name_2":[["value","Title 2"]],
+    ///    "field_name_3":[["value","Title 3"]]
+    /// }"#
+    /// ```
+    ///
     // *********************************************************************************************
     fn db_update_dyn_widgets(json_line: &str) -> Result<(), Box<dyn std::error::Error>> {
         // Refresh the state in the technical database.
