@@ -145,8 +145,8 @@ impl OutputDataForm {
     /// # Example:
     ///
     /// ```
-    /// let restore_password  = RestorePasswordForm {...}
-    /// let result = restore_password.check()?;
+    /// let output_data  = RestorePasswordForm {...}
+    /// let result = output_data.check()?;
     /// assert!(result.is_valid());
     /// ```
     ///
@@ -171,6 +171,14 @@ impl OutputDataForm {
     /// Get Form instance.)
     // ---------------------------------------------------------------------------------------------
     /// (It is convenient if the form passes (after validation) the value of the fields to Models.
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let output_data = RestorePasswordForm.check()?;
+    /// let instance =  output_data.form::<RestorePasswordForm>()?;
+    /// ```
+    ///
     pub fn form<T>(&self) -> Result<T, serde_json::error::Error>
     where
         T: serde::de::DeserializeOwned,
