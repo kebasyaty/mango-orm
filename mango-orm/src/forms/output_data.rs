@@ -118,6 +118,14 @@ impl OutputDataForm {
     /// Json-line for admin panel.
     // ---------------------------------------------------------------------------------------------
     /// ( converts a widget map to a list, in the order of the Model fields )
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let output_data = UserProfile.save()?;
+    /// println!("{}", output_data.json_for_admin());
+    /// ```
+    ///
     pub fn json_for_admin(&self) -> Result<String, Box<dyn std::error::Error>> {
         let data = match self {
             Self::Save(data) => data,
@@ -196,7 +204,7 @@ impl OutputDataForm {
     /// # Example:
     ///
     /// ```
-    /// let output_data = RestorePasswordForm.delete()?;
+    /// let output_data = UserProfile.delete()?;
     /// println!("{}", output_data.err_msg());
     /// ```
     ///
