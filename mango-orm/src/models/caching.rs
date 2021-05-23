@@ -259,14 +259,18 @@ pub trait CachingModel: ToModel {
     /// Accepts json-line to update data, for dynamic widgets.
     /// Hint: Used in conjunction with the admin panel.
     ///
+    /// # Example:
+    ///
     /// ```
-    /// Example (json-line): {"field_name":[["value","Title"]]}
-    /// or
-    /// r#"{
-    ///    "field_name":[["value","Title"]],
-    ///    "field_name_2":[["value","Title 2"]],
-    ///    "field_name_3":[["value","Title 3"]]
-    /// }"#
+    /// let json-line =  r#"{"field_name":[["value","Title"]]}"#;
+    /// // or
+    /// let json-line = r#"{
+    ///        "field_name":[["value","Title"]],
+    ///        "field_name_2":[["value","Title 2"]],
+    ///        "field_name_3":[["value","Title 3"]]
+    ///     }"#;
+    ///
+    /// assert!(Dynamic::db_update_dyn_widgets(json-line).is_ok());
     /// ```
     ///
     // *********************************************************************************************
