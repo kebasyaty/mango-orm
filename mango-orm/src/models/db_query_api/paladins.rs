@@ -1447,6 +1447,15 @@ pub trait QPaladins: ToModel + CachingModel {
     // *********************************************************************************************
     /// Generate password hash and add to result document.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let user_profile = UserProfile {...};
+    /// let field_value = user_profile.password;
+    /// println!("{}", user_profile.create_password_hash(field_value)?);
+    /// ```
+    ///
     fn create_password_hash(field_value: &str) -> Result<String, Box<dyn std::error::Error>> {
         const CHARSET: &[u8] =
             b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&+=*!~)(";
@@ -1467,6 +1476,15 @@ pub trait QPaladins: ToModel + CachingModel {
 
     /// Match the password from the user to the password in the database.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let user_profile = UserProfile {...};
+    /// let password = "12345678";
+    /// assert!(user_profile.create_password_hash(password, None)?);
+    /// ```
+    ///
     fn verify_password(
         &self,
         password: &str,
@@ -1529,6 +1547,16 @@ pub trait QPaladins: ToModel + CachingModel {
 
     /// For replace or recover password.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let user_profile = UserProfile {...};
+    /// let old_password = "12345678";
+    /// let new_password = "qBfJHCW2C9EH3_RW";
+    /// assert!(user_profile.create_password_hash(old_password, new_password, None)?);
+    /// ```
+    ///
     fn update_password(
         &self,
         old_password: &str,
