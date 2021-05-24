@@ -279,6 +279,13 @@ pub trait QCommon: ToModel + CachingModel {
     /// let filter = doc!{};
     /// let output_data  = UserProfile::find(filter, None)?;
     /// if output_data.is_valid()? {
+    ///     // Get raw documents. (Hint: For non-standard operations.)
+    ///     println!("{:?}", routput_data.raw_docs()?);
+    ///     // Get prepared documents. (Hint: For page template.)
+    ///     println!("{:?}", routput_data.docs()?);
+    ///     // Get json-line. (Hint: For Ajax.)
+    ///     println!("{:?}", routput_data.json()?);
+    ///     // Get the number of documents.
     ///     println!("{}", routput_data.count()?);
     /// }
     /// ```
