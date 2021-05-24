@@ -327,7 +327,11 @@ pub trait QCommon: ToModel + CachingModel {
     /// ```
     /// let filter = doc!{};
     /// let output_data  = UserProfile::find_one(filter, None)?;
-    /// assert!(output_data.is_valid()?);
+    /// if output_data.is_valid()? {
+    ///     println!("{:?}", output_data.doc()?);  
+    ///     println!("{}", output_data.json()?);  
+    ///     println!("{:?}", output_data.model::<UserProfile>()?);
+    /// }
     /// ```
     ///
     fn find_one(
