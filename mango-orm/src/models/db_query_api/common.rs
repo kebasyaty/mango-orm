@@ -328,8 +328,13 @@ pub trait QCommon: ToModel + CachingModel {
     /// let filter = doc!{};
     /// let output_data  = UserProfile::find_one(filter, None)?;
     /// if output_data.is_valid()? {
-    ///     println!("{:?}", output_data.doc()?);  
-    ///     println!("{}", output_data.json()?);  
+    ///     // Get raw document. (Hint: For non-standard operations.)
+    ///     println!("{:?}", output_data.raw_doc()?);
+    ///     // Get prepared document. (Hint: For page template.)
+    ///     println!("{:?}", output_data.doc()?);
+    ///     //Get json-line. (Hint: For Ajax.)
+    ///     println!("{}", output_data.json()?);
+    ///     // Get model instance. (Hint: For the `save`, `update`, `delete` operations.)
     ///     println!("{:?}", output_data.model::<UserProfile>()?);
     /// }
     /// ```
