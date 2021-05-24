@@ -24,7 +24,7 @@
 - serde
 
 ## Installation
-### Importing
+#### Cargo.toml
     [dependencies]
     chrono = "0.4"
     mango-orm = "0.4.75-beta"
