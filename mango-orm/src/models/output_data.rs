@@ -23,6 +23,17 @@ impl OutputDataOne {
     /// Get raw document.
     /// Hint: For non-standard operations.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find_one(filter, None)?;
+    /// if output_data.is_valid()? {
+    ///     println!("{:?}", output_data.raw_doc()?);
+    /// }
+    /// ```
+    ///
     pub fn raw_doc(&self) -> mongodb::bson::document::Document {
         match self {
             Self::Doc(data) => {
@@ -38,6 +49,17 @@ impl OutputDataOne {
     /// Get prepared document.
     /// Hint: For page template.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find_one(filter, None)?;
+    /// if output_data.is_valid()? {
+    ///     println!("{:?}", output_data.doc()?);
+    /// }
+    /// ```
+    ///
     pub fn doc(&self) -> Result<mongodb::bson::document::Document, Box<dyn std::error::Error>> {
         match self {
             Self::Doc(data) => {
@@ -58,6 +80,17 @@ impl OutputDataOne {
     /// Get json-line.
     /// Hint: For Ajax.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find_one(filter, None)?;
+    /// if output_data.is_valid()? {
+    ///     println!("{}", output_data.json()?);
+    /// }
+    /// ```
+    ///
     pub fn json(&self) -> Result<String, Box<dyn std::error::Error>> {
         match self {
             Self::Doc(data) => {
@@ -80,6 +113,17 @@ impl OutputDataOne {
     /// Get model instance.
     /// Hint: For the `save`, `update`, `delete` operations.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find_one(filter, None)?;
+    /// if output_data.is_valid()? {
+    ///     println!("{:?}", output_data.model::<UserProfile>()?);
+    /// }
+    /// ```
+    ///
     pub fn model<T>(&self) -> Result<T, mongodb::bson::de::Error>
     where
         T: serde::de::DeserializeOwned,
@@ -132,6 +176,17 @@ impl OutputDataOne {
     /// Get validation status (boolean)
     /// Hint: For check document availability.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find_one_and_delete(filter, None)?;
+    /// if !routput_data.is_valid() {
+    ///     println!("{}", routput_data.err_msg());
+    /// }
+    /// ```
+    ///
     pub fn is_valid(&self) -> bool {
         match self {
             Self::Doc(data) => data.0.is_some(),
@@ -141,6 +196,17 @@ impl OutputDataOne {
     /// A description of the error if the document was not deleted.
     /// (Main use for admin panel.)
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find_one_and_delete(filter, None)?;
+    /// if !routput_data.is_valid() {
+    ///     println!("{}", routput_data.err_msg());
+    /// }
+    /// ```
+    ///
     pub fn err_msg(&self) -> String {
         match self {
             Self::Doc(data) => data.4.clone(),
@@ -240,6 +306,18 @@ impl OutputDataMany {
     // Get raw documents.
     // Hint: For non-standard operations.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find(filter, None)?;
+    /// if output_data.is_valid()? {
+    ///     // Get raw documents. (Hint: For non-standard operations.)
+    ///     println!("{:?}", routput_data.raw_docs()?);
+    /// }
+    /// ```
+    ///
     pub fn raw_docs(
         &self,
     ) -> Result<Vec<mongodb::bson::document::Document>, Box<dyn std::error::Error>> {
@@ -256,6 +334,18 @@ impl OutputDataMany {
     /// Get prepared documents.
     /// Hint: For page template.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find(filter, None)?;
+    /// if output_data.is_valid()? {
+    ///     // Get prepared documents. (Hint: For page template.)
+    ///     println!("{:?}", routput_data.docs()?);
+    /// }
+    /// ```
+    ///
     pub fn docs(
         &self,
     ) -> Result<Vec<mongodb::bson::document::Document>, Box<dyn std::error::Error>> {
@@ -339,6 +429,18 @@ impl OutputDataMany {
     /// Get json-line.
     /// Hint: For Ajax.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find(filter, None)?;
+    /// if output_data.is_valid()? {
+    ///     // Get json-line. (Hint: For Ajax.)
+    ///     println!("{:?}", routput_data.json()?);
+    /// }
+    /// ```
+    ///
     pub fn json(&self) -> Result<String, Box<dyn std::error::Error>> {
         match self {
             Self::Data(data) => {
@@ -434,12 +536,34 @@ impl OutputDataMany {
     /// Get validation status (boolean)
     /// Hint: For check documents availability.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find(filter, None)?;
+    /// if output_data.is_valid()? {
+    ///     ...
+    /// }
+    /// ```
+    ///
     pub fn is_valid(&self) -> Result<bool, Box<dyn std::error::Error>> {
         Ok(self.count()? > 0)
     }
 
     /// Get the number of documents.
     // ---------------------------------------------------------------------------------------------
+    ///
+    /// # Example:
+    ///
+    /// ```
+    /// let filter = doc!{};
+    /// let output_data  = UserProfile::find(filter, None)?;
+    /// if output_data.is_valid()? {
+    ///     println!("{}", routput_data.count()?);
+    /// }
+    /// ```
+    ///
     pub fn count(&self) -> mongodb::error::Result<i64> {
         match self {
             Self::Data(data) => {
