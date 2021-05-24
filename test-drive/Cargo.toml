@@ -7,14 +7,15 @@ name = "test-drive"
 version = "0.1.0"
 
 [dependencies]
-chrono = "0.4.19"
-# metamorphose = "0.1.29-alpha.1"
-lazy_static = "1.4"
-rand = "0.7.3"
-regex = "1.3.9"
-rust-argon2 = "0.8.2"
-serde_json = "1.0.57"
-validator = "0.11.0"
+chrono = "0.4"
+# mango-orm = "0.4"
+# metamorphose = "0.2"
+lazy_static = "1"
+rand = "0.7"
+regex = "1"
+rust-argon2 = "0.8"
+serde_json = "1"
+validator = "0.11"
 
 mango-orm = {path = "../mango-orm"}
 metamorphose = {path = "../metamorphose"}
@@ -22,8 +23,8 @@ metamorphose = {path = "../metamorphose"}
 [dependencies.mongodb]
 default-features = false
 features = ["sync"]
-version = "1.1.1"
+version = "1"
 
 [dependencies.serde]
 features = ["derive"]
-version = "1.0.115"
+version = "1"

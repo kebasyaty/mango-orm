@@ -26,18 +26,24 @@
 ## Installation
 ### Importing
     [dependencies]
-    mango-orm = "0.4.74-beta"
-    metamorphose = "0.2.55-beta"
-    serde_json = "1.0"
-    
-    [dependencies.serde]
-    features = ["derive"]
-    version = "1.0"
+    chrono = "0.4"
+    mango-orm = "0.4.75-beta"
+    metamorphose = "0.2.56-beta"
+    lazy_static = "1"
+    rand = "0.7"
+    regex = "1"
+    rust-argon2 = "0.8"
+    serde_json = "1"
+    validator = "0.11"
     
     [dependencies.mongodb]
     default-features = false
     features = ["sync"]
-    version = "1.2"
+    version = "1"
+    
+    [dependencies.serde]
+    features = ["derive"]
+    version = "1"
 
 ## Examples Usage:
 #### Model
