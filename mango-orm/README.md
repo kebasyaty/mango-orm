@@ -57,8 +57,8 @@
     // Example: "7rzgacfqQB3B7q7T"
     pub const UNIQUE_PROJECT_KEY: &str = "Gm5EKQZRAWvV6BW";
     
-    // Admin - Settings for user accounts.
-    pub mod admin {
+    // Settings for user accounts.
+    pub mod users {
         // Valid characters: _ a-z A-Z 0-9
         // Max size: 31
         // First character: a-z A-Z
@@ -109,11 +109,11 @@
     use serde::{Deserialize, Serialize};
     
     use crate::settings::{
-        DATABASE_NAME, DB_CLIENT_NAME, DB_QUERY_DOCS_LIMIT, SERVICE_NAME,
+        users::{DATABASE_NAME, DB_CLIENT_NAME, DB_QUERY_DOCS_LIMIT, SERVICE_NAME},
         PROJECT_NAME, UNIQUE_PROJECT_KEY,
     };
     
-    // Administrator profiles
+    // User profiles
     #[Model(
         is_del_docs = false,
         is_use_add_valid = true,
