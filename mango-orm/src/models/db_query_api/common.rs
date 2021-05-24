@@ -67,7 +67,7 @@ pub trait QCommon: ToModel + CachingModel {
     /// ```
     /// let filter = doc!{};
     /// let count  = UserProfile::count_documents(filter, None)?;
-    /// println!("{:?}", count);
+    /// println!("{}", count);
     /// ```
     ///
     fn count_documents(
@@ -252,7 +252,7 @@ pub trait QCommon: ToModel + CachingModel {
     ///
     /// ```
     /// let count  = UserProfile::estimated_document_count(None)?;
-    /// println!("{:?}", count);
+    /// println!("{}", count);
     /// ```
     ///
     fn estimated_document_count(
