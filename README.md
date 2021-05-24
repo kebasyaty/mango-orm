@@ -95,10 +95,6 @@
             ],
         };
         monitor.migrat()?;
-    
-        // Add metadata and widgects map to cache.
-        models::UserProfile::to_cache()?;
-        //
         Ok(())
     }
 
