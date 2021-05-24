@@ -284,7 +284,7 @@
         println!("is_valid: {}", result.is_valid());
         println!("Hash: {}", result.hash()?);
         println!("Widget map:\n{:?}", result.wig());
-        println!("son-line:\n{}", result.json()?);
+        println!("Json-line:\n{}", result.json()?);
         println!("Html:\n{}", result.html());
         println!("For admin panale: {}", result.json_for_admin()?);
         ...
