@@ -155,7 +155,7 @@ pub trait ToForm {
     fn fields_name() -> Result<Vec<String>, Box<dyn std::error::Error>>;
 
     /// Get map of widgets for Form fields.
-    /// Hint: <field name, Widget>
+    /// Hint: Vec<field name, Widget>
     // ---------------------------------------------------------------------------------------------
     fn widgets() -> Result<std::collections::HashMap<String, Widget>, Box<dyn std::error::Error>>;
 
