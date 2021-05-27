@@ -20,8 +20,8 @@
 ## Installation
 #### Cargo.toml
     [dependencies]
-    mango-orm = "0.4.75-beta"
-    metamorphose = "0.2.56-beta"
+    mango-orm = "0.4.76-beta"
+    metamorphose = "0.2.57-beta"
     chrono = "0.4"
     image = "0.23"
     lazy_static = "1.0"
@@ -55,14 +55,14 @@
     // Valid characters: a-z A-Z 0-9
     // Size: 8-16
     // Example: "7rzgacfqQB3B7q7T"
-    pub const UNIQUE_PROJECT_KEY: &str = "Gm5EKQZRAWvV6BW";
+    pub const UNIQUE_PROJECT_KEY: &str = "bhjRV8ry9X5LQBw";
     
     // Settings for user accounts.
     pub mod users {
         // Valid characters: _ a-z A-Z 0-9
         // Max size: 31
         // First character: a-z A-Z
-        pub const SERVICE_NAME: &str = "admin";
+        pub const SERVICE_NAME: &str = "accounts";
         // Valid characters: _ a-z A-Z 0-9
         // Max size: 21
         // First character: a-z A-Z
@@ -73,7 +73,7 @@
 
 #### migration.rs
     use crate::{models, settings};
-    use mango_orm::{CachingModel, Monitor, ToModel, MONGODB_CLIENT_STORE};
+    use mango_orm::{Monitor, ToModel, MONGODB_CLIENT_STORE};
     
     // Migration Service `Mango`.
     pub fn mango_migration() -> Result<(), Box<dyn std::error::Error>> {
@@ -90,11 +90,11 @@
             project_name: settings::PROJECT_NAME,
             unique_project_key: settings::UNIQUE_PROJECT_KEY,
             // Register models.
-            models: vec![
-                models::UserProfile::meta()?,
-            ],
+            models: vec![models::UserProfile::meta()?],
         };
+        // Run migration
         monitor.migrat()?;
+        //
         Ok(())
     }
 
@@ -128,21 +128,6 @@
             hint = "Valid characters: a-z A-Z 0-9 _ @ + .<br>Max size: 150"
         )]
         pub username: Option<String>,
-        //
-        #[serde(default)]
-        #[field_attrs(
-            widget = "inputImage",
-            label = "Photo",
-            value = r#"{
-                    "path":"./media/no_avatar.png",
-                    "url":"/media/no_avatar.png"
-                }"#,
-            placeholder = "Upload your photo",
-            accept = "image/jpeg,image/png",
-            hint = "Image in JPEG or PNG format",
-            thumbnails = r#"[["xs",150],["sm",300]]"#    // all sizes: "xs","sm","md","lg"
-        )]
-        pub photo: Option<String>,
         //
         #[serde(default)]
         #[field_attrs(
@@ -262,32 +247,34 @@
 #### main.rs
     use mango_orm::*;
     
+    mod migration;
     mod models;
     mod settings;
-    mod migration;
     
     fn main() -> Result<(), Box<dyn std::error::Error>> {
         // Run migration.
         migration::mango_migration()?;
         //
         let mut user = models::UserProfile {
-        username: Some("testname.to_string()),
-        email: Some("test@test.test".to_string()),
-        password: Some("12345678".to_string()),
-        confirm_password: Some("12345678".to_string()),
-        is_staff: Some(false),
-        is_active: Some(true),
-        ..Default::default() // or initialize the `hash` field - { hash: Some(String::new()) }
+            username: Some("testname".to_string()),
+            email: Some("test@test.test".to_string()),
+            password: Some("12345678".to_string()),
+            confirm_password: Some("12345678".to_string()),
+            is_staff: Some(false),
+            is_active: Some(true),
+            ..Default::default() // or initialize the `hash` field - { hash: Some(String::new()) }
         };
-        
+    
         let result = user.save(None, None)?;
-        println!("is_valid: {}", result.is_valid());
+        println!("Is valid: {}", result.is_valid());
         println!("Hash: {}", result.hash()?);
+        /*
         println!("Widget map:\n{:?}", result.wig());
-        println!("Json-line:\n{}", result.json()?);
+        println!("son-line:\n{}", result.json()?);
         println!("Html:\n{}", result.html());
         println!("For admin panale: {}", result.json_for_admin()?);
-        ...
+        // ...
+        */
         //
         Ok(())
     }
