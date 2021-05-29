@@ -2,7 +2,12 @@
 
 # mango-orm
 ### ORM-like API MongoDB for Rust
-#### For maximum convenience use  [mango-panel](https://github.com/kebasyaty/mango-panel "mango-panel") 
+#### For maximum convenience use  [mango-panel](https://github.com/kebasyaty/mango-panel "mango-panel")
+
+![crates.io](https://img.shields.io/crates/v/mango-orm)
+![crates.io](https://img.shields.io/crates/d/mango-orm)
+![crates.io](https://img.shields.io/crates/l/mango-orm)
+![crates.io](https://img.shields.io/github/stars/kebasyaty/mango-orm?style=social)
 
 ## Requirements
 - mongodb
@@ -18,10 +23,41 @@
 - metamorphose
 
 ## Installation
-#### Cargo.toml
+#### 1)  Install mongodb (if not installed)
+    ### Ubuntu, Mint:
+    $ sudo apt install mongodb
+    ## OR
+    $ sudo apt update
+    $ sudo apt install dirmngr gnupg apt-transport-https ca-certificates
+    $ wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+    $ sudo add-apt-repository 'deb [arch=amd64] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse'
+    $ sudo apt update
+    $ sudo apt install mongodb-org
+    $ sudo systemctl enable --now mongod
+    $ mongo --eval 'db.runCommand({ connectionStatus: 1 })'    # For check
+    $ reboot
+    ### Configuration file:
+    sudo nano /etc/mongod.conf
+    ### Systemd:
+    $ sudo service mongod status
+    $ sudo service mongod start
+    $ sudo service mongod stop
+    $ sudo service mongod restart
+    $ sudo service mongod enable
+    $ sudo service mongod disable
+    ### Uninstall:
+    $ sudo systemctl stop mongodb
+    $ sudo systemctl disable mongodb
+    $ sudo apt purge mongodb    # OR (for 4.4) - $ sudo apt-get purge mongodb-org*
+    $ sudo rm -r /var/log/mongodb
+    $ sudo rm -r /var/lib/mongodb
+    $ sudo rm -f /etc/mongod.conf
+    $ sudo rm -f /etc/apt/sources.list.d/mongodb-org-4.4.list    # for 4.4
+
+#### 2) Cargo.toml
     [dependencies]
-    mango-orm = "0.4.76-beta"
-    metamorphose = "0.2.57-beta"
+    mango-orm = "0.4"
+    metamorphose = "0.2"
     chrono = "0.4"
     image = "0.23"
     lazy_static = "1.0"
