@@ -5,7 +5,7 @@
 **To simulate fields of type ForeignKey and ManyToMany, a simplified alternative (Dynamic Widgets) is used. For examples of how to add fields to the Model, see [tests](https://github.com/kebasyaty/mango-orm/tree/master/test-drive/tests "tests"). For maximum convenience use [mango-panel](https://github.com/kebasyaty/mango-panel "mango-panel").**
 
 ![crates.io](https://img.shields.io/crates/v/mango-orm)
-![crates.io](https://img.shields.io/static/v1?label=Rust&message=1.52.1&color=orange)
+![crates.io](https://img.shields.io/static/v1?label=rustc&message=v1.52%2B&color=red)
 ![crates.io](https://img.shields.io/crates/d/mango-orm)
 ![crates.io](https://img.shields.io/crates/l/mango-orm)
 

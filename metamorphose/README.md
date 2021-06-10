@@ -5,6 +5,7 @@
 ### Macros collection for converting Structure to Model, for a [mango-orm](https://github.com/kebasyaty/mango-orm "mango-orm") project.
 
 ![crates.io](https://img.shields.io/crates/v/metamorphose)
+![crates.io](https://img.shields.io/static/v1?label=rustc&message=v1.52%2B&color=red)
 ![crates.io](https://img.shields.io/crates/d/metamorphose)
 ![crates.io](https://img.shields.io/crates/l/metamorphose)
 
