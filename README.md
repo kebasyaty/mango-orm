@@ -1,11 +1,11 @@
-![Logo](https://github.com/kebasyaty/mango-orm/raw/master/images/logo.svg)
+[![Logo](https://github.com/kebasyaty/mango-orm/raw/master/images/logo.svg "Logo")](https://github.com/kebasyaty/mango-orm "Logo")
 
 # mango-orm
 #### ORM-like API MongoDB for Rust
 **To simulate fields of type ForeignKey and ManyToMany, a simplified alternative (Dynamic Widgets) is used. For examples of how to add fields to the Model, see [tests](https://github.com/kebasyaty/mango-orm/tree/master/test-drive/tests "tests"). For maximum convenience use [mango-panel](https://github.com/kebasyaty/mango-panel "mango-panel").**
 
-![crates.io](https://img.shields.io/crates/v/mango-orm)
-![crates.io](https://img.shields.io/static/v1?label=rustc&message=v1.52%2B&color=red)
+[![crates.io](https://img.shields.io/crates/v/mango-orm "crates.io")](https://crates.io/crates/mango-orm "crates.io")
+[![crates.io](https://img.shields.io/static/v1?label=rustc&message=v1.52%2B&color=red "crates.io")](https://www.rust-lang.org/ "crates.io")
 ![crates.io](https://img.shields.io/crates/d/mango-orm)
 ![crates.io](https://img.shields.io/crates/l/mango-orm)
 
@@ -21,6 +21,118 @@
 - serde_json
 - validator
 - metamorphose
+
+## Matching field types and widget types
+    Field type:   |     Widget type:
+    --------------------------------------------------------------------------------
+    bool                  "checkBox"
+    String                "inputColor"
+    String                "inputDate"
+    String                "inputDateTime"
+    String                "inputEmail"
+    String                "inputFile"
+    String                "inputImage"
+    i32                     "numberI32"
+    u32                    "numberU32"
+    i64                     "numberI64"
+    f64                     "numberF64"
+    String                 "inputPassword"
+    String                 "radioText"
+    i32                      "radioI32"
+    u32                     "radioU32"
+    i64                      "radioI64"
+    f64                      "radioF64"
+    i32                      "rangeI32"
+    u32                    "rangeU32"
+    i64                     "rangeI64"
+    f64                     "rangeF64"
+    String                "inputPhone"
+    String                "inputText"
+    String                "inputUrl"
+    String                "inputIP"
+    String                "inputIPv4"
+    String                "inputIPv6"
+    String                "textArea"
+    String                "selectText"
+    String                "selectTextDyn"
+    Vec<String>      "selectTextMult"
+    Vec<String>      "selectTextMultDyn"
+    i32                     "selectI32"
+    i32                     "selectI32Dyn"
+    Vec<i32>          "selectI32Mult"
+    Vec<i32>          "selectI32MultDyn"
+    u32                   "selectU32"
+    u32                   "selectU32Dyn"
+    Vec<u32>        "selectU32Mult"
+    Vec<u32>        "selectU32MultDyn"
+    i64                    "selectI64"
+    i64                    "selectI64Dyn"
+    Vec<i64>         "selectI64Mult"
+    Vec<i64>         "selectI64MultDyn"
+    f64                   "selectF64"
+    f64                   "selectF64Dyn"
+    Vec<f64>         "selectF64Mult"
+    Vec<f64>         "selectF64MultDyn"
+    String               "hiddenText"
+    i32                   "hiddenI32"
+    u32                  "hiddenU32"
+    i64                   "hiddenI64"
+    f64                   "hiddenF64"
+
+## Widget attributes
+    // "model-name--field-name" ( The value is determined automatically )
+    id: String
+    //
+    label: String
+    //
+    widget: String
+    // The value is determined automatically
+    input_type: String,
+    //
+    name: String
+    //
+    value: String
+    // Hint: accept="image/jpeg,image/png,image/gif"
+    accept: String
+    //
+    placeholder: String
+    // Validating a field using a client-side regex
+    pattern: String
+    //
+    minlength: usize
+    //
+    maxlength: usize
+    //
+    required: bool
+    // For <input type="checkbox|radio">
+    checked: bool
+    //
+    unique: bool
+    //
+    disabled: bool
+    //
+    readonly: bool
+    step: String
+    //
+    min: String
+    //
+    max: String
+    // Hint: <value, Title> - <option value="value1">Title 1</option>
+    options: Vec<(String, String)>
+    //
+    thumbnails: Vec<(String, u32)>
+    // "autofocus tabindex=\"some number\" size=\"some number\" ..."
+    other_attrs: String
+    // "class-name class-name ..."
+    css_classes: String
+    //
+    hint: String
+    // The value is determined automatically
+    warning: String
+    // The value is determined automatically
+    error: String
+    // Messages common to the entire Form
+    common_msg: String
 
 ## Installation
 #### 1)  Install mongodb (if not installed)
@@ -77,7 +189,7 @@
     version = "1.0"
 
 ## Example Usage:
-#### settings.rs
+#### src/settings.rs
     // General settings for the project.
     // Project name.
     // Hint: PROJECT_NAM it is recommended not to change.
@@ -107,7 +219,7 @@
         pub const DB_QUERY_DOCS_LIMIT: u32 = 1000;
     }
 
-#### migration.rs
+#### src/migration.rs
     use crate::{models, settings};
     use mango_orm::{Monitor, ToModel, MONGODB_CLIENT_STORE};
     
@@ -134,7 +246,7 @@
         Ok(())
     }
 
-#### models.rs
+#### src/models.rs
     use mango_orm::*;
     use metamorphose::Model;
     use regex::RegexBuilder;
@@ -280,7 +392,7 @@
         }
     }
 
-#### main.rs
+#### src/main.rs
     use mango_orm::*;
     
     mod migration;
