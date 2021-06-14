@@ -23,7 +23,7 @@
 - metamorphose
 
 ## Matching field types and widget types
-|Field type: | Widget type:|
+| Field type: | Widget type: |
 | ------------ | ------------ |
 | bool | "checkBox"|
 | String | "inputColor" |
