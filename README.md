@@ -24,8 +24,8 @@
 
 ## Matching field types and widget types
 | Field type: | Widget type: |
-| ------------ | ------------ |
-| bool | "checkBox"|
+| :------------ | :------------ |
+| bool | "checkBox" |
 | String | "inputColor" |
 | String | "inputDate" |
 | String | "inputDateTime" |
