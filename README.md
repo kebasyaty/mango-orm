@@ -159,8 +159,8 @@
     $ sudo service mongod enable
     $ sudo service mongod disable
     ### Uninstall:
-    $ sudo systemctl stop mongodb
-    $ sudo systemctl disable mongodb
+    $ sudo service mongod stop
+    $ sudo service mongod disable
     $ sudo apt purge mongodb    # OR (for 4.4) - $ sudo apt-get purge mongodb-org*
     $ sudo rm -r /var/log/mongodb
     $ sudo rm -r /var/lib/mongodb
