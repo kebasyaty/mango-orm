@@ -179,7 +179,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     );
     */
 
-    // Test Model..
+    // Test Model.
     let mut user = mango_models::UserProfile {
         username: Some("Rust".to_string()),
         email: Some("test_1_@test.test".to_string()),
